@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>杨大大</title>
+        <meta name="author" content="阿腾" />
+        <meta name="description" content="IT" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+<script src="/js/lib/home.js"></script>
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        
+        <div id="layout">
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>不要着急，正在加载中亲！</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>杨大大</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;主页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;杨大大</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">主页</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div id="home-head">
+    <div
+        id="home-background"
+        ref="homeBackground"
+        data-images="/images/background.jpg"
+    ></div>
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>杨大大</h1>
+                <h3>个人博客</h3>
+                <h5>IT</h5>
+            </div>
+        </span>
+    </div>
+</div>
+<div id="home-posts-wrap"  ref="homePostsWrap">
+    <div id="home-posts">
+        
+
+<div class="post">
+    <a href="/2023/04/25/spider/">
+        <h2 class="post-title">什么是爬虫？</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="爬虫定义与分类"><a href="#爬虫定义与分类" class="headerlink" title="爬虫定义与分类"></a>爬虫定义与分类</h2><pre><code class="bash">网络爬虫，通过一定的规则策略，自动抓取、下载互联网上网页，在按照某些规则算法对这些网页进行数据抽取，形成所需要的数据集。
+
+按照抓取网站对象来分类，可以分为2类爬虫
+
+通用爬虫：类似百度、谷歌这样的爬虫，抓取对象是整个互联网，对于网页没有固定的抽取规则。 对于所有网页都是一套通用的处理方法。
+
+垂直爬虫：这类爬虫主要针对一些特定对象、网站，有一台指定的爬取路径、数据抽取规则。比如今日头条，它的目标网站就是所有的新闻类网站。 比如Etao比价、网易的慧慧购物助手，他们的目标网站就是 淘宝、京东、天猫等等电商网站。
+
+通用爬虫和垂直爬虫显著的区别：
+抓取范围，通用爬虫的抓取范围要比垂直爬虫大得多，一个是整个互联网，一个是指定的网站。
+
+爬取路线，通用爬虫要不按照深度爬取、要不是按广度爬取。 而垂直爬虫则可能是按照指定路线爬取。
+
+数据处理，通用爬虫一般就是分词、索引到数据库。 而垂直爬虫则通过特定的规则来抽取更加精细的数据 。
+</code></pre>
+<h2 id="网络爬虫实现"><a href="#网络爬虫实现" class="headerlink" title="网络爬虫实现"></a>网络爬虫实现</h2><h3 id="爬虫的组成部分"><a href="#爬虫的组成部分" class="headerlink" title="爬虫的组成部分"></a>爬虫的组成部分</h3><pre><code class="bash">一个完整的爬虫功能通常由以下功能模块组成：
+
+HTTP下载器：负责HTTP下载，别小瞧它，要做好还挺不容易，因为你面对的复杂而无序、甚至包含错误的互联网。
+
+抓取队列：存储新产生的URL队列（queue），队列可以是多种形式的，他可以是redis的队列、数据库中的表、内存中的队列。根据场景，你可以自行选择。
+
+调度器：负责管理工作的，它通过制定策略，规定哪些URL优先执行、哪些URL靠后。
+
+多线程模块：支持多线程，并且可控，实现海量数据的大批量爬取。
+
+排重集合：这是一个爬虫必不可少的部分，你必须记录下哪些URL已经采集过、哪些是未采集过的，哪些信息已经采集过了，哪些还没有采集，需要记录上次抓取时间。
+
+页面解析器：定义如何解析抓取到的页面，对于通用爬虫，它可能对于所有页面都是一套逻辑，就是分词、索引。 但对于垂直爬虫，则需要指定规则，手段包括正则、XPath、正文识别、ORC图片识别等多种方式。
+
+数据存储：将爬虫按照解析规则解析的结果写入数据库中， 一般情况下都是存储到数据库啦，一般的关系数据库，也有写到NoSQL中。
+
+结果提供服务：将爬虫的结果以批量数据的方式对外提供同步数据文件，或者提供WebSevice查询服务，按照实际需求情况。
+</code></pre>
+<h3 id="爬虫技术流程"><a href="#爬虫技术流程" class="headerlink" title="爬虫技术流程"></a>爬虫技术流程</h3><pre><code class="bash">指定起始URLs。 也就是指定一个入口，不管是通用爬虫还是垂直爬虫，都需要一个入口。
+
+下载、解析URL。 这里分为2个操作，分别是：抽取数据，存储到数据库以及解析出页面中包含的URL。
+
+将解析的新URL放到队列中。
+
+调度器从URL队列中，按照一定策略，取出要下载的URL，添加到HTTP下载中。
+
+下载完成后，对文本内容进行解析和规则提取出有用的结果，写入数据库中。
+
+对入库的信息进行清洗、治理、去重等操作，提升爬取结果的数据质量
+</code></pre>
+<p>原文出处：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43233737/article/details/115346562">CSDN</a></p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/spider/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/25/%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80/">
+        <h2 class="post-title">文心一言</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="什么是文心一言"><a href="#什么是文心一言" class="headerlink" title="什么是文心一言"></a>什么是文心一言</h2><pre><code class="bash">文心一言（英文名：ERNIE Bot）是百度全新一代知识增强大语言模型，文心大模型家族的新成员，能够与人对话互动，回答问题，协助创作，高效便捷地帮助人们获取信息、知识和灵感。文心一言是知识增强的大语言模型，基于飞桨深度学习平台和文心知识增强大模型，持续从海量数据和大规模知识中融合学习具备知识增强、检索增强和对话增强的技术特色 。
+</code></pre>
+<p>原文出处：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50804299/article/details/129627975">CSDN</a></p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/25/chatGPT/">
+        <h2 class="post-title">ChatGPT的介绍</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="Chat-GPT是什么？"><a href="#Chat-GPT是什么？" class="headerlink" title="Chat GPT是什么？"></a>Chat GPT是什么？</h2><pre><code class="bash">ChatGPT是一个基于大规模预训练语言模型的对话系统，由OpenAI开发。它的核心技术是GPT（Generative Pre-trained Transformer）模型，是一种基于深度学习的自然语言处理技术。GPT模型采用Transformer架构，利用无监督学习从大规模语料库中学习语言知识，具有强大的语言理解和生成能力。ChatGPT将GPT模型应用于对话生成，可以进行自然流畅的对话，具有人类般的语言交互能力，本质上是一个聊天工具。
+</code></pre>
+<h2 id="Chat-GPT应用场景"><a href="#Chat-GPT应用场景" class="headerlink" title="Chat GPT应用场景"></a>Chat GPT应用场景</h2><pre><code class="bash">ChatGPT的应用场景非常广泛，可以用于客户服务、教育培训、智能客服、智能助手、娱乐等方面。
+
+1.在客户服务中，ChatGPT可以代替人工客服，为用户提供更快速、更高效的服务；
+2.在教育培训中，ChatGPT可以作为学习辅助工具，帮助学生解答问题、梳理知识点；
+3.在智能客服中，ChatGPT可以为用户提供24小时不间断的服务；
+4.在智能助手中，ChatGPT可以帮助用户安排日程、提醒事项、查找资料等；
+5.在娱乐方面，ChatGPT可以作为聊天机器人，与用户进行有趣的互动。
+</code></pre>
+<h2 id="Chat-GPT能够做什么？"><a href="#Chat-GPT能够做什么？" class="headerlink" title="Chat GPT能够做什么？"></a>Chat GPT能够做什么？</h2><pre><code class="bash">在目前版本当中，ChatGPT大致可以做到这3个方面。
+
+1、资料查找： 资料查找是ChatGPT最基本的功能了，它可以回答各类不同的问题，包括生活常识、新闻资讯、历史事件等。只要您输入相关的问题，ChatGPT 就可以提供问题的答案，不过需要明白的是，ChatGPT的数据来自训练数据库，目前数据库仅更新至2021年，所以2021年之后的资讯，ChatGPT准确性未知，而且官方也强调ChatGPT的回答未必100％准确。
+
+2、 内容创作： 除了回答问题之外，ChatGPT还有一个强大的功能就是它具备快速高效的内容创作能力。它可以帮助我们生成各种不同的文字内容，包括编程、写文章、剧本、诗歌等。
+
+3、翻译语言： 除此之外，ChatGPT也提供了翻译的功能。它可以对不同语言进行翻译，这个类似目前网络上一些翻译工具。只要您输入相关的文字或文章，ChatGPT 就可以将其翻译成各国不同的语言。据了解，ChatGPT目前可以翻译的语言包括但不限于英语、法语、德语、西班牙语、葡萄牙语、意大利语、荷兰语、俄语、中文、日语和韩语等。
+</code></pre>
+<p>原文出处：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Allenzyg/article/details/129684800">CSDN</a></p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/chatGPT/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/25/aaa/">
+        <h2 class="post-title">美文鉴赏</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>1.尘封在沙漏里的友谊：<br>曾经我们坚信海誓山盟过后沉淀的必定是坚贞不移、此生不离；曾经我们坚信彼此的心圈<br>在一个核里哪怕时光穿梭也毫无芥蒂；曾经你赠我沙漏与我互定永久告诉我亘古不变天荒地老<br>的情谊。那些曾经在我最灿烂的年华里伴我左右。<br>然而，所有的事，由平淡开始，终究归于平淡。如你，亦如我。那些曾经我们牵手一起走<br>过的小巷如今留与我一人独步；那些曾经我们欢笑的地方如今留与我含泪目睹；那些曾经我们<br>惦念的往昔如今在记忆里残存过渡。只是那些幻影，那么不小心掉进了我的回忆里。<br>2.沧桑年华，辗转成殇：<br>霎间清泪寂寥飘飞，点点涟漪生起，浅笑惨淡人生，遥指落花已尽，碾碎手中的温柔。旧<br>的回忆，碎的情感，都有寥影随行。离歌声里愁肠殇魂，相逢陌路，谁在谁的梦里洒下哀愁？<br>轻捻一指成殇暗香，挥手决绝的散场的画面，始终滞在脑海。雨幕后的你，寂然舞动，回<br>眸浅笑，一丝馨香入住阑珊回忆中。锦瑟年华，埋葬羞涩爱恋，江水东引，韶韶年华尽。小轩<br>窗外，满是落花，与那一袭红纱照相辉映，凄楚绝艳的红，是殇的写照，是离的写照，更是残<br>爱的写照。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/aaa/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/25/eno/">
+        <h2 class="post-title">emo文案</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>1、如果悲伤不能省略，那么至少，请让我牢牢的记住每一滴泪水，再让我用全部的泪水洗去带给我悲伤的那个元素，哪怕回忆中会有伤痕！</p>
+<p>2、我的世界太过安静，静得可以听见自己心跳的声音。心房的血液慢慢流回心室，如此这般的轮回。聪明的人，喜欢猜心，也许猜对了别人的心，却也失去了自己的。傻气的人，喜欢给心，也许会被人骗，却未必能得到别人的。你以为我刀枪不入，我以为你百毒不侵。</p>
+<p>3、有多少人故意赌气关掉手机，忍不住打开后，发现什么也没有。自作多情以为自己在他心里有多重要，到最后才发现自己原来是个笑话。别在傻了，人家不在乎你。</p>
+<p>4、当岁月无情的斑驳了三生石上的情缘，我又能如何改变宿命？于是，唯有放飞心灵深处相思的云，任其飘荡，慢慢覆盖在那一片寂寞的沙洲。</p>
+<p>5、我在为谁而心醉，我在为谁而伤痛。十指在键盘上轻轻划过，多少回忆凝聚指尖，我就用这样的方式记载着对你的思念。</p>
+<p>6、年少时的爱情，就是欢天喜地地认为会与眼前人过一辈子，所以预想以后的种种，一口咬定它会实现。走过千山万水后，才会幡然醒悟，那么多年的时光只是上天赐予你的一场美梦，为了支撑你这冗长的一生。</p>
+<p>7、你永远不知道，这世界有一种人，你可以每天听见他的消息，了解他的行踪，知道他身边发生的每件事情。你可以很想很想他，却无法去见他。</p>
+<p>8、你以为这只不过是短短的邂逅，我却认为是永恒的守护。或许认为这只是单纯的自以为是，但是有些人切深陷其中无法自拔。只是无法舍弃这其中的缘分，那怕当初仅仅只是擦肩而过，有的事错过了便是永恒的遗憾，有的人错过了，却是这辈子永恒的痛。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/eno/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/25/%E5%88%9D%E8%AF%86SpringBoot/">
+        <h2 class="post-title">初识SpringBoot</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="Springboot的特点"><a href="#Springboot的特点" class="headerlink" title="Springboot的特点"></a>Springboot的特点</h2><p>‘’’<br>1、可快速构建独立的Spring应用程序。<br>2、内嵌Servlet容器，无需单独安装容器即可独立运行项目。<br>3、对主流开发框架的无配置集成。<br>4、提供开箱即用的Spring插件，简化Maven、Gradle的配置。<br>5、自动配置Spring，极大地提高了开发、部署效率。<br>6、无需任何XML配置。<br>‘’’</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/%E5%88%9D%E8%AF%86SpringBoot/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/25/hello-world/">
+        <h2 class="post-title">Hello World</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/04/25/hello-world/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
+    <div class="prev">
+        
+    </div>
+    <div class="page-index">
+        
+        <span class="current">1</span>
+        
+    </div>
+    <div class="next">
+        
+    </div>
+</div>
+
+    </div>
+    
+    <div id="home-card">
+        <div id="card-div">
+    <div class="card-style">
+        <div class="avatar">
+            <img src="/images/avatar.jpg" alt="avatar" />
+        </div>
+        <div class="name">阿腾</div>
+        <div class="description">
+            <p>“只学会了开关机的阿腾”</p>
+
+        </div>
+        
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://argvchs.github.io">Argvchs</a>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    
+</div>
+
+                <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2023 - 2023 杨大大
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;阿腾
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/lib/fireworks.min.js"></script>
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/lib/background.min.js"></script>
+<div id="cursor"></div>
+<link rel="stylesheet" href="/css/cursor.min.css" />
+<script src="/js/lib/cursor.min.js"></script>
+        <script src="/js/main.js"></script>
+        
+        
+    </body>
+</html>

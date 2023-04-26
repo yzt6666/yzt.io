@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>ChatGPT的介绍 | 杨大大</title>
+        <meta name="author" content="阿腾" />
+        <meta name="description" content="IT" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        
+        <div id="layout">
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>不要着急，正在加载中亲！</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>杨大大</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;主页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;杨大大</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">主页</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>ChatGPT的介绍</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/25
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="Chat-GPT是什么？"><a href="#Chat-GPT是什么？" class="headerlink" title="Chat GPT是什么？"></a>Chat GPT是什么？</h2><pre><code class="bash">ChatGPT是一个基于大规模预训练语言模型的对话系统，由OpenAI开发。它的核心技术是GPT（Generative Pre-trained Transformer）模型，是一种基于深度学习的自然语言处理技术。GPT模型采用Transformer架构，利用无监督学习从大规模语料库中学习语言知识，具有强大的语言理解和生成能力。ChatGPT将GPT模型应用于对话生成，可以进行自然流畅的对话，具有人类般的语言交互能力，本质上是一个聊天工具。
+</code></pre>
+<h2 id="Chat-GPT应用场景"><a href="#Chat-GPT应用场景" class="headerlink" title="Chat GPT应用场景"></a>Chat GPT应用场景</h2><pre><code class="bash">ChatGPT的应用场景非常广泛，可以用于客户服务、教育培训、智能客服、智能助手、娱乐等方面。
+
+1.在客户服务中，ChatGPT可以代替人工客服，为用户提供更快速、更高效的服务；
+2.在教育培训中，ChatGPT可以作为学习辅助工具，帮助学生解答问题、梳理知识点；
+3.在智能客服中，ChatGPT可以为用户提供24小时不间断的服务；
+4.在智能助手中，ChatGPT可以帮助用户安排日程、提醒事项、查找资料等；
+5.在娱乐方面，ChatGPT可以作为聊天机器人，与用户进行有趣的互动。
+</code></pre>
+<h2 id="Chat-GPT能够做什么？"><a href="#Chat-GPT能够做什么？" class="headerlink" title="Chat GPT能够做什么？"></a>Chat GPT能够做什么？</h2><pre><code class="bash">在目前版本当中，ChatGPT大致可以做到这3个方面。
+
+1、资料查找： 资料查找是ChatGPT最基本的功能了，它可以回答各类不同的问题，包括生活常识、新闻资讯、历史事件等。只要您输入相关的问题，ChatGPT 就可以提供问题的答案，不过需要明白的是，ChatGPT的数据来自训练数据库，目前数据库仅更新至2021年，所以2021年之后的资讯，ChatGPT准确性未知，而且官方也强调ChatGPT的回答未必100％准确。
+
+2、 内容创作： 除了回答问题之外，ChatGPT还有一个强大的功能就是它具备快速高效的内容创作能力。它可以帮助我们生成各种不同的文字内容，包括编程、写文章、剧本、诗歌等。
+
+3、翻译语言： 除此之外，ChatGPT也提供了翻译的功能。它可以对不同语言进行翻译，这个类似目前网络上一些翻译工具。只要您输入相关的文字或文章，ChatGPT 就可以将其翻译成各国不同的语言。据了解，ChatGPT目前可以翻译的语言包括但不限于英语、法语、德语、西班牙语、葡萄牙语、意大利语、荷兰语、俄语、中文、日语和韩语等。
+</code></pre>
+<p>原文出处：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Allenzyg/article/details/129684800">CSDN</a></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2023 - 2023 杨大大
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;阿腾
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/lib/fireworks.min.js"></script>
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/lib/background.min.js"></script>
+<div id="cursor"></div>
+<link rel="stylesheet" href="/css/cursor.min.css" />
+<script src="/js/lib/cursor.min.js"></script>
+        <script src="/js/main.js"></script>
+        
+        
+        
+
+
+
+
+        
+    </body>
+</html>
