@@ -20,16 +20,7 @@
 	--wrap-right-button-color: #444444;
     --footer-color: #888
 }
-pre[class*="language-"] {
-    padding: 1.2em;
-    margin: .5em 0;
-}
 
-code[class*="language-"],
-pre[class*="language-"] {
-    color: #e8eaf6;
-    white-space: pre-wrap !important;
-}
 * {
 	margin: 0;
 	padding: 0
