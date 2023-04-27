@@ -20,7 +20,16 @@
 	--wrap-right-button-color: #444444;
     --footer-color: #888
 }
+pre[class*="language-"] {
+    padding: 1.2em;
+    margin: .5em 0;
+}
 
+code[class*="language-"],
+pre[class*="language-"] {
+    color: #e8eaf6;
+    white-space: pre-wrap !important;
+}
 * {
 	margin: 0;
 	padding: 0
@@ -720,10 +729,10 @@ mjx-container {
 	margin-bottom: 0.8rem
 }
 
-.article-body pre {
+/* .article-body pre {
     white-space: pre;
     word-break: break-all
-}
+} */
 
 .gutter pre {
 	border-radius: 5px 0 0 5px
