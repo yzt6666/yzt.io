@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            杨大大
+            Docker的入门程序
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,266 +32,135 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">摆烂的阿腾</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">Docker的入门程序</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-04-27
+                        </span>
+                        
+                            
+                                <span id="/posts/3665708294/" class="leancloud_visitors" data-flag-title="Docker的入门程序">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3665708294/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
+                </div>
             
         </div>
     </div>
     
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
-    
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>在CentOS中安装完Docker，通过一个入门程序来学习它的基本使用，我们首先需要编写Dockerfile及其相关文件，然后构建镜像，创建并启动容器，最后查看结果。</p>
+<h2 id="编写Dockerfile文件"><a href="#编写Dockerfile文件" class="headerlink" title="编写Dockerfile文件"></a>编写Dockerfile文件</h2><p>先创建一个空的Docker工作目录dockerspace，进入该目录，vim Dockerfile新建并打开一个文件</p>
+<pre><code class="bash">mkdir dockerspace
+cd dockerspace
+vim Dockerfile
+</code></pre>
+<pre><code class="bash">#Docker官方自带的python作为一个基础镜像
+FROM python:2.7-slim
+#设置工作目录/app
+WORKDIR /app
+#复制当前所有内容到/app中
+ADD . /app
+#安装文件包
+RUN pip install -r requirements.txt
+#设置容器暴露的端口
+EXPOSE 80
+#定义环境变量
+ENV NAME World
+#容器启动后，立刻启动app.py
+CMD [&quot;python&quot;,&quot;app.py&quot;]
+</code></pre>
+<h2 id="编写外部文件"><a href="#编写外部文件" class="headerlink" title="编写外部文件"></a>编写外部文件</h2><h3 id="requirements-txt"><a href="#requirements-txt" class="headerlink" title="requirements.txt"></a>requirements.txt</h3><pre><code class="bash">Flask
+Redis
+</code></pre>
+<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><pre><code class="bash">from flask import Flask
+from redis import Redis, RedisError
+import os
+import socket
+redis = Redis(host=&#39;redis&#39;, \
+    db=0, socket_comment_timeout=2, socket_timeout=2)
+app = Flask(__name__)
+@app.route(&quot;/&quot;)
+def hello():
+    try:
+        visits = redis.incr(&#39;counter&#39;)
+    except RedisError:
+        visits = &quot;&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;&quot;
+    html = =&quot;&lt;h3&gt;Hello &#123;name&#125;!&lt;/h3&gt;&quot; \
+        &quot;&lt;b&gt;Hostname:&lt;/b&gt; &#123;hostname&#125;&lt;br/&gt;&quot; \
+        &quot;&lt;b&gt;Visits:&lt;/b&gt; &#123;visits&#125;&quot;
+    return html.format(name=os.getenv(&quot;NAME&quot;,&quot;world&quot;), \
+                       hostname = socket.gethostname(),
+                       visits=visits)
+if __name__ == &#39;__main__&#39;:
+    app.run(host=&#39;0.0.0.0&#39;, port=80)
+</code></pre>
+<p>这时我们所需要的文件已经准备完成</p>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/3665708294/">Docker的入门程序</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-27
-                            </span>
-                            
-                                
-                                    <span id="/posts/3665708294/" class="leancloud_visitors" data-flag-title="Docker的入门程序">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3665708294/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3665708294/" target="_blank">Docker的入门程序</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/1107118888/">什么是爬虫？</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/1107118888/" class="leancloud_visitors" data-flag-title="什么是爬虫？">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1107118888/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/1126375787/">文心一言</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/1126375787/" class="leancloud_visitors" data-flag-title="文心一言">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1126375787/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/4125018247/">ChatGPT的介绍</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/4125018247/" class="leancloud_visitors" data-flag-title="ChatGPT的介绍">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/4125018247/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/57857380/">美文鉴赏</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/57857380/" class="leancloud_visitors" data-flag-title="美文鉴赏">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/57857380/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/3509114662/">emo文案</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/3509114662/" class="leancloud_visitors" data-flag-title="emo文案">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3509114662/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/3446401948/">初识SpringBoot</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/3446401948/" class="leancloud_visitors" data-flag-title="初识SpringBoot">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3446401948/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/1243066710/">Hello World</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-25
-                            </span>
-                            
-                                
-                                    <span id="/posts/1243066710/" class="leancloud_visitors" data-flag-title="Hello World">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1243066710/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/posts/1107118888/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1107118888/" title="发布于 2023-04-25 06:06">什么是爬虫？</a>
+                    
+                </div>
             </div>
             
-            
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -319,7 +188,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
