@@ -71,7 +71,7 @@
             <div class="toc"></div>
             <div class="article-body">
                 <p>在CentOS中安装完Docker，通过一个入门程序来学习它的基本使用，我们首先需要编写Dockerfile及其相关文件，然后构建镜像，创建并启动容器，最后查看结果。</p>
-<h2 id="编写Dockerfile文件"><a href="#编写Dockerfile文件" class="headerlink" title="编写Dockerfile文件"></a>编写Dockerfile文件</h2><p>先创建一个空的Docker工作目录dockerspace，进入该目录，vim Dockerfile新建并打开一个文件</p>
+<h2 id="编写Dockerfile文件"><a href="#编写Dockerfile文件" class="headerlink" title="编写Dockerfile文件"></a>编写Dockerfile文件</h2><p>先创建一个空的Docker工作目录dockerspace，进入该目录，vim Dockerfile新建并打开一个文件。</p>
 <pre><code class="bash">mkdir dockerspace
 cd dockerspace
 vim Dockerfile
@@ -116,7 +116,19 @@ def hello():
 if __name__ == &#39;__main__&#39;:
     app.run(host=&#39;0.0.0.0&#39;, port=80)
 </code></pre>
-<p>这时我们所需要的文件已经准备完成</p>
+<p>这时我们所需要的文件已经准备完成，接下来就是创建镜像，打开linux的终端，在Dockerfile文件所在目录使用指令，生成镜像。</p>
+<pre><code class="bash">docker bulid -t hellodocker . 
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/p9QGKtf"><img src="https://s1.ax1x.com/2023/04/27/p9QGKtf.png" alt="p9QGKtf.png"></a><br>镜像构建完成后，输入下面的指令查看本地列表中是否有名为hellodocker的镜像。</p>
+<pre><code class="bash">docker images
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/p9QGZnA"><img src="https://s1.ax1x.com/2023/04/27/p9QGZnA.png" alt="p9QGZnA.png"></a><br>可以看到本地镜像列表不仅包含hellodocker镜像，也包含Dockerfile文件中依赖的基础镜像Python，然后创建启动容器，命令如下：</p>
+<pre><code class="bash">docker run -d -p 5000:80 hellodocker
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/p9QGm7t"><img src="https://s1.ax1x.com/2023/04/27/p9QGm7t.png" alt="p9QGm7t.png"></a><br>docker run是创建并启动容器的命令，-d表示后台运行，-p是将容器的80端口映射到宿主机的5000端口。<br>最后查看运行容器：</p>
+<pre><code class="bash">docker ps
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/p9QGe0I"><img src="https://s1.ax1x.com/2023/04/27/p9QGe0I.png" alt="p9QGe0I.png"></a><br>通过PORTS列表可以看出容器已经映射到了一个5000的端口，使用宿主机的浏览器访问<a href="http://localhost:5000（请求失败的话，所以用虚拟机的ip地址来代替localhost）来访问容器中的程序。">http://localhost:5000（请求失败的话，所以用虚拟机的ip地址来代替localhost）来访问容器中的程序。</a><br><a target="_blank" rel="noopener" href="https://imgse.com/i/p9QGEXd"><img src="https://s1.ax1x.com/2023/04/27/p9QGEXd.png" alt="p9QGEXd.png"></a></p>
 
                 
                 <p class="end">__END__</p>
