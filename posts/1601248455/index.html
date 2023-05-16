@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            文心一言
+            反爬虫之随机用户代理
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,21 +37,21 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">文心一言</h1>
+                <h1 class="header-subtitle">反爬虫之随机用户代理</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-04-25
+                            <i class="iconfont icon-time"></i> 发表时间：2023-05-16
                         </span>
                         
                             
-                                <span id="/posts/1126375787/" class="leancloud_visitors" data-flag-title="文心一言">
+                                <span id="/posts/1601248455/" class="leancloud_visitors" data-flag-title="反爬虫之随机用户代理">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1126375787/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1601248455/"></span>
                                 </span>
                               
                         
@@ -70,8 +70,77 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h2 id="什么是文心一言"><a href="#什么是文心一言" class="headerlink" title="什么是文心一言"></a>什么是文心一言</h2><p>文心一言（英文名：ERNIE Bot）是百度全新一代知识增强<br>大语言模型，文心大模型家族的新成员，能够与人对话互动，<br>回答问题，协助创作，高效便捷地帮助人们获取信息、知识<br>和灵感。文心一言是知识增强的大语言模型，基于飞桨深度<br>学习平台和文心知识增强大模型，持续从海量数据和大规模<br>知识中融合学习具备知识增强、检索增强和对话增强的技术特色 。</p>
-<p>原文出处：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50804299/article/details/129627975">CSDN</a></p>
+                <p>用一个用户代理一直爬取一个网页肯定会容易被检测到，所以需要我们每次要用不同的User-Agent来访问网页，访问时间间隔也要随机选取，才能使爬虫更像人的操作。</p>
+<h2 id="编写useragent-py文件"><a href="#编写useragent-py文件" class="headerlink" title="编写useragent.py文件"></a>编写useragent.py文件</h2><p>里面需要存储大量的User-Agent，存在一个列表中，越多越好。</p>
+<pre><code class="bash">user_list = [
+    &#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1&#39;,
+    &#39;Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0&#39;,
+    &#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50&#39;,
+    &#39;Opera/9.80 (Windows NT 6.1; U; zh-cn) Presto/2.9.168 Version/11.50&#39;,
+    &#39;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E) QQBrowser/6.9.11079.201&#39;
+]
+</code></pre>
+<h2 id="引用文件加入到项目中"><a href="#引用文件加入到项目中" class="headerlink" title="引用文件加入到项目中"></a>引用文件加入到项目中</h2><p>然后import文件导入到项目中就可以使用了，以下是用随机用户代理爬取的百度贴吧静态页面的源码。</p>
+<pre><code class="bash">from urllib import request,parse #爬取页面用到的库
+import time,random  #random()是使用随机数的标准库，time()是处理时间的标准库
+from useragents import user_list  #导入的用户代理列表
+class Tieba():
+    def __init__(self):
+        self.url = &#39;https://tieba.baidu.com/f?&#123;&#125;&#39;
+    # 1.获取页面
+    def get_html(self, url):
+        header = &#123;
+            &#39;User-Agent&#39;: random.choice(user_list)&#125;  #随机选取列表中的代理
+        req = request.Request(url=url, headers=header)
+        res = request.urlopen(req)
+        html = res.read().decode(&#39;utf-8&#39;)
+        return html
+
+    # 2.解析
+    def parse_html(self):
+        pass
+
+    # 3.保存
+    def save_html(self, filename, html):
+        with open(filename, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
+            f.write(str(html))
+
+    # 4.入口程序
+    def run(self):
+        name = input(&#39;请输入贴吧名：&#39;)
+        begin = int(input(&#39;请输入起始页：&#39;))
+        end = int(input(&#39;请输入终止页：&#39;))
+        for page in range(begin, end + 1):
+            # url的拼接
+            pn = (page - 1) * 50
+            params = &#123;
+                &#39;kw&#39;:name,
+                &#39;pn&#39;:str(pn)
+            &#125;
+            params = parse.urlencode(params)
+            # 调用类中变量拼接文件名filename
+            filename = &#39;&#123;&#125;-第&#123;&#125;页.html&#39;.format(name, page)
+            url = self.url.format(params, pn)
+            html = self.get_html(url)
+            # 保存页面
+            self.save_html(filename, html)
+            # 爬虫操作更像人，爬取每页的时间随机
+            time.sleep(random.randint(1, 2))
+
+
+if __name__ == &#39;__main__&#39;:
+    start = time.time()
+    spider = Tieba()
+    spider.run()
+    end = time.time()
+    print(&#39;执行时间%.2f&#39; % (end - start))
+</code></pre>
+<h2 id="直接利用python自带的标准库"><a href="#直接利用python自带的标准库" class="headerlink" title="直接利用python自带的标准库"></a>直接利用python自带的标准库</h2><p>另一种是直接导入python自带的fake_useragent库</p>
+<pre><code class="bash">from fake_useragent import UserAgent
+
+ua = UserAgent()
+headers = &#123;&#39;User-Agent&#39;: ua.random&#125;
+</code></pre>
 
                 
                 <p class="end">__END__</p>
@@ -84,7 +153,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/posts/1126375787/" target="_blank">文心一言</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/1601248455/" target="_blank">反爬虫之随机用户代理</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -99,11 +168,11 @@
                 
                 <div class="article-prev-next">
                     
-                        <a href="/posts/1107118888/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1107118888/" title="发布于 2023-04-25 06:06">什么是爬虫？</a>
+                        <a href="/posts/2440839365/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/2440839365/" title="发布于 2023-05-16 09:25">二级爬取与断点续存</a>
                         <br>
                     
                     
-                        <a href="/posts/4125018247/" class="next-prefix">» </a> 下一篇：    <a href="/posts/4125018247/" title="发布于 2023-04-25 05:58">ChatGPT的介绍</a>
+                        <a href="/posts/3665708294/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3665708294/" title="发布于 2023-04-27 11:38">Docker的入门程序</a>
                     
                 </div>
             </div>
