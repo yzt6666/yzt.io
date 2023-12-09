@@ -74,45 +74,53 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h2 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h2><p>cat -n 查看文件，显示行数，空行也显示</p>
-<p>nl 相当于cat -n  空行不显示</p>
-<p>head -10 前十行</p>
-<p>tail -10 后十行</p>
-<p>more &#x3D;&#x3D; less  分页显示</p>
-<p>| 管道  </p>
-<p>cat -n  file | head -15 | tail -10  &#x2F;&#x2F;获取第6到15行</p>
-<p>把前面获取到的内容存为一个临时文件，作为后面命令的条件</p>
-<p>wc -l 统计行号</p>
-<p>wc -w 统计单词数目</p>
-<h2 id="grep-在文件中查找"><a href="#grep-在文件中查找" class="headerlink" title="grep 在文件中查找"></a>grep 在文件中查找</h2><p>-w  将条件视为完整单词进行查找</p>
-<p>-i 忽略大小写</p>
-<p>-v反转查找</p>
-<p>“^x” 以x为开头查找</p>
-<p>“x$”以x为结尾查找</p>
-<p>grep -E &#x3D;&#x3D; egrep  正则表达式来搜索 “ x|xx|xxx”</p>
-<h2 id="tar-压缩解压"><a href="#tar-压缩解压" class="headerlink" title="tar 压缩解压"></a>tar 压缩解压</h2><p>tar -zcvf  [压缩包名] [压缩文件]压缩文件</p>
-<p>tar -zxvf  [压缩包] -C [指定路径] 解压文件</p>
-<p>tar.gz &#x3D;&#x3D; .tgz</p>
+                <h4 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h4><p>cat：查看文件。</p>
+<p>tac：倒着查看文件。</p>
+<p>rev：单词拼写倒过来查看文件。</p>
+<p>cat -n 查看文件，并且标注行数，空行也标注。</p>
+<p>nl ：相当于cat -n  但是空行不标注。</p>
+<p>head：默认显示前十行 head -[行数]。</p>
+<p>tail：默认显示后十行  tail -[行数]。</p>
+<p>more &#x3D;&#x3D; less  ：分页显示，交互式按q退出。</p>
+<p>| ：管道  例如：cat -n  file | head -15 | tail -10  &#x2F;&#x2F;获取第6到15行</p>
+<p>把前面获取到的内容存为一个临时文件，作为后面命令的条件。</p>
+<p>wc -l ：统计行号。</p>
+<p>wc -w ：统计单词数目。</p>
+<h4 id="grep-在文件中查找"><a href="#grep-在文件中查找" class="headerlink" title="grep 在文件中查找"></a>grep 在文件中查找</h4><p>grep “word”：查找包含word的。</p>
+<p>grep -w “word” ：将条件视为完整单词进行查找。</p>
+<p>grep -i “word”： 忽略大小写。</p>
+<p>grep -v “word” ：反转查找，查找除了word的。</p>
+<p>grep “^x” ：以x为开头查找。</p>
+<p>grep “x$”：以x为结尾查找。</p>
+<p>egrep “ x|xx|xxx”：grep -E &#x3D;&#x3D; egrep，正则表达式来搜索包含x，xx，xxx的。</p>
+<h4 id="tar-压缩解压操作"><a href="#tar-压缩解压操作" class="headerlink" title="tar 压缩解压操作"></a>tar 压缩解压操作</h4><p>tar -zcvf  [压缩包名] [压缩文件]：用来压缩文件。</p>
+<p>tar -zxvf  [压缩包] -C [指定路径] ：用来解压文件。</p>
+<p>文件扩展名tar.gz &#x3D;&#x3D; .tgz</p>
 <p>tar -g 文件名字 -zxvf 压缩名字 目标（增量备份）</p>
-<p>tar -g aaa -zxvf full.tar.gz test&#x2F;   &#x2F;&#x2F;aaa文件对已经打包的目录做压缩记录–压缩了哪个目录，压缩了什么内容</p>
-<h2 id="vim命令"><a href="#vim命令" class="headerlink" title="vim命令"></a>vim命令</h2><p>x&#x2F;dd删除  100dd删除100行</p>
-<p>yy复制 p 粘贴</p>
-<p>u撤销  ctrl + r 可以恢复撤销的u操作</p>
-<p>set nu 显示行号</p>
-<p>&#x2F;word  查找 </p>
-<p>:s&#x2F;old&#x2F;new&#x2F;g  替换  加g换一行，不加换第一个</p>
-<p>:2,3s&#x2F;old&#x2F;new&#x2F;g  2,3第二行到第三行</p>
-<p>:%s&#x2F;old&#x2F;new&#x2F;g  全文替换</p>
-<h2 id="软件包的安装"><a href="#软件包的安装" class="headerlink" title="软件包的安装"></a>软件包的安装</h2><p>rpm -ivh 软件包名  安装软件（需要依赖关系）</p>
-<p>–nodeps 安装或者卸载忽略依赖关系</p>
-<p>rpm -e  软件名   卸载软件，不删除依赖关系</p>
-<p>rpm –rebuilddb  rpm –initdb  重建rpm数据库</p>
-<h5 id="源码包的安装"><a href="#源码包的安装" class="headerlink" title="源码包的安装"></a>源码包的安装</h5><p>md5sum tar包名  检查一下包是否损坏缺失</p>
+<p>tar -g aaa -zxvf full.tar.gz test&#x2F;   &#x2F;&#x2F;aaa文件对已经打包的目录做压缩记录–压缩了哪个目录，压缩了什么内容，如果新加了目录或者在原有目录中增加了内容，仅压缩新增的。</p>
+<h4 id="vim命令"><a href="#vim命令" class="headerlink" title="vim命令"></a>vim命令</h4><p>用vim命令进去交互界面就是命令模式，输入a,i,o任何一个进入编辑模式，shift+英文冒号就进入末行模式。</p>
+<p>x：删除单个单词。</p>
+<p>dd：删除整行。100dd删除光标下面的100行。</p>
+<p>yy：复制 整行，100yy复制下面100行，p 粘贴。</p>
+<p>u：撤销上步操作 ，ctrl + r 可以恢复撤销的u操作。</p>
+<p>set nu ：显示行号。</p>
+<p>set nonu：不显示行号。</p>
+<p>&#x2F;word ：查找 </p>
+<p>:s&#x2F;old&#x2F;new&#x2F;g  ：替换 ，加g换一行，不加只换第一个。</p>
+<p>:2,3s&#x2F;old&#x2F;new&#x2F;g ： 2,3只第二行到第三行的。</p>
+<p>:%s&#x2F;old&#x2F;new&#x2F;g  全文替换。</p>
+<h4 id="软件包的安装"><a href="#软件包的安装" class="headerlink" title="软件包的安装"></a>软件包的安装</h4><p>rpm -ivh 软件包名：安装软件（需要依赖关系）。</p>
+<p> –nodeps ：安装或者卸载忽略依赖关系。</p>
+<p>rpm -e  软件名：卸载软件，不删除依赖关系。</p>
+<p>rpm –rebuilddb 重建rpm数据库。</p>
+<p>rpm –initdb  初始化rpm数据库。</p>
+<h5 id="源码包的安装"><a href="#源码包的安装" class="headerlink" title="源码包的安装"></a>源码包的安装</h5><p>md5sum [tar压缩包名 ] ：解压之前，检查一下包是否损坏缺失。</p>
 <p>1.解压文件</p>
-<p>2..&#x2F;configure –prefix&#x3D;安装路径  生成Makefile文件</p>
-<p>3.make -j 2  编译生成可执行的二进制文件或者普通文件</p>
-<p>4.make install 复制文件到</p>
-<h5 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h5><p>yum clean all 清除缓存</p>
+<p>2..&#x2F;configure –prefix&#x3D;安装路径 ：生成Makefile文件。</p>
+<p>3.make -j 2：编译生成可执行的二进制文件或者普通文件。（2是两个线程）。</p>
+<p>4.make install ：复制编译生成的文件到指定目录。</p>
+<h5 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h5><p>yum -y install 安装软件</p>
+<p>yum clean all 清除缓存</p>
 <p>yum makecache  建立缓存</p>
 
                 
