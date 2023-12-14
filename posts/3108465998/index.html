@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Linux基础命令
+            磁盘分区与文件系统
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,21 +37,21 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">Linux基础命令</h1>
+                <h1 class="header-subtitle">磁盘分区与文件系统</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-12-09
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-14
                         </span>
                         
                             
-                                <span id="/posts/1254138214/" class="leancloud_visitors" data-flag-title="Linux基础命令">
+                                <span id="/posts/3108465998/" class="leancloud_visitors" data-flag-title="磁盘分区与文件系统">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1254138214/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3108465998/"></span>
                                 </span>
                               
                         
@@ -74,54 +74,41 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h4 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h4><p>cat：查看文件。</p>
-<p>tac：倒着查看文件。</p>
-<p>rev：单词拼写倒过来查看文件。</p>
-<p>cat -n 查看文件，并且标注行数，空行也标注。</p>
-<p>nl ：相当于cat -n  但是空行不标注。</p>
-<p>head：默认显示前十行 head -[行数]。</p>
-<p>tail：默认显示后十行  tail -[行数]。</p>
-<p>more &#x3D;&#x3D; less  ：分页显示，交互式按q退出。</p>
-<p>| ：管道  例如：cat -n  file | head -15 | tail -10  &#x2F;&#x2F;获取第6到15行</p>
-<p>把前面获取到的内容存为一个临时文件，作为后面命令的条件。</p>
-<p>wc -l ：统计行号。</p>
-<p>wc -w ：统计单词数目。</p>
-<h4 id="grep-在文件中查找"><a href="#grep-在文件中查找" class="headerlink" title="grep 在文件中查找"></a>grep 在文件中查找</h4><p>grep “word”：查找包含word的。</p>
-<p>grep -w “word” ：将条件视为完整单词进行查找。</p>
-<p>grep -i “word”： 忽略大小写。</p>
-<p>grep -v “word” ：反转查找，查找除了word的。</p>
-<p>grep “^x” ：以x为开头查找。</p>
-<p>grep “x$”：以x为结尾查找。</p>
-<p>egrep “ x|xx|xxx”：grep -E &#x3D;&#x3D; egrep，正则表达式来搜索包含x，xx，xxx的。</p>
-<h4 id="tar-压缩解压操作"><a href="#tar-压缩解压操作" class="headerlink" title="tar 压缩解压操作"></a>tar 压缩解压操作</h4><p>tar -zcvf  [压缩包名] [压缩文件]：用来压缩文件。</p>
-<p>tar -zxvf  [压缩包] -C [指定路径] ：用来解压文件。</p>
-<p>文件扩展名tar.gz &#x3D;&#x3D; .tgz</p>
-<p>tar -g 文件名字 -zxvf 压缩名字 目标（增量备份）</p>
-<p>tar -g aaa -zxvf full.tar.gz test&#x2F;   &#x2F;&#x2F;aaa文件对已经打包的目录做压缩记录–压缩了哪个目录，压缩了什么内容，如果新加了目录或者在原有目录中增加了内容，仅压缩新增的。</p>
-<h4 id="vim命令"><a href="#vim命令" class="headerlink" title="vim命令"></a>vim命令</h4><p>用vim命令进去交互界面就是命令模式，输入a,i,o任何一个进入编辑模式，shift+英文冒号就进入末行模式。</p>
-<p>x：删除单个单词。</p>
-<p>dd：删除整行。100dd删除光标下面的100行。</p>
-<p>yy：复制 整行，100yy复制下面100行，p 粘贴。</p>
-<p>u：撤销上步操作 ，ctrl + r 可以恢复撤销的u操作。</p>
-<p>set nu ：显示行号。</p>
-<p>set nonu：不显示行号。</p>
-<p>&#x2F;word ：查找 </p>
-<p>:s&#x2F;old&#x2F;new&#x2F;g  ：替换 ，加g换一行，不加只换第一个。</p>
-<p>:2,3s&#x2F;old&#x2F;new&#x2F;g ： 2,3只第二行到第三行的。</p>
-<p>:%s&#x2F;old&#x2F;new&#x2F;g  全文替换。</p>
-<h4 id="软件包的安装"><a href="#软件包的安装" class="headerlink" title="软件包的安装"></a>软件包的安装</h4><p>rpm -ivh 软件包名：安装软件（需要依赖关系）。</p>
-<p> –nodeps ：安装或者卸载忽略依赖关系。</p>
-<p>rpm -e  软件名：卸载软件，不删除依赖关系。</p>
-<p>rpm –rebuilddb 重建rpm数据库。</p>
-<p>rpm –initdb  初始化rpm数据库。</p>
-<h5 id="源码包的安装"><a href="#源码包的安装" class="headerlink" title="源码包的安装"></a>源码包的安装</h5><p>md5sum [tar压缩包名 ] ：解压之前，检查一下包是否损坏缺失。</p>
-<p>1.解压文件</p>
-<p>2..&#x2F;configure –prefix&#x3D;安装路径 ：生成Makefile文件。</p>
-<p>3.make -j 2：编译生成可执行的二进制文件或者普通文件。（2是两个线程）。</p>
-<p>4.make install ：复制编译生成的文件到指定目录。</p>
-<h5 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h5><p>yum -y install 安装软件</p>
-<p>yum clean all 清除缓存</p>
-<p>yum makecache  建立缓存</p>
+                <h3 id="磁盘分区与文件系统"><a href="#磁盘分区与文件系统" class="headerlink" title="磁盘分区与文件系统"></a>磁盘分区与文件系统</h3><h4 id="硬盘分区方式"><a href="#硬盘分区方式" class="headerlink" title="硬盘分区方式"></a>硬盘分区方式</h4><p>MBR</p>
+<p>定义：MBR主引导记录（器）也叫主启动记录</p>
+<p>位置：位于硬盘的第0个磁道，第0个柱面，第一个物理扇区（一个扇区512字节（B））处</p>
+<p>MBR中包含硬盘的<strong>主引导程序和硬盘分区表</strong>。分区表有4个主分区记录区，每个主分区记录区占16个字节，共64 个字节。446字节存放主引导程序，2字节校验。</p>
+<p>BIOS：基本输入输出系统</p>
+<ol>
+<li>硬件加电自检</li>
+<li>硬件配置初始化</li>
+<li>引导操作程序（BOOT–&gt;硬盘–&gt;MBR(446B)）</li>
+</ol>
+<h4 id="硬盘分区表示"><a href="#硬盘分区表示" class="headerlink" title="硬盘分区表示"></a>硬盘分区表示</h4><p>Linux中将硬盘等设备均表示为文件</p>
+<p>&#x2F;dev&#x2F;hda5</p>
+<ul>
+<li>&#x2F;dev&#x2F;硬件文件所在目录。</li>
+<li>hd表示IDE设备 sd表示SCSI设备</li>
+<li>a硬盘的顺序号，a、b、c…表示</li>
+<li>5分区的顺序号，以数字1、2、3…表示</li>
+</ul>
+<h4 id="硬盘分区结构"><a href="#硬盘分区结构" class="headerlink" title="硬盘分区结构"></a>硬盘分区结构</h4><ul>
+<li>硬盘中的主分区数目只有4个</li>
+<li>因此主分区和扩展分区的序号限制在1~4</li>
+<li>扩展分区分为逻辑分区</li>
+<li>逻辑分区的序号将始终从5开始</li>
+</ul>
+<p>主分区存储数据，主分区更改为扩展分区，扩展分区里面存逻辑分区（个数无限制），逻辑分区里面存数据</p>
+<h4 id="文件系统类型"><a href="#文件系统类型" class="headerlink" title="文件系统类型"></a>文件系统类型</h4><p>XFS文件系统：文件系统组织文件存储到分区的方式，文件系统在分区格式化的时候形成。</p>
+<p>SWAP交换文件系统：虚拟内存（给物理内存环节压力的，防止内存溢出，不能存普通文件或目录数据）</p>
+<p>XFS文件系统与ext4文件系统的区别？</p>
+<ol>
+<li>XFS文件系统可以支持单个文件大小从16TB到16EB，而Ext4文件系统支持的单个文件大小从16GB到16TB。</li>
+<li>XFS最大支持的文件系统大小为8EB，而Ext4的理论最大支持大小为1EB。</li>
+<li>XFS具有更强的扩展性和可扩展性，而Ext4受限于磁盘结构和兼容问题，其扩展性和可扩展性不如XFS。</li>
+<li>在某些情况下，XFS的性能可能比Ext4高5-10%。例如，在高并发压力下，XFS的性能优势可能更为明显。</li>
+<li>XFS的io利用率通常比Ext4低，但CPU利用率可能较高。</li>
+</ol>
 
                 
                 <p class="end">__END__</p>
@@ -134,7 +121,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/posts/1254138214/" target="_blank">Linux基础命令</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3108465998/" target="_blank">磁盘分区与文件系统</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -156,11 +143,8 @@
                 
                 <div class="article-prev-next">
                     
-                        <a href="/posts/52499497/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/52499497/" title="发布于 2023-12-11 08:53">文件账户与权限管理</a>
-                        <br>
                     
-                    
-                        <a href="/posts/2440839365/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2440839365/" title="发布于 2023-05-16 09:25">二级爬取与断点续存</a>
+                        <a href="/posts/52499497/" class="next-prefix">» </a> 下一篇：    <a href="/posts/52499497/" title="发布于 2023-12-11 08:53">文件账户与权限管理</a>
                     
                 </div>
             </div>

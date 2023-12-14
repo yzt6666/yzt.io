@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Linux基础命令
+            文件账户与权限管理
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,21 +37,21 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">Linux基础命令</h1>
+                <h1 class="header-subtitle">文件账户与权限管理</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-12-09
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-11
                         </span>
                         
                             
-                                <span id="/posts/1254138214/" class="leancloud_visitors" data-flag-title="Linux基础命令">
+                                <span id="/posts/52499497/" class="leancloud_visitors" data-flag-title="文件账户与权限管理">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1254138214/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/52499497/"></span>
                                 </span>
                               
                         
@@ -74,54 +74,94 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h4 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h4><p>cat：查看文件。</p>
-<p>tac：倒着查看文件。</p>
-<p>rev：单词拼写倒过来查看文件。</p>
-<p>cat -n 查看文件，并且标注行数，空行也标注。</p>
-<p>nl ：相当于cat -n  但是空行不标注。</p>
-<p>head：默认显示前十行 head -[行数]。</p>
-<p>tail：默认显示后十行  tail -[行数]。</p>
-<p>more &#x3D;&#x3D; less  ：分页显示，交互式按q退出。</p>
-<p>| ：管道  例如：cat -n  file | head -15 | tail -10  &#x2F;&#x2F;获取第6到15行</p>
-<p>把前面获取到的内容存为一个临时文件，作为后面命令的条件。</p>
-<p>wc -l ：统计行号。</p>
-<p>wc -w ：统计单词数目。</p>
-<h4 id="grep-在文件中查找"><a href="#grep-在文件中查找" class="headerlink" title="grep 在文件中查找"></a>grep 在文件中查找</h4><p>grep “word”：查找包含word的。</p>
-<p>grep -w “word” ：将条件视为完整单词进行查找。</p>
-<p>grep -i “word”： 忽略大小写。</p>
-<p>grep -v “word” ：反转查找，查找除了word的。</p>
-<p>grep “^x” ：以x为开头查找。</p>
-<p>grep “x$”：以x为结尾查找。</p>
-<p>egrep “ x|xx|xxx”：grep -E &#x3D;&#x3D; egrep，正则表达式来搜索包含x，xx，xxx的。</p>
-<h4 id="tar-压缩解压操作"><a href="#tar-压缩解压操作" class="headerlink" title="tar 压缩解压操作"></a>tar 压缩解压操作</h4><p>tar -zcvf  [压缩包名] [压缩文件]：用来压缩文件。</p>
-<p>tar -zxvf  [压缩包] -C [指定路径] ：用来解压文件。</p>
-<p>文件扩展名tar.gz &#x3D;&#x3D; .tgz</p>
-<p>tar -g 文件名字 -zxvf 压缩名字 目标（增量备份）</p>
-<p>tar -g aaa -zxvf full.tar.gz test&#x2F;   &#x2F;&#x2F;aaa文件对已经打包的目录做压缩记录–压缩了哪个目录，压缩了什么内容，如果新加了目录或者在原有目录中增加了内容，仅压缩新增的。</p>
-<h4 id="vim命令"><a href="#vim命令" class="headerlink" title="vim命令"></a>vim命令</h4><p>用vim命令进去交互界面就是命令模式，输入a,i,o任何一个进入编辑模式，shift+英文冒号就进入末行模式。</p>
-<p>x：删除单个单词。</p>
-<p>dd：删除整行。100dd删除光标下面的100行。</p>
-<p>yy：复制 整行，100yy复制下面100行，p 粘贴。</p>
-<p>u：撤销上步操作 ，ctrl + r 可以恢复撤销的u操作。</p>
-<p>set nu ：显示行号。</p>
-<p>set nonu：不显示行号。</p>
-<p>&#x2F;word ：查找 </p>
-<p>:s&#x2F;old&#x2F;new&#x2F;g  ：替换 ，加g换一行，不加只换第一个。</p>
-<p>:2,3s&#x2F;old&#x2F;new&#x2F;g ： 2,3只第二行到第三行的。</p>
-<p>:%s&#x2F;old&#x2F;new&#x2F;g  全文替换。</p>
-<h4 id="软件包的安装"><a href="#软件包的安装" class="headerlink" title="软件包的安装"></a>软件包的安装</h4><p>rpm -ivh 软件包名：安装软件（需要依赖关系）。</p>
-<p> –nodeps ：安装或者卸载忽略依赖关系。</p>
-<p>rpm -e  软件名：卸载软件，不删除依赖关系。</p>
-<p>rpm –rebuilddb 重建rpm数据库。</p>
-<p>rpm –initdb  初始化rpm数据库。</p>
-<h5 id="源码包的安装"><a href="#源码包的安装" class="headerlink" title="源码包的安装"></a>源码包的安装</h5><p>md5sum [tar压缩包名 ] ：解压之前，检查一下包是否损坏缺失。</p>
-<p>1.解压文件</p>
-<p>2..&#x2F;configure –prefix&#x3D;安装路径 ：生成Makefile文件。</p>
-<p>3.make -j 2：编译生成可执行的二进制文件或者普通文件。（2是两个线程）。</p>
-<p>4.make install ：复制编译生成的文件到指定目录。</p>
-<h5 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h5><p>yum -y install 安装软件</p>
-<p>yum clean all 清除缓存</p>
-<p>yum makecache  建立缓存</p>
+                <h2 id="文件账户与权限管理"><a href="#文件账户与权限管理" class="headerlink" title="文件账户与权限管理"></a>文件账户与权限管理</h2><h3 id="一、用户账号管理"><a href="#一、用户账号管理" class="headerlink" title="一、用户账号管理"></a>一、用户账号管理</h3><h4 id="用户账号概述"><a href="#用户账号概述" class="headerlink" title="用户账号概述"></a>用户账号概述</h4><p>Linux是一个多用户，多任务，多进程的服务器操作系统。</p>
+<p>超级用户：root uid&#x3D;0 gid&#x3D;0 权限最大。</p>
+<p>普通用户：1000&lt;&#x3D;uid&lt;&#x3D;60000 宿主目录有完整权限。</p>
+<p>程序用户：1&lt;&#x3D;uid&lt;&#x3D;999  不能登陆系统或管理系统。</p>
+<h4 id="x2F-etc-x2F-password用户信息文件"><a href="#x2F-etc-x2F-password用户信息文件" class="headerlink" title="&#x2F;etc&#x2F;password用户信息文件"></a>&#x2F;etc&#x2F;password用户信息文件</h4><p>7个字段，各字段代表含义：</p>
+<p>第一段：用户账号名。</p>
+<p>第二段：密码（显示x，密码保存到了影子文件）。</p>
+<p>第三段：uid编号，唯一标识符。</p>
+<p>第四段：gid编号，用户属组。</p>
+<p>第五段：用户信息。</p>
+<p>第六段：用户宿主目录（家目录）。</p>
+<p>第七段：默认的shell解释器。</p>
+<h4 id="x2F-etc-x2F-shadow-密码文件"><a href="#x2F-etc-x2F-shadow-密码文件" class="headerlink" title="&#x2F;etc&#x2F;shadow 密码文件"></a>&#x2F;etc&#x2F;shadow 密码文件</h4><p>分为9字段</p>
+<p>第二段：加密的密码，!!表示密码被锁定</p>
+<h4 id="添加用户账号useradd命令"><a href="#添加用户账号useradd命令" class="headerlink" title="添加用户账号useradd命令"></a>添加用户账号useradd命令</h4><p>Ubuntu系列系统中为adduser</p>
+<p>useradd -u：指定uid标记号。</p>
+<p>-d：指定家目录，默认为&#x2F;home&#x2F;用户名</p>
+<p>-M ：不为用户建立宿主目录。</p>
+<p>-s：指定用户的登陆shell。（-M -s一般组合用于创建程序用户）</p>
+<p>-e：设置账号失效时间。</p>
+<p>-g：指定用户的基本组名（gid号）。</p>
+<p>-G：指定用户的附加组名（gid号）。</p>
+<h4 id="用户账号的初始配置"><a href="#用户账号的初始配置" class="headerlink" title="用户账号的初始配置"></a>用户账号的初始配置</h4><h5 id="针对一个用户使用"><a href="#针对一个用户使用" class="headerlink" title="针对一个用户使用"></a>针对一个用户使用</h5><p>~&#x2F;.bash_profile：每次登陆需要执行。</p>
+<p>~&#x2F;.bashrc：每次进入新bash环境时执行。</p>
+<p>~&#x2F;.bash_logout：每次退出登陆时执行。</p>
+<p>~&#x2F;.bash_history：用户登陆时从该文件加载历史命令记录。   </p>
+<p>history： 查看历史命令。</p>
+<p>history -c：清除历史命令。</p>
+<p>历史命令引用：</p>
+<p>（1）!序号</p>
+<p>（2）Ctrl+r</p>
+<h5 id="全局初始配置文件"><a href="#全局初始配置文件" class="headerlink" title="全局初始配置文件"></a>全局初始配置文件</h5><p>&#x2F;etc&#x2F;bashrc</p>
+<p>&#x2F;etc&#x2F;profile</p>
+<h4 id="设置-x2F-更改用户口令passwd命令"><a href="#设置-x2F-更改用户口令passwd命令" class="headerlink" title="设置&#x2F;更改用户口令passwd命令"></a>设置&#x2F;更改用户口令passwd命令</h4><p>passwd [用户名]：没有用户名则是默认更改当前登陆的用户。</p>
+<p>passwd -d：清空用户密码。</p>
+<p>-l：锁定用户账号。</p>
+<p>-S：查看用户账号的状态。</p>
+<p>-u：解锁用户账号 </p>
+<p>usermod [选项]  用户名：修改用户属性。</p>
+<p>-l：更改账户名字。</p>
+<p>-L：锁定用户账号。</p>
+<p>-U：解锁用户账号</p>
+<p>passwd和usermod可以互相解锁。</p>
+<h4 id="删除用户账号userdel命令"><a href="#删除用户账号userdel命令" class="headerlink" title="删除用户账号userdel命令"></a>删除用户账号userdel命令</h4><p>userdel -r [用户名]：删除用户的同时删除用户的宿主目录。</p>
+<h4 id="关于用户及密码相关控制文件"><a href="#关于用户及密码相关控制文件" class="headerlink" title="关于用户及密码相关控制文件"></a>关于用户及密码相关控制文件</h4><p>&#x2F;etc&#x2F;login.defs(用户创建的相关信息) &#x3D;&#x3D;&#x2F;etc&#x2F;skel(用户家目录下的信息)。</p>
+<p>&#x2F;etc&#x2F;default&#x2F;useradd：控制用户宿主目录、shell类型等默认值控制。</p>
+<p>&#x2F;etc&#x2F;login.defs：uid范围、gid范围、使用期限等默认值控制。</p>
+<h3 id="二、组账号管理"><a href="#二、组账号管理" class="headerlink" title="二、组账号管理"></a>二、组账号管理</h3><h4 id="组账号概述"><a href="#组账号概述" class="headerlink" title="组账号概述"></a>组账号概述</h4><p>组：用户集合，组的存在便于管理多个用户的权限。</p>
+<p>组账号文件：</p>
+<p>&#x2F;etc&#x2F;group：保存组账号基本信息。</p>
+<p>第一段：组名</p>
+<p>第二段：密码占位符</p>
+<p>第三段：GID</p>
+<p>第四段：组内的成员信息</p>
+<p>&#x2F;etc&#x2F;gshadow：保存组账号的密码信息。</p>
+<h4 id="添加组账号groupadd命令"><a href="#添加组账号groupadd命令" class="headerlink" title="添加组账号groupadd命令"></a>添加组账号groupadd命令</h4><p>groupadd [-g GID] 组账号名</p>
+<h4 id="设置组账号密码-x2F-添加、删除组成员gpasswd命令"><a href="#设置组账号密码-x2F-添加、删除组成员gpasswd命令" class="headerlink" title="设置组账号密码&#x2F;添加、删除组成员gpasswd命令"></a>设置组账号密码&#x2F;添加、删除组成员gpasswd命令</h4><p>gpasswd [选项]  组账号名</p>
+<p>-a：向组内添加一个用户。</p>
+<p>-d：从组内删除一个用户。</p>
+<p>-M：定义组内成员列表，以逗号分割，会覆盖原有的成员。  </p>
+<h3 id="三、查询命令"><a href="#三、查询命令" class="headerlink" title="三、查询命令"></a>三、查询命令</h3><p>id [用户名]：查询用户身份标识。 </p>
+<p>groups [用户名]： 查询用户所属的组。</p>
+<p>finger [用户名]：查询账号的详细信息。</p>
+<p>whoami：查询有效的用户名称。</p>
+<p>who：查看当前登入主机的终端信息。</p>
+<p>w：查看登陆系统的用户以及进程信息。</p>
+<h3 id="四、权限及归属管理"><a href="#四、权限及归属管理" class="headerlink" title="四、权限及归属管理"></a>四、权限及归属管理</h3><h4 id="查看文件的权限和归属"><a href="#查看文件的权限和归属" class="headerlink" title="查看文件的权限和归属"></a>查看文件的权限和归属</h4><p>drwxr-xr-x ：  d目录文件 rwx属主   r-x属组   r-x其他人</p>
+<p>-：表示一般文件。</p>
+<p>d：表示目录。</p>
+<p>l：表示软链接(快捷方式)</p>
+<p>目录默认权限755</p>
+<p>文件默认权限644  x权限需要手动给</p>
+<h4 id="设置文件或目录的权限chmod命令"><a href="#设置文件或目录的权限chmod命令" class="headerlink" title="设置文件或目录的权限chmod命令"></a>设置文件或目录的权限chmod命令</h4><p>chmod [-R] [ugoa] [+-&#x3D;] [rwx] 参数</p>
+<p>chmod [-R] [nnn] 参数 </p>
+<p>-R：递归方式设置权限，目录下的所有子目录和文件的权限。</p>
+<p>u：属主。</p>
+<p>g：属组。</p>
+<p>o：其他人。</p>
+<p>a：所有人。</p>
+<h4 id="设置文件的归属chown"><a href="#设置文件的归属chown" class="headerlink" title="设置文件的归属chown"></a>设置文件的归属chown</h4><p>chown  属主 文件：更改文件属主。</p>
+<p>chown  :属主 文件  &#x3D;  chown .属组  文件  &#x3D;chgrp  属组：更改文件属组。</p>
+<p>chown 属主.  ：更改相同的属主、属组。</p>
+<p>chown  属主:属组  文件：更改不同的属主、属组。</p>
+<h4 id="权限掩码umask"><a href="#权限掩码umask" class="headerlink" title="权限掩码umask"></a>权限掩码umask</h4><p>作用是控制新建的目录和文件的权限，默认为0022</p>
+<p>目录777-022&#x3D;755</p>
+<p>文件666-022&#x3D;644</p>
+<p>umask：查看umask值</p>
+<p>umask nnn：设置umask值</p>
 
                 
                 <p class="end">__END__</p>
@@ -134,7 +174,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/posts/1254138214/" target="_blank">Linux基础命令</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/52499497/" target="_blank">文件账户与权限管理</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -156,11 +196,11 @@
                 
                 <div class="article-prev-next">
                     
-                        <a href="/posts/52499497/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/52499497/" title="发布于 2023-12-11 08:53">文件账户与权限管理</a>
+                        <a href="/posts/3108465998/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3108465998/" title="发布于 2023-12-14 05:10">磁盘分区与文件系统</a>
                         <br>
                     
                     
-                        <a href="/posts/2440839365/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2440839365/" title="发布于 2023-05-16 09:25">二级爬取与断点续存</a>
+                        <a href="/posts/1254138214/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1254138214/" title="发布于 2023-12-09 04:02">Linux基础命令</a>
                     
                 </div>
             </div>
