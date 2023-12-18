@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            LVM逻辑卷与磁盘配额限制
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">LVM逻辑卷与磁盘配额限制</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-16
+                        </span>
+                        
+                            
+                                <span id="/posts/4049794481/" class="leancloud_visitors" data-flag-title="LVM逻辑卷与磁盘配额限制">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/4049794481/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Linux</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,47 +70,120 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="LVM逻辑卷与磁盘配额限制"><a href="#LVM逻辑卷与磁盘配额限制" class="headerlink" title="LVM逻辑卷与磁盘配额限制"></a>LVM逻辑卷与磁盘配额限制</h3><h4 id="LVM概述"><a href="#LVM概述" class="headerlink" title="LVM概述"></a>LVM概述</h4><p>LVM是Linux操作系统中对磁盘分区管理的一种逻辑机制。它是建立在硬盘和分区之上，文件系统之下的一个逻辑层，在建立文件系统时屏蔽了下层的磁盘分区布局，因此能够在保持现有数据不变的情况下动态调整磁盘容量，从而增强磁盘管理的灵活性。</p>
+<h4 id="LVM基本概念"><a href="#LVM基本概念" class="headerlink" title="LVM基本概念"></a>LVM基本概念</h4><h5 id="PV（Physical-Volume）物理卷"><a href="#PV（Physical-Volume）物理卷" class="headerlink" title="PV（Physical Volume）物理卷"></a>PV（Physical Volume）物理卷</h5><p>物理卷是LVM机制的基本存储设备，对应一个普通分区或者整个硬盘，创建物理卷时，会在分区或者硬盘头部创建一个保留区块，用于记录LVM的属性，把存储空间分割成默认大小为4MB的基本单元。</p>
+<h5 id="VG（Volume-Group）卷组"><a href="#VG（Volume-Group）卷组" class="headerlink" title="VG（Volume Group）卷组"></a>VG（Volume Group）卷组</h5><p>由一个或多个物理卷组成一个整体，成为卷组，在卷组中可以动态添加或者移除物理卷，多个物理卷可以分成不同卷组。卷组大小是多个物理卷大小的总和。</p>
+<h5 id="LV（Logical-Volume）逻辑卷"><a href="#LV（Logical-Volume）逻辑卷" class="headerlink" title="LV（Logical Volume）逻辑卷"></a>LV（Logical Volume）逻辑卷</h5><p>逻辑卷建立在卷组之上，与物理卷没有直接关系，一个卷组就是一个整体，从这个整体分割出一块空间，作为用户创建文件系统的基础，这一小块空间就成为逻辑卷。逻辑卷经过格式化创建了文件系统后就可以挂载使用了。</p>
+<p>逻辑卷创建步骤：</p>
+<p>准备分区–创建物理卷–创建卷组–创建逻辑卷–格式化（形成文件系统）–挂载</p>
+<h4 id="LVM管理命令"><a href="#LVM管理命令" class="headerlink" title="LVM管理命令"></a>LVM管理命令</h4><table>
+<thead>
+<tr>
+<th align="left">功能</th>
+<th>物理卷管理</th>
+<th>卷组管理</th>
+<th>逻辑卷管理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">扫描 scan</td>
+<td>pvscan | pvs</td>
+<td>vgscan |vgs</td>
+<td>lvscan | lvs</td>
+</tr>
+<tr>
+<td align="left">建立 create</td>
+<td>pvcreate</td>
+<td>vgcreate</td>
+<td>lvcreate</td>
+</tr>
+<tr>
+<td align="left">显示 display</td>
+<td>pvdisplay</td>
+<td>vgdisplay</td>
+<td>lvdisplay</td>
+</tr>
+<tr>
+<td align="left">删除 remove</td>
+<td>pvremove</td>
+<td>vgremove</td>
+<td>lvremove</td>
+</tr>
+<tr>
+<td align="left">扩展 extend</td>
+<td></td>
+<td>vgextend</td>
+<td>lvextend</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<p>pvcreate  &#x2F;dev&#x2F;sdb3</p>
+<p>vgcreate myvg &#x2F;dev&#x2F;sdb1 &#x2F;dev&#x2F;sdb2</p>
+<p>lvcreate -L 6G -n mylv myvg</p>
+<p>vgextend myvg &#x2F;dev&#x2F;sdb3</p>
+<p>lvextend  -L +3G &#x2F;dev&#x2F;myvg&#x2F;mylv</p>
+<h5 id="磁盘配额"><a href="#磁盘配额" class="headerlink" title="磁盘配额"></a>磁盘配额</h5><p>xfs文件系统配置和管理磁盘配额的工具由xfsprogs软件包的xfs_quota配额管理程序提供。</p>
+<p>检查所需程序是否存在：</p>
+<p>rpm -q xfsprogs</p>
+<p>rpm -q | xfsprogs | grep xfs_quota</p>
+<p>ps：xfs文件系统只有首次挂载时才会启动磁盘配额功能，所以不能用-o remount 挂载选项。</p>
+<p>xfs_quota -x -c ‘limit -u bsoft&#x3D;80M bhard&#x3D;100M isoft&#x3D;80 ihard&#x3D;100 [用户]’  [挂载目录]：设置磁盘容量和文件数量，0为无限制。limit -u用户，limit -g组</p>
+<p>xfs_quota -c ‘quota -uvi [用户]’ [挂载目录]：查看文件容量限制。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/4049794481/" target="_blank">LVM逻辑卷与磁盘配额限制</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 8 篇日志，继续加油！
+                            <a href="/category/Linux/">Linux</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/2440839365/"><span>二级爬取与断点续存</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">05-16</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1601248455/"><span>反爬虫之随机用户代理</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">05-16</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3108465998/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3108465998/" title="发布于 2023-12-14 05:10">磁盘分区与文件系统</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -123,7 +217,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
