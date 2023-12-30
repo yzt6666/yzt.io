@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            引导过程Troubleshooting与服务控制
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">引导过程Troubleshooting与服务控制</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-24
+                        </span>
+                        
+                            
+                                <span id="/posts/3261447872/" class="leancloud_visitors" data-flag-title="引导过程Troubleshooting与服务控制">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3261447872/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Linux</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,47 +70,145 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="一、Linux操作系统的引导过程"><a href="#一、Linux操作系统的引导过程" class="headerlink" title="一、Linux操作系统的引导过程"></a>一、Linux操作系统的引导过程</h3><p>Linux操作系统的引导过程一般包括以下几个阶段：<strong>开机自检、MBR引导、GRUB菜单、加载Linux内核、init进程初始化。</strong></p>
+<h4 id="开机自检"><a href="#开机自检" class="headerlink" title="开机自检"></a>开机自检</h4><p>服务器开机后，将根据主板BIOS中的设置对CPU、内存、显卡等设备进行初步检测，检测成功韩后根据预设的启动顺序移交系统控制权（大多数会移交给本机硬盘），检测失败会通过屏幕或者蜂鸣器报警。</p>
+<p>BIOS基本输入输出系统主要功能：</p>
+<ul>
+<li>加电自检</li>
+<li>硬件初始化</li>
+<li>引导操作系统（BOOT）</li>
+</ul>
+<h4 id="MBR引导"><a href="#MBR引导" class="headerlink" title="MBR引导"></a>MBR引导</h4><p> 从本机硬盘启动系统时，先根据硬盘第一个扇区中MBR的设置，将系统控制权传递给包含操作系统引导文件的分区（&#x2F;boot）；或者直接根据MBR记录中的引导信息调用启动菜单（如GRUB）。</p>
+<h4 id="GRUB菜单"><a href="#GRUB菜单" class="headerlink" title="GRUB菜单"></a>GRUB菜单</h4><p>是使用最为广泛的多系统引导器程序。系统控制权传递给GRUB后，将会显示启动菜单给用户选择，并根据所选项加载Linux内核文件，然后将系统控制权转交给内核。CentOS 7采用的GRUB2启动引导器。</p>
+<h4 id="加载Linux内核"><a href="#加载Linux内核" class="headerlink" title="加载Linux内核"></a>加载Linux内核</h4><p>Linux内核是一个预先编译好的特殊二进制文件，介于各种硬件资源与系统程序之间，负责资源分配与调度。内核接过系统控制权后，将完全掌握整个Linux系统的运行过程。内核文件位于&#x2F;boot。</p>
+<h4 id="init进程初始化"><a href="#init进程初始化" class="headerlink" title="init进程初始化"></a>init进程初始化</h4><p>Linux内核首先将系统中的&#x2F;sbin&#x2F;init程序加载到内存中运行。init进程负责完成系列的系统初始化过程，最后等待用户登陆。</p>
+<h3 id="二、系统初始化进程及文件"><a href="#二、系统初始化进程及文件" class="headerlink" title="二、系统初始化进程及文件"></a>二、系统初始化进程及文件</h3><h4 id="init进程"><a href="#init进程" class="headerlink" title="init进程"></a>init进程</h4><p>&#x2F;sbin&#x2F;init是内核第一个加载的程序，因此init进程对应的PID号总是为1。</p>
+<h4 id="Systemd概述"><a href="#Systemd概述" class="headerlink" title="Systemd概述"></a>Systemd概述</h4><p>Systemd是Linux操作系统的一种init软件。Systemd启动方式使系统初始化时诸多服务<strong>并行</strong>启动，大大增高了开机效率。</p>
+<p>systemd守护进程负责Linux的系统和服务。</p>
+<p>systemctl用于控制Systemd管理的系统和服务状态。</p>
+<p>Systemd的目标与SysVinit的运级别：</p>
+<table>
+<thead>
+<tr>
+<th>运行级别</th>
+<th>Systemd的target</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>poweroff.target</td>
+<td><strong>关机</strong>状态，使用该级别时将会关闭主机。</td>
+</tr>
+<tr>
+<td>1</td>
+<td>rescue.target</td>
+<td><strong>单用户模式</strong>，不需要密码验证即可登陆系统，多用于系统维护。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>multi-user.target</td>
+<td>用户定义&#x2F;域特定运行级别。默认等同于3，但是不支持网络。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>multi-user.target</td>
+<td><strong>字符界面</strong>的完整多用户模式，大多数服务器主机运行在此级别。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>multi-user.target</td>
+<td>用户定义&#x2F;域特定运行级别。默认等同于3。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>graphical.target</td>
+<td><strong>图形界面</strong>的多用户模式，提供了图形桌面操作环境。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>reboot.target</td>
+<td><strong>重新启动</strong>，使用该级别时将会重启主机。</td>
+</tr>
+</tbody></table>
+<h3 id="服务控制及优化启动过程"><a href="#服务控制及优化启动过程" class="headerlink" title="服务控制及优化启动过程"></a>服务控制及优化启动过程</h3><h4 id="系统服务控制"><a href="#系统服务控制" class="headerlink" title="系统服务控制"></a>系统服务控制</h4><ul>
+<li>systemctl 控制类型 服务名称[.service]</li>
+<li>start（启动）：运行指定的系统服务程序。</li>
+<li>stop（停止）：终止指定的系统服务程序。</li>
+<li>restart（重启）：退出并重新运行系统服务程序。</li>
+<li>reload（重载）：不退出服务程序，只是刷新配置。</li>
+<li>status（插看状态）：插看指定的系统服务的运行状态及相关信息。</li>
+</ul>
+<p>实际生产环境中运行的服务器，若只是要为系统服务启用新的配置，可以采用reload参数重新加载配置。</p>
+<h4 id="切换运行级别"><a href="#切换运行级别" class="headerlink" title="切换运行级别"></a>切换运行级别</h4><p>查看系统的target，可以用runlevel进行查询，结果显示两个字符，分别表示<strong>切换前的目标</strong>，<strong>当前的目标</strong>。</p>
+<p>init 0  &#x3D;&#x3D; poweroff  &#x2F;&#x2F;关闭系统</p>
+<p>init 6 &#x3D;&#x3D; reboot  &#x2F;&#x2F;重启系统</p>
+<h4 id="优化开机自动加载的服务"><a href="#优化开机自动加载的服务" class="headerlink" title="优化开机自动加载的服务"></a>优化开机自动加载的服务</h4><h5 id="使用ntsysv工具"><a href="#使用ntsysv工具" class="headerlink" title="使用ntsysv工具"></a>使用ntsysv工具</h5><p>ntsysv工具可以在字符模式中运行，为用户提供一个仿图形的交互式操作界面。单独执行”ntsysv”命令时仅用于管理当前运行目标中的服务。”ntsysv  –level  35 “命令可以打开ntsysv管理程序，同时对运行目标3、5中的各种系服务的默认启动状态进行调整。</p>
+<p>[*] 表示启动</p>
+<p>[ ]表示禁用</p>
+<h5 id="使用systemctl工具"><a href="#使用systemctl工具" class="headerlink" title="使用systemctl工具"></a>使用systemctl工具</h5><p>不提供交互式的操作界面，命令格式如下：</p>
+<p>systemctl 控制选项  服务名称</p>
+<p>enable：开机自动启动。</p>
+<p>disable：开机自动关闭。</p>
+<p>is-enabled：查看开机启动状态。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3261447872/" target="_blank">引导过程Troubleshooting与服务控制</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 12 篇日志，继续加油！
+                            <a href="/category/Linux/">Linux</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3085117772/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3085117772/" title="发布于 2023-12-27 12:06">系统进程与计划任务管理</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/3665708294/"><span>Docker的入门程序</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-27</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/2370057590/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2370057590/" title="发布于 2023-12-22 04:03">服务器软硬磁盘阵列</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -123,7 +242,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            操作系统安全控制
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">操作系统安全控制</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-29
+                        </span>
+                        
+                            
+                                <span id="/posts/275906450/" class="leancloud_visitors" data-flag-title="操作系统安全控制">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/275906450/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Linux</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,47 +70,184 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="chattr命令锁定账号配置文件"><a href="#chattr命令锁定账号配置文件" class="headerlink" title="chattr命令锁定账号配置文件"></a>chattr命令锁定账号配置文件</h4><p>i锁只能只读，a锁可以追加。</p>
+<p>i锁：</p>
+<p>chattr	+i	[文件]：锁定文件。</p>
+<p>chattr	-i	[文件]：解锁文件。</p>
+<p>lsattr	[文件]：查看文件锁定情况。</p>
+<p>a锁：</p>
+<p>chattr	+a	[文件]：锁定文件。</p>
+<p>chattr	-a	[文件]：解锁文件。</p>
+<h4 id="密码安全控制"><a href="#密码安全控制" class="headerlink" title="密码安全控制"></a>密码安全控制</h4><p>为了避免降低密码被破解的风险，可以限制用户密码使用最大有效天数。</p>
+<p>chage	-M	30	zhangsan：适用于已存在的用户，密码30天过期。</p>
+<h4 id="用户切换和提权"><a href="#用户切换和提权" class="headerlink" title="用户切换和提权"></a>用户切换和提权</h4><p>su命令切换用户</p>
+<p>su	-：切换用户后进入目标用户的登陆的shell环境，若不带只切换用户，不切换用户环境。</p>
+<h4 id="开关机安全控制"><a href="#开关机安全控制" class="headerlink" title="开关机安全控制"></a>开关机安全控制</h4><h5 id="调整BIOS引导设置"><a href="#调整BIOS引导设置" class="headerlink" title="调整BIOS引导设置"></a>调整BIOS引导设置</h5><p>将第一优先引导设备设为当前系统所在磁盘。</p>
+<p>禁止从其他设备引导系统（U盘，光驱，网络），对应的项为Disabled。</p>
+<p>将BIOS安全级别改为setup，设置好管理密码。</p>
+<h5 id="禁止Ctrl-Alt-Del快捷键重启"><a href="#禁止Ctrl-Alt-Del快捷键重启" class="headerlink" title="禁止Ctrl+Alt+Del快捷键重启"></a>禁止Ctrl+Alt+Del快捷键重启</h5><p>systemctl	mask	ctrl-alt-del.target：禁止快捷键功能。</p>
+<p>systemctl	daemon-reload：重新加载systemd配置。</p>
+<p>systemctl	mask：是用于注销指定服务的。</p>
+<h4 id="登陆控制"><a href="#登陆控制" class="headerlink" title="登陆控制"></a>登陆控制</h4><h5 id="禁止root用户登陆"><a href="#禁止root用户登陆" class="headerlink" title="禁止root用户登陆"></a>禁止root用户登陆</h5><p>login程序会读取&#x2F;etc&#x2F;securetty文件，以决定允许root用户从哪些终端登陆。若禁止，只需注释或删除对应行。</p>
+<p>vim	&#x2F;etc&#x2F;securetty</p>
+<p>#tty1</p>
+<p>#tty2</p>
+<h5 id="禁止普通用户登陆"><a href="#禁止普通用户登陆" class="headerlink" title="禁止普通用户登陆"></a>禁止普通用户登陆</h5><p>建立&#x2F;etc&#x2F;nologin文件即可，当login程序检测到文件存在时，除了root用户其他不能登陆。</p>
+<p>touch	&#x2F;etc&#x2F;nologin</p>
+<h4 id="PAM可拔插认证模块"><a href="#PAM可拔插认证模块" class="headerlink" title="PAM可拔插认证模块"></a>PAM可拔插认证模块</h4><p>PAM是一种高效而且灵活便利的用户级别的认证方式。PAM提供了对所有服务进行认证的中央机制 ，适用于login，远程登陆，su等应用程序。</p>
+<p>PAM认证原理：Service（服务）-&gt;PAM-&gt;pam_*.so</p>
+<p>PAM认证首先确定哪一项服务，加载相应的配置文件（&#x2F;etc&#x2F;pam.d），最后调用认证库文件（&#x2F;lib64&#x2F;security）.</p>
+<p>PAM认证的构成：</p>
+<p>每一行都是一个独立的认证过程。</p>
+<p>每一行可以区分为是三个字段：认证类型、控制类型、PAM模块及其参数。</p>
+<p>常见的四种认证类型：</p>
+<table>
+<thead>
+<tr>
+<th>认证类型</th>
+<th>意义</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>auth</strong></td>
+<td>认证管理</td>
+<td>接受用<strong>户名和密码</strong>，进而对该用户的密码进行验证。</td>
+</tr>
+<tr>
+<td><strong>account</strong></td>
+<td>账户管理</td>
+<td>检查账户是否被允许登陆系统，账号是否已过期，账号的登陆是否有时间段的限制等<strong>权限</strong>。</td>
+</tr>
+<tr>
+<td><strong>password</strong></td>
+<td>密码管理</td>
+<td>主要是用来<strong>修改</strong>用户的<strong>密码</strong>。</td>
+</tr>
+<tr>
+<td><strong>session</strong></td>
+<td>会话管理</td>
+<td>主要是提供<strong>对会话</strong>的<strong>管理</strong>和<strong>记账</strong>。</td>
+</tr>
+</tbody></table>
+<p>常见的五种控制类型</p>
+<ul>
+<li>required	验证失败时仍然继续，但返回Fail。</li>
+<li>requisite	验证失败则立刻结束验证过程，返回Fail。</li>
+<li>sufficient	验证成功则立刻返回，不再继续，否则忽略结果并继续。</li>
+<li>optional	不用于验证，只是显示信息（通常用于session类型）。</li>
+<li>include	不进行认证，转到后面PAM模块进行认证。</li>
+</ul>
+<h4 id="弱口令检测–John-the-Ripper"><a href="#弱口令检测–John-the-Ripper" class="headerlink" title="弱口令检测–John the Ripper"></a>弱口令检测–John the Ripper</h4><p>John the Ripper是一款开源的密码破解工具。</p>
+<p>解压文件后切换到src目录下，make	clean	linux-x86-64编译，run子目录生成john可执行程序。</p>
+<p>.&#x2F;john	&#x2F;etc&#x2F;shadow.txt：破解密码。</p>
+<p>.&#x2F;john	–show	&#x2F;etc&#x2F;shadow.txt：查看已破解的账户列表。</p>
+<p>“&gt;john.pot“:清空破解的账户列表。</p>
+<p>.&#x2F;john	–wordlist&#x3D;.&#x2F;password.lst	&#x2F;etc&#x2F;shadow.txt：提供默认的密码字典。</p>
+<h4 id="网络扫描–NMAP"><a href="#网络扫描–NMAP" class="headerlink" title="网络扫描–NMAP"></a>网络扫描–NMAP</h4><p>NMAP是一款强大的端口扫描类安全评测工具，支持ping扫描、多端口检测、os识别等多种技术。</p>
+<p>基本格式：</p>
+<p>nmap	-[扫描类型]	[选项]	[扫描目标]</p>
+<p>扫描目标：可以是主机名、ip地址、网络地址等，多个以空格分离。</p>
+<p>选项：</p>
+<p>-p：指定扫描的端口</p>
+<p>-n：禁用反向解析（加快扫描）</p>
+<p>常用的扫描类型如下：</p>
+<p>-sS：TCP SYN扫描，只向目标发送SYN数据包，如果收到SYN&#x2F;ACK响应就认为目标正在监听，并立刻断开连接；否则就认为目标端口额日开放。</p>
+<p>-sT：TCP连接扫描，完整的TCP扫描方式，如果成功连接就认为目标端口正在监听；否则就认为目标端口未开放。</p>
+<p>-sF：TCP FIN扫描，开放的端口会忽略，关闭的端口会回应RST数据包。这种方式扫描可间接检测防火墙的健壮性。</p>
+<p>-sU：UDP扫描，探测目标主机提供哪些UDP服务，UDP扫描会比较慢。</p>
+<p>-sP：ICMP扫描。快速判断目标主机是否存活，不做其他扫描。</p>
+<p>-s0：跳过ping检测。</p>
+<p>-sV：扫描服务软件版本。</p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>端口号</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ftp</td>
+<td>21</td>
+<td>文件传输协议（FTP）端口；有时被文件服务协议（FSP）使用</td>
+</tr>
+<tr>
+<td>ssh</td>
+<td>22</td>
+<td>安全Shell（ssh）服务</td>
+</tr>
+<tr>
+<td>telnet</td>
+<td>23</td>
+<td>Telnet服务</td>
+</tr>
+<tr>
+<td>https</td>
+<td>443</td>
+<td>安全超文本传输协议（HTTP）</td>
+</tr>
+<tr>
+<td>http</td>
+<td>80</td>
+<td>用于万维网（www）服务的超文本传输协议（HTTP）</td>
+</tr>
+</tbody></table>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/275906450/" target="_blank">操作系统安全控制</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 12 篇日志，继续加油！
+                            <a href="/category/Linux/">Linux</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/3665708294/"><span>Docker的入门程序</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-27</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3085117772/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3085117772/" title="发布于 2023-12-27 12:06">系统进程与计划任务管理</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -123,7 +281,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

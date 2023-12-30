@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            服务器软硬磁盘阵列
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">服务器软硬磁盘阵列</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-22
+                        </span>
+                        
+                            
+                                <span id="/posts/2370057590/" class="leancloud_visitors" data-flag-title="服务器软硬磁盘阵列">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2370057590/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Linux</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,47 +70,157 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>RAID称为廉价磁盘冗余阵列。RAID基本思想是把多个便宜的小磁盘组合到一起，组合成一个大磁盘组，是性能达到或超过一个容量巨大、价格昂贵、读写速度快的磁盘。</p>
+<h4 id="RAID0"><a href="#RAID0" class="headerlink" title="RAID0"></a>RAID0</h4><p>称为条带模式，把连续的数据分散到多个磁盘上存取。当数据有请求就可以被多个磁盘<strong>并行</strong>的执行。。</p>
+<h4 id="RAID1"><a href="#RAID1" class="headerlink" title="RAID1"></a>RAID1</h4><p>称为镜像，一个具有全冗余的模式。可以用于两个或者2xN个磁盘，并使用0块或更多的备用磁盘，每次写入数据时同时写入镜像盘。可靠性很高，有效容量减少一半。</p>
+<h4 id="RAID4"><a href="#RAID4" class="headerlink" title="RAID4"></a>RAID4</h4><p>需要三块或者更多的磁盘，它在一个磁盘上保存校验信息，并以RAID0方式将数据写入其他磁盘，阵列的空间大小为（N-1）*S，S是阵列中最小磁盘的大小。磁盘的大小应该相等。</p>
+<h4 id="RAID5"><a href="#RAID5" class="headerlink" title="RAID5"></a>RAID5</h4><p>结合大量物理磁盘并且保留一些冗余时，RAID5可能是最有用的RAID模型。可以用在三块或者更多的磁盘上，并使用0块或者更多的备用磁盘，设备大小为（N-1）*S。校验信息均匀分布在各个驱动器上。如果两个磁盘损坏，则全部数据丢失。</p>
+<h4 id="RAID6"><a href="#RAID6" class="headerlink" title="RAID6"></a>RAID6</h4><p>是在RAID5的基础上扩展而来的，只是RAID6多增加一块校验磁盘，用于备份分步在各个磁盘上的校验码。允许两个磁盘同时出现故障，最少需要四块磁盘。</p>
+<h4 id="RAID1-0"><a href="#RAID1-0" class="headerlink" title="RAID1+0"></a>RAID1+0</h4><p>N（偶数，N&gt;&#x3D;4）块盘两两镜像，组合成一个RAID0。容量为N&#x2F;2，N&#x2F;2块盘同时写入，写速度一般，N块盘同时读取，读取速度较快。性能高，可靠性高。</p>
+<p>阵列对比</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>RAID0</strong></th>
+<th><strong>RAID1</strong></th>
+<th><strong>RAID5</strong></th>
+<th>RAID6</th>
+<th>RAID10</th>
+<th>RAID50</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>特点</td>
+<td>并行执行，读写速度快</td>
+<td>数据完全冗余</td>
+<td>读写速度快，数据有校验</td>
+<td>读写速度快，数据有校验，冗余性高</td>
+<td>读写速度更快，数据有校验高</td>
+<td>读写速度更快，数据有校验高</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>数据无冗余</td>
+<td>读写速度慢</td>
+<td></td>
+<td>磁盘数量太多</td>
+<td>磁盘数量太多</td>
+<td>磁盘数量太多</td>
+</tr>
+<tr>
+<td>磁盘数</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr>
+<td>故障磁盘数</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>空间</td>
+<td>总和</td>
+<td>1&#x2F;2</td>
+<td>（N-1）*S</td>
+<td>（N-2）*S</td>
+<td>1&#x2F;2</td>
+<td>（N-2）*S</td>
+</tr>
+<tr>
+<td>场景</td>
+<td>大空间测试</td>
+<td>系统</td>
+<td>常规服务</td>
+<td></td>
+<td>数据库</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="创建软RAID"><a href="#创建软RAID" class="headerlink" title="创建软RAID"></a>创建软RAID</h4><p>在Linux服务器中通过mdadm工具来创建和维护软RAID</p>
+<p>上。mdadm常用的参数有：</p>
+<p>-C：创建一个软件RAID，后面需要标识RAID设备的名称，例如&#x2F;dev&#x2F;md0,&#x2F;dev&#x2F;md1.</p>
+<p>-A：加载一个已存在的RAID，后面跟RAID以及设备的名称。</p>
+<p>-D：输出指定RAID设备的详细信息。</p>
+<p>-S：停止指定的RAID设备。</p>
+<p>-l：指定RAID配置级别。-l 5 就是RAID5。</p>
+<p>-n：指定RAID中活动磁盘的数目。</p>
+<p>-r：删除RAID中的某个磁盘。</p>
+<p>-a：向RAID中添加磁盘。</p>
+<p>-x：指定备用磁盘数量。</p>
+<p>-s：扫描配置文件&#x2F;proc&#x2F;mdstat来搜索软RAID的配置信息。</p>
+<p>例如创建RAID5：</p>
+<p>mdadm -C &#x2F;dev&#x2F;md5 -l 5 -n 3 -x 1 &#x2F;dev&#x2F;sdb[1-4]</p>
+<h4 id="创建RAID的配置文件"><a href="#创建RAID的配置文件" class="headerlink" title="创建RAID的配置文件"></a>创建RAID的配置文件</h4><p>mdadm -D -s &gt;  &#x2F;etc&#x2F;mdadm.conf：生成mdadm.conf文件，然后vim打开这个文件，加入 auto&#x3D;yes才能生效。</p>
+<h4 id="维护RAID"><a href="#维护RAID" class="headerlink" title="维护RAID"></a>维护RAID</h4><p>mdadm &#x2F;dev&#x2F;md5 –fail &#x2F;dev&#x2F;sdb2 :标记&#x2F;dev&#x2F;sdb2为故障磁盘，停止对故障磁盘的读写操作，备用磁盘自动顶替故障磁盘工作，内裂在短时间内重建，通过 cat &#x2F;proc&#x2F;mdstat查看当前阵列的状态。</p>
+<p>mdadm &#x2F;dev&#x2F;md5 –remove &#x2F;dev&#x2F;sdb2：移除故障磁盘&#x2F;dev&#x2F;sdvb2。</p>
+<p>mdadm  &#x2F;dev&#x2F;md5 –add &#x2F;dev&#x2F;sdb2：添加新硬盘。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/2370057590/" target="_blank">服务器软硬磁盘阵列</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 12 篇日志，继续加油！
+                            <a href="/category/Linux/">Linux</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3261447872/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3261447872/" title="发布于 2023-12-24 04:26">引导过程Troubleshooting与服务控制</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/3665708294/"><span>Docker的入门程序</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-27</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/4049794481/" class="next-prefix">» </a> 下一篇：    <a href="/posts/4049794481/" title="发布于 2023-12-16 04:24">LVM逻辑卷与磁盘配额限制</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -123,7 +254,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            系统进程与计划任务管理
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">系统进程与计划任务管理</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-27
+                        </span>
+                        
+                            
+                                <span id="/posts/3085117772/" class="leancloud_visitors" data-flag-title="系统进程与计划任务管理">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3085117772/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Linux</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,47 +70,206 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="系统进程管理"><a href="#系统进程管理" class="headerlink" title="系统进程管理"></a>系统进程管理</h3><h4 id="ps命令-查看静态的进程统计信息"><a href="#ps命令-查看静态的进程统计信息" class="headerlink" title="ps命令:查看静态的进程统计信息"></a>ps命令:查看静态的进程统计信息</h4><ul>
+<li>a：显示当前终端下的所有进程信息，包括其他用户的进程。</li>
+<li>u：使用以用户为主的格式输出进程信息。</li>
+<li>x：显示当前用户在所有终端下的进程信息。</li>
+<li>-e：显示系统内的所有进程信息。</li>
+<li>-l：使用长格式显示进程信息。</li>
+<li>-f：使用完整的格式显示进程信息。</li>
+<li>-F：显示更完整格式的进程信息。</li>
+<li>-H：以进程层级格式显示进程相关信息。</li>
+<li>-C 进程名称：查询进程。</li>
+</ul>
+<p>显示下列输出信息：</p>
+<p>USER：启动该进程的用户账号的名称。</p>
+<p>PID：该进程在系统中的PID号，在当前系统中是唯一的。</p>
+<p>%CPU：CPU占用的百分比。</p>
+<p>%MEM：内存占用的百分比。</p>
+<p>VSZ：占用虚拟内存swap空间的大小。</p>
+<p>RSS：占用常驻内存物理内存的大小。</p>
+<p>TTY：表明该进程在哪个终端上运行。”？“表示未知或不需要终端。</p>
+<p>STAT：显示了进程当前的状态。</p>
+<ul>
+<li>​	D：不可中断睡眠。</li>
+<li>​	<strong>S：可中断的睡眠。</strong></li>
+<li>​	<strong>R：就绪或运行状态。</strong></li>
+<li>​	T：中止状态。</li>
+<li>​	<strong>Z：僵死状态。</strong></li>
+<li>​	<strong>&lt;：高优先级进程。</strong></li>
+<li>​	N：低优先级进程。</li>
+<li>​	<strong>+：前台进程组中的进程。</strong></li>
+<li>​	l：多线程的进程。</li>
+<li>​	s：会话进程的首进程。</li>
+</ul>
+<p>START：启动该进程的时间。</p>
+<p>TIME：该进程占用的CPU时间。</p>
+<p>COMMAND：启动该进程的命令的名称。</p>
+<h4 id="top命令：查看进程动态信息。"><a href="#top命令：查看进程动态信息。" class="headerlink" title="top命令：查看进程动态信息。"></a>top命令：查看进程动态信息。</h4><p>全屏交互式的界面显示进程，默认每三秒刷新一次。</p>
+<p>第一行：总数值。</p>
+<p>第二行：进程的相关信息。</p>
+<p>第三行：CPU的相关信息。主要是id列。</p>
+<p>第四行：内存，主要看free列。</p>
+<p>第五行：虚拟内存，主要看free列 。</p>
+<h5 id="命令选项："><a href="#命令选项：" class="headerlink" title="命令选项："></a>命令选项：</h5><ul>
+<li>-d：指定刷新的间隔时间。</li>
+<li>-b：以批量处理模式操作（非交互），一般与-n同时使用。</li>
+<li>-n：指定循环显示的次数。</li>
+<li>-u：指定用户名。</li>
+<li>-p：指定进程号。</li>
+</ul>
+<p>当CPU占用率过高时，不再直接执行top命令查看，存入一个文件内查看，以免CPU占用率过高导致崩溃。例如：top -b -n 1 &gt;  &#x2F;top.txt</p>
+<h5 id="常用的交互命令："><a href="#常用的交互命令：" class="headerlink" title="常用的交互命令："></a>常用的交互命令：</h5><p><strong>P：根据CPU使用百分比大小进行排序。</strong></p>
+<p><strong>M：根据驻留内存大小进行排序。</strong></p>
+<p>T：根据累积时间进行排序。</p>
+<p>k：终止一个进程。</p>
+<p>q：退出程序。</p>
+<h4 id="pgrep命令：查询特定进程信息"><a href="#pgrep命令：查询特定进程信息" class="headerlink" title="pgrep命令：查询特定进程信息"></a>pgrep命令：查询特定进程信息</h4><p>-l：显示进程名。</p>
+<p>-U：指定特定用户。</p>
+<p>-t：指定终端。</p>
+<p>-a：显示完整格式的进程名。</p>
+<p>-P pid：显示指定进程的子进程。</p>
+<h4 id="pstree命令：用ASCLL字符显示树状进程结构"><a href="#pstree命令：用ASCLL字符显示树状进程结构" class="headerlink" title="pstree命令：用ASCLL字符显示树状进程结构"></a>pstree命令：用ASCLL字符显示树状进程结构</h4><p>-p：选项使用时可以同时列出对应的PID号。</p>
+<p>-u：选项可以列出对应的用户名。</p>
+<p>-a：选项可以列出完整的命令信息。</p>
+<h4 id="终止进程"><a href="#终止进程" class="headerlink" title="终止进程"></a>终止进程</h4><p>Ctrl+C中断正在执行的命令。</p>
+<p>kill用于终止指定PID号的进程。</p>
+<p>killall：用于终止指定名称的所有进程。</p>
+<p>kill  -9  pid：强制杀死进程。</p>
+<p>kill -15 pid：结束进程，允许进程结束前执行一些清理工作。</p>
+<h4 id="pkill命令：根据特定条件终止相应的进程。"><a href="#pkill命令：根据特定条件终止相应的进程。" class="headerlink" title="pkill命令：根据特定条件终止相应的进程。"></a>pkill命令：根据特定条件终止相应的进程。</h4><p>-U：根据进程所属的用户名终止相应的进程。</p>
+<p>-t：根据进程所在的终端终止相应的进程。</p>
+<p>例如：pkill -9 -U name -t tty1</p>
+<h3 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h3><h4 id="手工启动"><a href="#手工启动" class="headerlink" title="手工启动"></a>手工启动</h4><p>前台启动：用户输入命令，直接执行程序。</p>
+<p>后台启动：在命令行尾加入“&amp;”符号。</p>
+<p>nohup是使程序永久执行的方式，和用户终端没有关系。</p>
+<p>nohup COMMAND &amp;：使命令永久的在后台执行，nohup执行后。会产生日志文件，把命令执行的消息保存到这个文件中，一般存在当前目录中。</p>
+<h4 id="进程的前后台调度"><a href="#进程的前后台调度" class="headerlink" title="进程的前后台调度"></a>进程的前后台调度</h4><p>ctrl+z：将正在前台运行的任务放到后台暂停。</p>
+<p>jobs：查看处于后台的任务列表。</p>
+<p>-l：列出进程id及其他信息。</p>
+<p>-p：仅列出进程id 。</p>
+<p>-r：仅显示运行中的作业。</p>
+<p>-s：仅显示停止的作业。</p>
+<p>fg：将后台进程恢复到前台运行。可指定任务程序号。</p>
+<p>bg：将后台暂停的进程调至后台运行。</p>
+<p>at：管理一次性任务计划。</p>
+<p>crontab：管理周期任务计划。</p>
+<h4 id="at一次性任务设置"><a href="#at一次性任务设置" class="headerlink" title="at一次性任务设置"></a>at一次性任务设置</h4><p><strong>at HH:MM ：今天执行，若是时间已经超过，则明天执行。</strong></p>
+<p><strong>at HH:MM YYYY-MM-DD 指定具体的执行日期和时间。</strong></p>
+<p>at HH:MM +  number {minutes|hours|days|weeks}某个时间</p>
+<p>基本操作：</p>
+<p>Ctrl+D 保存退出。</p>
+<p>atq ：查询现有的一次性任务计划。</p>
+<p>atrm [任务序号] &#x3D;&#x3D;at -d： 删除第几项任务。</p>
+<p>at -c 1：查看任务的具体内容。</p>
+<h4 id="crontab周期性任务设置"><a href="#crontab周期性任务设置" class="headerlink" title="crontab周期性任务设置"></a>crontab周期性任务设置</h4><p>&#x2F;etc&#x2F;crontab文件中设置的是</p>
+<p>使用crontab命令管理用户的计划任务：</p>
+<p>-e：编辑计划任务列表。</p>
+<p>-u：指定所管理的计划任务属于哪个用户。</p>
+<p>-l：列表显示计划。</p>
+<p>-r：清空计划任务列表。</p>
+<p>crontab计划任务的配置格式：</p>
+<table>
+<thead>
+<tr>
+<th>分钟</th>
+<th>小时</th>
+<th>日期</th>
+<th>月份</th>
+<th>星期</th>
+<th>执行命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01</td>
+<td>3</td>
+<td>*&#x2F;3</td>
+<td>*</td>
+<td>*</td>
+<td>systemctl start httpd</td>
+</tr>
+<tr>
+<td>02</td>
+<td>4</td>
+<td>*</td>
+<td>*</td>
+<td>1,3,5</td>
+<td>systemctl stop httpd</td>
+</tr>
+</tbody></table>
+<p>“-”：表示一个连续的时间范围1-5</p>
+<p>“,”：表示一个间隔的不连续范围1,5</p>
+<p>“&#x2F;”：表示指定间隔频率，例如*&#x2F;5表示每个五天</p>
+<p>例如：</p>
+<p>每天早上7:50自动开启sshd，22:50关闭</p>
+<p>50 	07	*	*	*	systemctl	start	sshd</p>
+<p>每隔5天24:00清空一次FTP服务器公告目录&#x2F;var&#x2F;ftp&#x2F;pub</p>
+<p>00	24	*&#x2F;5	*	*	rm	-rf	&#x2F;var&#x2F;ftp&#x2F;pub</p>
+<p>每周六7:30重启httpd服务</p>
+<p>30	17	*	*	6	systemctl	restart	sshd</p>
+<p>每周一、三、五的17:30打包备份&#x2F;etc&#x2F;httpd目录</p>
+<p>30	17	*	*	1,3,5	tar 	-zcvf	httpd.tar.gz	&#x2F;etc&#x2F;httpd</p>
+<p>注意：</p>
+<p>1.配置完计划任务后建议重启计划任务服务。</p>
+<p>2.计划任务信息要定时备份。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3085117772/" target="_blank">系统进程与计划任务管理</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 12 篇日志，继续加油！
+                            <a href="/category/Linux/">Linux</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/275906450/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/275906450/" title="发布于 2023-12-29 03:14">操作系统安全控制</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/3665708294/"><span>Docker的入门程序</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-27</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3261447872/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3261447872/" title="发布于 2023-12-24 04:26">引导过程Troubleshooting与服务控制</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -123,7 +303,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
