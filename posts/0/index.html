@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            磁盘分区与文件系统
+            
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,29 +37,25 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">磁盘分区与文件系统</h1>
+                <h1 class="header-subtitle"></h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-12-14
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-30
                         </span>
                         
                             
-                                <span id="/posts/3108465998/" class="leancloud_visitors" data-flag-title="磁盘分区与文件系统">
+                                <span id="/posts/0/" class="leancloud_visitors" data-flag-title="">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3108465998/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/0/"></span>
                                 </span>
                               
                         
                     </p>
-                    
-                        
-                            <span class="category-color">Linux</span>
-                        
                     
                     
                 </div>
@@ -74,102 +70,7 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h3 id="磁盘分区与文件系统"><a href="#磁盘分区与文件系统" class="headerlink" title="磁盘分区与文件系统"></a>磁盘分区与文件系统</h3><h4 id="硬盘分区方式"><a href="#硬盘分区方式" class="headerlink" title="硬盘分区方式"></a>硬盘分区方式</h4><p>MBR</p>
-<p>定义：MBR主引导记录（器）也叫主启动记录。</p>
-<p>位置：位于硬盘的第0个磁道，第0个柱面，第一个物理扇区（一个扇区512字节（B））处。</p>
-<p>MBR中包含硬盘的<strong>主引导程序和硬盘分区表</strong>。分区表有4个主分区记录区，每个主分区记录区占16个字节，共64 个字节。446字节存放主引导程序，2字节校验。</p>
-<p>BIOS：基本输入输出系统。</p>
-<ol>
-<li>硬件加电自检。</li>
-<li>硬件配置初始化。</li>
-<li>引导操作程序（BOOT–&gt;硬盘–&gt;MBR(446B)）。</li>
-</ol>
-<h4 id="硬盘分区表示"><a href="#硬盘分区表示" class="headerlink" title="硬盘分区表示"></a>硬盘分区表示</h4><p>Linux中将硬盘等设备均表示为文件。</p>
-<p>&#x2F;dev&#x2F;hda5</p>
-<ul>
-<li>&#x2F;dev&#x2F;硬件文件所在目录。</li>
-<li>hd表示IDE设备 sd表示SCSI设备。</li>
-<li>a硬盘的顺序号，a、b、c…表示。</li>
-<li>5分区的顺序号，以数字1、2、3…表示。</li>
-</ul>
-<h4 id="硬盘分区结构"><a href="#硬盘分区结构" class="headerlink" title="硬盘分区结构"></a>硬盘分区结构</h4><ul>
-<li>硬盘中的主分区数目只有4个。</li>
-<li>因此主分区和扩展分区的序号限制在1~4。</li>
-<li>扩展分区分为逻辑分区。</li>
-<li>逻辑分区的序号将始终从5开始。</li>
-</ul>
-<p>主分区存储数据，主分区更改为扩展分区，扩展分区里面存逻辑分区（个数无限制），逻辑分区里面存数据。</p>
-<h4 id="文件系统类型"><a href="#文件系统类型" class="headerlink" title="文件系统类型"></a>文件系统类型</h4><p>XFS文件系统：文件系统组织文件存储到分区的方式，文件系统在分区格式化的时候形成。</p>
-<p>SWAP交换文件系统：虚拟内存（给物理内存缓解压力的，防止内存溢出，不能存普通文件或目录数据）。</p>
-<p>XFS文件系统与ext4文件系统的区别？</p>
-<ol>
-<li>XFS文件系统可以支持单个文件大小从16TB到16EB，而Ext4文件系统支持的单个文件大小从16GB到16TB。</li>
-<li>XFS最大支持的文件系统大小为8EB，而Ext4的理论最大支持大小为1EB。</li>
-<li>XFS具有更强的扩展性和可扩展性，而Ext4受限于磁盘结构和兼容问题，其扩展性和可扩展性不如XFS。</li>
-<li>在某些情况下，XFS的性能可能比Ext4高5-10%。例如，在高并发压力下，XFS的性能优势可能更为明显。</li>
-<li>XFS的io利用率通常比Ext4低，但CPU利用率可能较高。</li>
-</ol>
-<h4 id="fdisk命令"><a href="#fdisk命令" class="headerlink" title="fdisk命令"></a>fdisk命令</h4><p>作用：在交互式的操作环境中管理磁盘分区。</p>
-<p>fdisk -l [磁盘设备]：查看硬盘详细信息。</p>
-<p>格式：fdisk [磁盘设备]</p>
-<p>常用选项：</p>
-<p>m：查看操作指令的帮助信息。</p>
-<p>p：列表查看分区信息。</p>
-<p>n：新建分区。</p>
-<p>d：删除分区。</p>
-<p>t：变更分区类型。</p>
-<p>w：保存分区设置并退出。</p>
-<p>q：放弃分区设置并退出。</p>
-<p>Ctrl+退格键：删除输入的错误字符。</p>
-<p>partprobe &#x2F;dev&#x2F;sdb #使系统加载分区表，识别新的分区。</p>
-<h4 id="mkfs命令"><a href="#mkfs命令" class="headerlink" title="mkfs命令"></a>mkfs命令</h4><p>作用：创建文件系统（格式化）。</p>
-<p>格式：mkfs -t  文件系统类型  分区设备</p>
-<p><strong>-t：指定格式化类型。</strong></p>
-<p>-b：指定block大小，单位为字节。</p>
-<p>-I：inode大小。</p>
-<p>-U：设置UUID号。</p>
-<p>-q：执行时不显示任何信息。</p>
-<h4 id="mkswap命令"><a href="#mkswap命令" class="headerlink" title="mkswap命令"></a>mkswap命令</h4><p>作用：创建交换文件系统。</p>
-<p>mkswap [目录]：设置交换空间。</p>
-<p>swapon [swap]：启用交换空间。</p>
-<p>swapoff [swap]：关闭交换空间。</p>
-<p>swapon -s：查看交换空间的信息。</p>
-<h4 id="mount命令"><a href="#mount命令" class="headerlink" title="mount命令"></a>mount命令</h4><p>作用：挂载文件系统、ISO镜像。</p>
-<p>格式：</p>
-<p>mount [-t 类型]   存储设备  挂载点目录</p>
-<p>mount  [-o loop]   ISO镜像文件   挂载点目录</p>
-<p>mount 查看当前挂载</p>
-<p>mount -a ：  把&#x2F;etc&#x2F;fstab文件里的都挂载一遍</p>
-<p>&#x2F;etc&#x2F;fstab用来存储挂载信息的。</p>
-<h4 id="umount命令"><a href="#umount命令" class="headerlink" title="umount命令"></a>umount命令</h4><p>umount 存储设备位置</p>
-<p>umount 挂载点目录</p>
-<p>umount -a 卸载所有&#x2F;etc&#x2F;fstab已记录的挂载</p>
-<h4 id="x2F-etc-x2F-fstab文件"><a href="#x2F-etc-x2F-fstab文件" class="headerlink" title="&#x2F;etc&#x2F;fstab文件"></a>&#x2F;etc&#x2F;fstab文件</h4><p>常见参数：</p>
-<p>&#x2F;dev&#x2F;mapper&#x2F;ao-usr      &#x2F;usr     xfs     defaults,ro    0 0</p>
-<p>default：默认</p>
-<p>auto：系统自动挂载，fstab默认的就是这个</p>
-<p>noauto：开机不自动挂载</p>
-<p>nouser：只有超级用户可以挂载</p>
-<p>ro：按只读权限挂载（read only）</p>
-<p>rw：按可读可写权限挂载</p>
-<p>user：任何用户都可以挂载</p>
-<p>dump备份设置：值为1时允许备份程序，为0时忽略备份操作。</p>
-<p>fsck磁盘检查设置：值是一个顺序，为0永不检查，而根目录分区永远为1优先检查，其他一般为2，次要检查。</p>
-<h4 id="df命令"><a href="#df命令" class="headerlink" title="df命令"></a>df命令</h4><p>作用：查看磁盘使用情况。</p>
-<p>df -TH：显示文件系统的磁盘使用情况。（容量）</p>
-<p>df -i ：显示inode数量使用情况。（数量）</p>
-<h4 id="blkid命令"><a href="#blkid命令" class="headerlink" title="blkid命令"></a>blkid命令</h4><p>作用：查看分区的UUID号</p>
-<p>UUID号：分区必须格式化后才会有UUID号</p>
-<p>格式：blkid 分区设备</p>
-<h4 id="parted命令"><a href="#parted命令" class="headerlink" title="parted命令"></a>parted命令</h4><p>parted  &#x2F;dev&#x2F;sdb  进入要操作的磁盘</p>
-<p>quit：退出parted工具</p>
-<p>select 设备：选择要编辑的设备。</p>
-<p>p：查看磁盘分区状态</p>
-<p>mklabel 标签类型：新建新的磁盘标签（分区表）。</p>
-<p>mkpart 分区类型 [文件系统类型] 起始点 终止点：创建一个分区，primary主分区，extended扩展分区，logical逻辑分区。</p>
-<p>print [MINOR]：打印分区表，或者分区。</p>
-<p>rm MINOR：删除编号为MINOR的分区。</p>
-
+                
                 
                 <p class="end">__END__</p>
             </div>
@@ -181,7 +82,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/posts/3108465998/" target="_blank">磁盘分区与文件系统</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/0/" target="_blank"></a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -193,21 +94,11 @@
     <div style="clear: both;"></div>
 </div>
                 
-                    <div class="category">
-                        分类：
-                        
-                            <a href="/category/Linux/">Linux</a>
-                        
-                    </div>
-                
                 
                 <div class="article-prev-next">
                     
-                        <a href="/posts/4049794481/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/4049794481/" title="发布于 2023-12-16 04:24">LVM逻辑卷与磁盘配额限制</a>
-                        <br>
                     
-                    
-                        <a href="/posts/52499497/" class="next-prefix">» </a> 下一篇：    <a href="/posts/52499497/" title="发布于 2023-12-11 08:53">文件账户与权限管理</a>
+                        <a href="/posts/275906450/" class="next-prefix">» </a> 下一篇：    <a href="/posts/275906450/" title="发布于 2023-12-29 03:14">操作系统安全控制</a>
                     
                 </div>
             </div>
