@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            OpenSSH配置
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">OpenSSH配置</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-01-16
+                        </span>
+                        
+                            
+                                <span id="/posts/590003368/" class="leancloud_visitors" data-flag-title="OpenSSH配置">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/590003368/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">SSH</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,113 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="SSH简介"><a href="#SSH简介" class="headerlink" title="SSH简介"></a>SSH简介</h4><p>SSH是一种安全通道协议，主要实现远程登录、远程命令执行、远程复制等功能。</p>
+<p>SSH协议默认监听端口：TCP协议	22</p>
+<p>SSH协议版本：v1	<strong>v2</strong></p>
+<h4 id="OpenSSH的配置"><a href="#OpenSSH的配置" class="headerlink" title="OpenSSH的配置"></a>OpenSSH的配置</h4><p>OpenSSH服务器属于C&#x2F;S结构，并已将sshd添加为标准的系统服务。</p>
+<p>服务名称：sshd</p>
+<p>服务端主程序：&#x2F;usr&#x2F;sbin&#x2F;sshd</p>
+<p>服务端配置文件：&#x2F;etc&#x2F;ssh&#x2F;sshd_config</p>
+<p>客户端配置文件：&#x2F;etc&#x2F;ssh&#x2F;ssh_config</p>
+<h5 id="服务监听选项"><a href="#服务监听选项" class="headerlink" title="服务监听选项"></a>服务监听选项</h5><pre><code>vim	/etc/ssh/ssh_config
+Port 22		#监听端口
+ListenAddress 0.0.0.0	#监听IP地址
+protocol 2		#ssh协议的版本选用V2比V1的安全性更好
+UseDNS no		#禁用DNS反向解可以提高服务的响应速度
+</code></pre>
+<h5 id="用户登录控制"><a href="#用户登录控制" class="headerlink" title="用户登录控制"></a>用户登录控制</h5><pre><code>vim	/etc/ssh/ssh_config
+LoginGraceTime 2m	#登录验证时间为2分钟
+PermitRootLogin yes		#允许root用户登录
+MaxAuthTries 6		#最大重试次数为6
+PermitEmptyPasswords no		#禁止控密码用户登陆
+</code></pre>
+<h4 id="登录验证方式"><a href="#登录验证方式" class="headerlink" title="登录验证方式"></a>登录验证方式</h4><p>SSH服务支持两种验证方式：</p>
+<p>密码验证</p>
+<p>密钥对验证</p>
+<p>可以设置只使用其中一种方式，也可以两种方式都启用。</p>
+<pre><code>vim	/etc/ssh/ssh_config
+PasswordAuthentication yes	#启用密码验证
+PermitEmptyPasswords yes	#启用密钥对验证
+</code></pre>
+<h4 id="使用SSH客户端程序"><a href="#使用SSH客户端程序" class="headerlink" title="使用SSH客户端程序"></a>使用SSH客户端程序</h4><p>openssh客户端包括ssh远程登录及远程命令执行、scp远程复制命令等</p>
+<h5 id="1-命令程序"><a href="#1-命令程序" class="headerlink" title="1.命令程序"></a>1.命令程序</h5><h6 id="（1）ssh命令（远程登录）"><a href="#（1）ssh命令（远程登录）" class="headerlink" title="（1）ssh命令（远程登录）"></a>（1）ssh命令（远程登录）</h6><p>ssh	user@host	（用户名相同可省去user）</p>
+<p>ssh	user@host	command（只执行命令，不切换）</p>
+<p>端口选项：-p	22</p>
+<p>ifconfig ens33 | awk ‘NR&#x3D;&#x3D;2{print$2}’：提取网卡的ip地址</p>
+<h6 id="（2）scp命令（远程安全复制）"><a href="#（2）scp命令（远程安全复制）" class="headerlink" title="（2）scp命令（远程安全复制）"></a>（2）scp命令（远程安全复制）</h6><p>scp	[-r]	user@host:file1	file2	#将远程复制到本机</p>
+<p>scp	[-r]	file1	user@host:file2	#将本机复制到远程</p>
+<h4 id="构建密钥对验证的SSH体系"><a href="#构建密钥对验证的SSH体系" class="headerlink" title="构建密钥对验证的SSH体系"></a>构建密钥对验证的SSH体系</h4><p>密钥对验证包含四步：</p>
+<ol>
+<li>首先在SSH客户端以root用户身份创建密钥对。</li>
+<li>客户端将创建的公钥文件上传至SSH服务端临时位置。</li>
+<li>服务端将公钥信息导入用户root的公钥数据库文件。</li>
+<li>客户端以root身份连接服务器端root用户测试。</li>
+</ol>
+<h5 id="1-在客户端创建密钥对"><a href="#1-在客户端创建密钥对" class="headerlink" title="1.在客户端创建密钥对"></a>1.在客户端创建密钥对</h5><p>ssh-keygen命令创建密钥对文件。</p>
+<p>id_ecdsa是私钥文件，id_ecdsa.pub是公钥文件，用来提供给SSH</p>
+<h5 id="2-将公钥上传至服务器"><a href="#2-将公钥上传至服务器" class="headerlink" title="2.将公钥上传至服务器"></a>2.将公钥上传至服务器</h5><p>scp .ssh&#x2F;id_ecdsa.pub <a href="mailto:&#114;&#111;&#111;&#x74;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#56;&#46;&#49;&#48;&#x30;&#x2e;&#49;&#48;">&#114;&#111;&#111;&#x74;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#56;&#46;&#49;&#48;&#x30;&#x2e;&#49;&#48;</a>:&#x2F;tmp</p>
+<h5 id="3-服务端：在服务器中导入公钥文本"><a href="#3-服务端：在服务器中导入公钥文本" class="headerlink" title="3.服务端：在服务器中导入公钥文本"></a>3.服务端：在服务器中导入公钥文本</h5><p>服务器中目标用户的公钥数据库位于~&#x2F;.ssh目录，文件为authorized_keys.</p>
+<p>cat &#x2F;tmp&#x2F;id_ecdsa.pub &gt;&gt; .ssh&#x2F;authorized_keys</p>
+<p>2和3可以采用另一种方式直接实现。</p>
+<p>ssh-copy-id <a href="mailto:&#114;&#x6f;&#111;&#116;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x31;&#48;&#48;&#x2e;&#x31;&#x30;">&#114;&#x6f;&#111;&#116;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x31;&#48;&#48;&#x2e;&#x31;&#x30;</a></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/590003368/" target="_blank">OpenSSH配置</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/SSH/">SSH</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/1003982246/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1003982246/" title="发布于 2024-01-18 05:19">Nginx调优</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/1092337223/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1092337223/" title="发布于 2024-01-16 05:05">系统日志文件详解</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +210,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

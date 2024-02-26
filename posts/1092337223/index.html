@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Docker的入门程序
+            系统日志文件详解
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,28 +37,28 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">Docker的入门程序</h1>
+                <h1 class="header-subtitle">系统日志文件详解</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-04-27
+                            <i class="iconfont icon-time"></i> 发表时间：2024-01-16
                         </span>
                         
                             
-                                <span id="/posts/3665708294/" class="leancloud_visitors" data-flag-title="Docker的入门程序">
+                                <span id="/posts/1092337223/" class="leancloud_visitors" data-flag-title="系统日志文件详解">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3665708294/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1092337223/"></span>
                                 </span>
                               
                         
                     </p>
                     
                         
-                            <span class="category-color">微服务</span>
+                            <span class="category-color">Linux</span>
                         
                     
                     
@@ -74,65 +74,122 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <p>在CentOS中安装完Docker，通过一个入门程序来学习它的基本使用，我们首先需要编写Dockerfile及其相关文件，然后构建镜像，创建并启动容器，最后查看结果。</p>
-<h2 id="编写Dockerfile文件"><a href="#编写Dockerfile文件" class="headerlink" title="编写Dockerfile文件"></a>编写Dockerfile文件</h2><p>先创建一个空的Docker工作目录dockerspace，进入该目录，vim Dockerfile新建并打开一个文件。</p>
-<pre><code class="bash">mkdir dockerspace
-cd dockerspace
-vim Dockerfile
-</code></pre>
-<pre><code class="bash">#Docker官方自带的python作为一个基础镜像
-FROM python:2.7-slim
-#设置工作目录/app
-WORKDIR /app
-#复制当前所有内容到/app中
-ADD . /app
-#安装文件包
-RUN pip install -r requirements.txt
-#设置容器暴露的端口
-EXPOSE 80
-#定义环境变量
-ENV NAME World
-#容器启动后，立刻启动app.py
-CMD [&quot;python&quot;,&quot;app.py&quot;]
-</code></pre>
-<h2 id="编写外部文件"><a href="#编写外部文件" class="headerlink" title="编写外部文件"></a>编写外部文件</h2><h3 id="requirements-txt"><a href="#requirements-txt" class="headerlink" title="requirements.txt"></a>requirements.txt</h3><pre><code class="bash">Flask
-Redis
-</code></pre>
-<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><pre><code class="bash">from flask import Flask
-from redis import Redis, RedisError
-import os
-import socket
-redis = Redis(host=&#39;redis&#39;, \
-    db=0, socket_comment_timeout=2, socket_timeout=2)
-app = Flask(__name__)
-@app.route(&quot;/&quot;)
-def hello():
-    try:
-        visits = redis.incr(&#39;counter&#39;)
-    except RedisError:
-        visits = &quot;&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;&quot;
-    html = =&quot;&lt;h3&gt;Hello &#123;name&#125;!&lt;/h3&gt;&quot; \
-        &quot;&lt;b&gt;Hostname:&lt;/b&gt; &#123;hostname&#125;&lt;br/&gt;&quot; \
-        &quot;&lt;b&gt;Visits:&lt;/b&gt; &#123;visits&#125;&quot;
-    return html.format(name=os.getenv(&quot;NAME&quot;,&quot;world&quot;), \
-                       hostname = socket.gethostname(),
-                       visits=visits)
-if __name__ == &#39;__main__&#39;:
-    app.run(host=&#39;0.0.0.0&#39;, port=80)
-</code></pre>
-<p>这时我们所需要的文件已经准备完成，接下来就是创建镜像，打开linux的终端，在Dockerfile文件所在目录使用指令，生成镜像。</p>
-<pre><code class="bash">docker bulid -t hellodocker . 
-</code></pre>
-<p>镜像构建完成后，输入下面的指令查看本地列表中是否有名为hellodocker的镜像。</p>
-<pre><code class="bash">docker images
-</code></pre>
-<p>可以看到本地镜像列表不仅包含hellodocker镜像，也包含Dockerfile文件中依赖的基础镜像Python，然后创建启动容器，命令如下：</p>
-<pre><code class="bash">docker run -d -p 5000:80 hellodocker
-</code></pre>
-<p>docker run是创建并启动容器的命令，-d表示后台运行，-p是将容器的80端口映射到宿主机的5000端口。<br>最后查看运行容器：</p>
-<pre><code class="bash">docker ps
-</code></pre>
-<p>通过PORTS列表可以看出容器已经映射到了一个5000的端口，使用宿主机的浏览器访问<a href="http://localhost:5000（请求失败的话，所以用虚拟机的ip地址来代替localhost）来访问容器中的程序。">http://localhost:5000（请求失败的话，所以用虚拟机的ip地址来代替localhost）来访问容器中的程序。</a></p>
+                <h4 id="日志文件的分类"><a href="#日志文件的分类" class="headerlink" title="日志文件的分类"></a>日志文件的分类</h4><h5 id="内核及系统日志"><a href="#内核及系统日志" class="headerlink" title="内核及系统日志"></a>内核及系统日志</h5><p>这种日志数据由系统服务rsyslog统一管理，主配置文件&#x2F;etc&#x2F;rsyslog.conf中的设置决定将内核消息及各种系统程序消息记录到什么位置。</p>
+<h5 id="用户日志"><a href="#用户日志" class="headerlink" title="用户日志"></a>用户日志</h5><p>用于记录Linux系统用户登陆及退出的相关信息。</p>
+<p>包括用户名、登陆终端、登陆时间等。</p>
+<h5 id="程序日志"><a href="#程序日志" class="headerlink" title="程序日志"></a>程序日志</h5><p>有些应用程序会选择由自己独立管理的一份日志文件。</p>
+<h4 id="日志文件的位置"><a href="#日志文件的位置" class="headerlink" title="日志文件的位置"></a>日志文件的位置</h4><p>Linux系统本身和大部分服务器程序的日志文件放在&#x2F;var&#x2F;log&#x2F;下。</p>
+<h4 id="常见的日志文件及查看方式"><a href="#常见的日志文件及查看方式" class="headerlink" title="常见的日志文件及查看方式"></a>常见的日志文件及查看方式</h4><table>
+<thead>
+<tr>
+<th>日志文件</th>
+<th>存放内容</th>
+<th>查看命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>&#x2F;var&#x2F;log&#x2F;messages</strong></td>
+<td>内核消息及各种应用程序的公共日志信息，包括启动、I&#x2F;O错误，网络错误、程序故障等</td>
+<td>cat等</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;cron</td>
+<td>crond周期性计划任务产生的时间信息</td>
+<td>cat等</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;dmesg</td>
+<td>引导过程中的各种事件信息</td>
+<td>cat等</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;maillog</td>
+<td>进入或发出系统鹅电子邮件活动</td>
+<td>cat等</td>
+</tr>
+<tr>
+<td><strong>&#x2F;var&#x2F;log&#x2F;lastlog</strong></td>
+<td>每个用户最近的登录事件</td>
+<td>last、lastlog</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;secure</td>
+<td>用户认证相关的安全事件信息</td>
+<td>cat等</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;wtmp</td>
+<td>每个用户登陆、注销及系统启动和停机事件</td>
+<td>users、who、w</td>
+</tr>
+<tr>
+<td><strong>&#x2F;var&#x2F;log&#x2F;btmp</strong></td>
+<td>失败的、错误的登录尝试及验证事件</td>
+<td>lastb</td>
+</tr>
+</tbody></table>
+<h4 id="日志消息的级别"><a href="#日志消息的级别" class="headerlink" title="日志消息的级别"></a>日志消息的级别</h4><p>数字等级越小，优先级越高，消息越重要</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>英文表示</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>EMERG（紧急）</td>
+<td>会导致主机系统不可用的情况</td>
+</tr>
+<tr>
+<td>1</td>
+<td>ALERT（警告）</td>
+<td>必须马上采取措施解决的问题</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CRITICAL（严重）</td>
+<td>比较严重的情况</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ERROR（错误）</td>
+<td>运行出现错误</td>
+</tr>
+<tr>
+<td>4</td>
+<td>WARNING（提醒）</td>
+<td>可能影响系统功能，需要提醒用户的重要事件</td>
+</tr>
+<tr>
+<td>5</td>
+<td>NOTICE（注意）</td>
+<td>不会影响正常功能，但是需要注意的事件</td>
+</tr>
+<tr>
+<td>6</td>
+<td>INFO（信息）</td>
+<td>一般信息</td>
+</tr>
+<tr>
+<td>7</td>
+<td>DEBUG（调试）</td>
+<td>程序或系统调试信息等</td>
+</tr>
+<tr>
+<td>8</td>
+<td>none（没有）</td>
+<td>不做记录</td>
+</tr>
+</tbody></table>
+<h4 id="用户日志的查看"><a href="#用户日志的查看" class="headerlink" title="用户日志的查看"></a>用户日志的查看</h4><p>存放位置：&#x2F;var&#x2F;log&#x2F;wtmp、&#x2F;var&#x2F;log&#x2F;btmp、&#x2F;var&#x2F;log&#x2F;lastlog</p>
+<p>查询命令：users、who、w、last、lastlog、lastb等</p>
+<p>users：只显示当前登录2的用户名，每一个显示对应一个会话。</p>
+<p>who：用于报告当前登录到系统中的每个用户的信息。</p>
+<p>last：用于查询成功登录到系统的用户记录，最近的登录情况在最前面。</p>
+<p>lastlog：用于显示系统中所有用户最近一次登录信息。</p>
+<p>lastb：用于显示用户错误的登录列表，此命令可以发现系统的登录异常。</p>
 
                 
                 <p class="end">__END__</p>
@@ -145,7 +202,7 @@ if __name__ == &#39;__main__&#39;:
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/posts/3665708294/" target="_blank">Docker的入门程序</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/1092337223/" target="_blank">系统日志文件详解</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -160,18 +217,18 @@ if __name__ == &#39;__main__&#39;:
                     <div class="category">
                         分类：
                         
-                            <a href="/category/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
+                            <a href="/category/Linux/">Linux</a>
                         
                     </div>
                 
                 
                 <div class="article-prev-next">
                     
-                        <a href="/posts/1601248455/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1601248455/" title="发布于 2023-05-16 08:34">反爬虫之随机用户代理</a>
+                        <a href="/posts/590003368/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/590003368/" title="发布于 2024-01-16 07:03">OpenSSH配置</a>
                         <br>
                     
                     
-                        <a href="/posts/1107118888/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1107118888/" title="发布于 2023-04-25 06:06">什么是爬虫？</a>
+                        <a href="/posts/3882607683/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3882607683/" title="发布于 2024-01-16 03:18">解析文件系统原理</a>
                     
                 </div>
             </div>

@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            mysql调优
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">mysql调优</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-01-27
+                        </span>
+                        
+                            
+                                <span id="/posts/304776862/" class="leancloud_visitors" data-flag-title="mysql调优">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/304776862/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">MySQL</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,97 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>以下均是修改mysql的配置文件</p>
+<p>vim &#x2F;etc&#x2F;my.cnf</p>
+<pre><code>[mysqld]
+basedir = /usr/local/mysql
+datadir = /usr/local/mysql/data
+socket = /usr/local/mysql/mysql.sock
+character-set-server=utf8mb4
+port = 3306
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+mysqlx_max_connections=65535
+max_connections=65535     #修改MySQL最大连接数
+thread_cache_size=16384   #实际最大可连接数为16384 不能超过16384即使超过也以16384为准
+default-storage-engine=InnoDB  #默认存储引擎
+innodb_file_per_table=on       #设置InnoDB为独立表空间模式
+innodb_open_files = 1024 #限制Innodb能打开的表的数据
+innodb_buffer_pool_size = 1G #缓冲池大小 设置服务器物理内存大小的80%。不要设置过大
+innodb_write_io_threads = 8  #io线程
+innodb_read_io_threads = 8
+innodb_thread_concurrency = 0 #线程并发限制0为无限制
+innodb_purge_threads = 1 #线程回收
+innodb_flush_log_at_trx_commit = 2 #写日志到磁盘2性能提升
+innodb_log_buffer_size = 8M #日志缓存池大小
+innodb_log_files_in_group = 3 #设置日志文件的个数推荐为3
+innodb_log_group_home_dir = /usr/local/mysql/data #设置表空间文件路径
+innodb_max_dirty_pages_pct = 90 #缓冲池脏数据比率
+innodb_lock_wait_timeout = 120 #事务锁定超时时间单位为秒默认为50
+innodb_buffer_pool_instances = 2 #多个缓冲池
+innodb_flush_method = O_DIRECT #写数据和日志文件的方式
+
+[client]
+socket = /usr/local/mysql/mysql.sock
+default-character-set=utf8mb4
+</code></pre>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/304776862/" target="_blank">mysql调优</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/MySQL/">MySQL</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3314795838/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3314795838/" title="发布于 2024-01-27 05:12">mysql半同步复制</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/2283993500/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2283993500/" title="发布于 2024-01-27 04:34">mysql部署</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +194,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

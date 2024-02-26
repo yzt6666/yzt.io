@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            mysql部署
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">mysql部署</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-01-27
+                        </span>
+                        
+                            
+                                <span id="/posts/2283993500/" class="leancloud_visitors" data-flag-title="mysql部署">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2283993500/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">MySQL</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,120 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h6 id="1-下载mysql"><a href="#1-下载mysql" class="headerlink" title="1.下载mysql"></a>1.下载mysql</h6><p>mysql8.0.26版本</p>
+<pre><code>wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz
+</code></pre>
+<h6 id="2-解压缩到-x2F-usr-x2F-local中"><a href="#2-解压缩到-x2F-usr-x2F-local中" class="headerlink" title="2.解压缩到&#x2F;usr&#x2F;local中"></a>2.解压缩到&#x2F;usr&#x2F;local中</h6><pre><code>tar xvf mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz -C /usr/local/
+</code></pre>
+<h6 id="3-如果有多个版本的mysql，可以做符号链接，方便管理"><a href="#3-如果有多个版本的mysql，可以做符号链接，方便管理" class="headerlink" title="3.如果有多个版本的mysql，可以做符号链接，方便管理"></a>3.如果有多个版本的mysql，可以做符号链接，方便管理</h6><pre><code>ln -s /usr/local/mysql-8.0.26-linux-glibc2.12-x86_64 /usr/local/mysql
+</code></pre>
+<h6 id="4-在mysql中创建data文件夹，用来存储数据。"><a href="#4-在mysql中创建data文件夹，用来存储数据。" class="headerlink" title="4.在mysql中创建data文件夹，用来存储数据。"></a>4.在mysql中创建data文件夹，用来存储数据。</h6><pre><code>cd /usr/local/mysql
+
+mkdir data
+</code></pre>
+<h6 id="5-给mysql创建用户组以及用户和密码"><a href="#5-给mysql创建用户组以及用户和密码" class="headerlink" title="5.给mysql创建用户组以及用户和密码"></a>5.给mysql创建用户组以及用户和密码</h6><pre><code>groupadd  mysql
+
+useradd -s /sbin/nologin -g mysql mysql
+
+chown -R mysql.mysql /usr/local/mysql #授权
+</code></pre>
+<h6 id="6-到bin目录下，初始化基础信息"><a href="#6-到bin目录下，初始化基础信息" class="headerlink" title="6.到bin目录下，初始化基础信息"></a>6.到bin目录下，初始化基础信息</h6><pre><code>cd bin
+
+./bin/mysqld --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --initialize
+</code></pre>
+<p>执行完毕后会得到一个临时密码，用于一次登陆mysql，修改root密码。</p>
+<h6 id="7-编辑my-cnf文件"><a href="#7-编辑my-cnf文件" class="headerlink" title="7.编辑my.cnf文件"></a>7.编辑my.cnf文件</h6><p>vi &#x2F;etc&#x2F;my.cnf</p>
+<pre><code>[mysqld]
+
+basedir = /usr/local/mysql
+
+datadir = /usr/local/mysql/data
+
+socket = /usr/local/mysql/mysql.sock
+
+character-set-server=utf8mb4
+
+port = 3306
+
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+[client]
+
+socket = /usr/local/mysql/mysql.sock
+
+default-character-set=utf8mb4
+</code></pre>
+<p>chmod +x &#x2F;etc&#x2F;my.cnf  #给文件执行权限</p>
+<h6 id="8-添加mysqld服务到系统"><a href="#8-添加mysqld服务到系统" class="headerlink" title="8.添加mysqld服务到系统"></a>8.添加mysqld服务到系统</h6><p>cp -a .&#x2F;support-files&#x2F;mysql.server &#x2F;etc&#x2F;init.d&#x2F;mysql</p>
+<h6 id="9-授权以及添加服务"><a href="#9-授权以及添加服务" class="headerlink" title="9.授权以及添加服务"></a>9.授权以及添加服务</h6><p>chmod +x &#x2F;etc&#x2F;init.d&#x2F;mysql</p>
+<p>chkconfig –add mysql</p>
+<h6 id="10-启动mysql"><a href="#10-启动mysql" class="headerlink" title="10.启动mysql"></a>10.启动mysql</h6><p>service mysql start</p>
+<h6 id="11-登录mysql"><a href="#11-登录mysql" class="headerlink" title="11.登录mysql"></a>11.登录mysql</h6><p>mysql -uroot -p临时密码</p>
+<p>修改root密码</p>
+<pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;123456&#39;;
+</code></pre>
+<h6 id="12-修改远程链接并生效"><a href="#12-修改远程链接并生效" class="headerlink" title="12.修改远程链接并生效"></a>12.修改远程链接并生效</h6><pre><code>update user set host=&#39;%&#39; where user=&#39;root&#39;;
+
+flush privileges;
+</code></pre>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/2283993500/" target="_blank">mysql部署</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/MySQL/">MySQL</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/304776862/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/304776862/" title="发布于 2024-01-27 05:03">mysql调优</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3678535185/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3678535185/" title="发布于 2024-01-27 02:48">tomcat优化</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +217,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

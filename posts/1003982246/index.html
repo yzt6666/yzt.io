@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            Nginx调优
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">Nginx调优</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-01-18
+                        </span>
+                        
+                            
+                                <span id="/posts/1003982246/" class="leancloud_visitors" data-flag-title="Nginx调优">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1003982246/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Nginx</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,312 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="隐藏Nginx版本号"><a href="#隐藏Nginx版本号" class="headerlink" title="隐藏Nginx版本号"></a>隐藏Nginx版本号</h4><h5 id="1-上传软件包并解压"><a href="#1-上传软件包并解压" class="headerlink" title="1.上传软件包并解压"></a>1.上传软件包并解压</h5><pre><code>[root@cong11 ~]# tar -zxvf nginx-1.10.3.tar.gz -C /usr/local/src/
+</code></pre>
+<h5 id="2-更改源码隐藏软件名称和版本号"><a href="#2-更改源码隐藏软件名称和版本号" class="headerlink" title="2.更改源码隐藏软件名称和版本号"></a>2.更改源码隐藏软件名称和版本号</h5><pre><code>[root@cong11 ~]# cd /usr/local/src/nginx-1.10.3/  
+[root@cong11 nginx-1.10.3]# vim src/core/nginx.h 
+13 #define NGINX_VERSION      &quot;8.8.8&quot;    #修改版本号
+14 #define NGINX_VER          &quot;web/&quot; NGINX_VERSION #修改服务器名称
+
+[root@cong11 nginx-1.10.3]# vim src/http/ngx_http_header_filter_module.c
+49 static char ngx_http_server_string[] = &quot;Server: web&quot; CRLF;  #修改HTTP头信息中的server字段，防止回显具体版本号
+
+[root@cong11 nginx-1.10.3]# vim src/http/ngx_http_special_response.c
+#这个文件定义了http错误码的返回，有时候我们页面程序出现错误，Nginx会代我们返回相应的错误代码，回显的时候，会带上nginx和版本号，我们把他隐藏起来.
+22 &quot;&lt;hr&gt;&lt;center&gt;&quot; NGINX_VER &quot;&lt;/center&gt;&quot; CRLF NGINX_VER变量
+29 &quot;&lt;hr&gt;&lt;center&gt;web&lt;/center&gt;&quot; CRLF
+</code></pre>
+<h5 id="3-安装nginx的依赖包"><a href="#3-安装nginx的依赖包" class="headerlink" title="3.安装nginx的依赖包"></a>3.安装nginx的依赖包</h5><pre><code>[root@cong11 nginx-1.10.3]# yum install -y gcc gcc-c++ autoconf automake zlib zlib-devel openssl openssl-devel  pcre pcre-devel
+</code></pre>
+<h5 id="4-编译安装"><a href="#4-编译安装" class="headerlink" title="4.编译安装"></a>4.编译安装</h5><pre><code>[root@cong11 nginx-1.10.3]#  ./configure --prefix=/usr/local/nginx &amp; make &amp; make install
+</code></pre>
+<h5 id="5-启动nginx"><a href="#5-启动nginx" class="headerlink" title="5.启动nginx"></a>5.启动nginx</h5><pre><code>[root@cong11 ~]# /usr/local/nginx/sbin/nginx
+</code></pre>
+<h5 id="6-查看端口号"><a href="#6-查看端口号" class="headerlink" title="6.查看端口号"></a>6.查看端口号</h5><pre><code>[root@cong11 ~]# lsof -i:80
+</code></pre>
+<h4 id="配置文件nginx-conf"><a href="#配置文件nginx-conf" class="headerlink" title="配置文件nginx.conf"></a>配置文件nginx.conf</h4><p>nginx -t  #配置文件语法检查</p>
+<p>nginx -s reload #重载</p>
+<p>ln -s &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;* &#x2F;usr&#x2F;local&#x2F;bin&#x2F; #添加path变量</p>
+<h5 id="1-全局配置"><a href="#1-全局配置" class="headerlink" title="1.全局配置"></a>1.全局配置</h5><pre><code>user nobody; //运行用户，Nginx的运行用户实际是编译时指定的nginx，若编译时未指定则默认为nobody
+worker_processes 2; //指定nginx启动的工作进程数量，建议按照cpu数目来指定，一般为它的倍数
+worker_rlimit_nofile 102400;  //这个指令是指当一个nginx进程打开的最多文件数目.
+error_log  logs/error.log; //全局错误日志文件的位置
+pid  logs/nginx.pid;  //PID文件的位置
+</code></pre>
+<h5 id="2-I-x2F-O事件配置"><a href="#2-I-x2F-O事件配置" class="headerlink" title="2.I&#x2F;O事件配置"></a>2.I&#x2F;O事件配置</h5><p> 使用”events {}”界定标记，用来指定Nginx进程的I&#x2F;O响应模型，每个进程的连接数等设置</p>
+<pre><code>events &#123;
+   use epoll;   //使用epoll模型，对于2.6以上的内核，建议使用epoll模型以提高性能
+   worker_connections 4096;  //每个进程允许的最多连接数(默认为1024)，每个进程的连接数应根据实际需要来定，一般在10000以下，理论上每台nginx服务器的最大连接数为worker_processes*worker_connections，具体还要看服务器的硬件、带宽等。
+&#125;
+</code></pre>
+<h5 id="3-HTTP配置"><a href="#3-HTTP配置" class="headerlink" title="3.HTTP配置"></a>3.HTTP配置</h5><p> 使用”http{}”界定标记，包括访问日志、HTTP端口、网页目录、默认字符集、连接保持、以及虚拟主机、PHP解析等一系列设置。其中大部分配置语句包含在子界定标记”server {}”内。</p>
+<pre><code>http &#123;
+    #设定媒体类型,include 只是一个在当前文件中包含另一个文件内容的指令。
+   include      mime.types;	
+   default_type application/octet-stream;   //默认媒体类型足够。
+   #设定日志格式
+   log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+                     &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+                     &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+  
+   #设定access log
+   access_log logs/access.log main;
+   keepalive_timeout 65;  //连接保持超时
+   #设定虚拟主机
+   server &#123;                //用来配置虚拟主机
+      listen  80; //WEB服务的监听设置，可以采用”IP地址:端口”形式
+      server_name www.lnmp.com;//网站名,称可以写多个名称,用空格分隔
+       location / &#123;    //表示如何匹配后面的路径的
+            index index.html; //默认首页
+            root html; //网页根目录位置，默认为Nginx安装目录下的html/子目录,root语句用来设置特定访问位置的网页文档路径，根据需要可改为/var/www/html等其他路径。
+         &#125;
+      charset gb2312;  //网页的默认字符集
+      #设定本虚拟主机的访问日志
+      access_log logs/www.lnmp.com.access.log main;
+      error_page 500 502 503 504  /50x.html; //内部错误的反馈页面
+      location = /50x.html &#123;
+           root html;
+      &#125;
+   &#125;
+&#125;
+</code></pre>
+<h4 id="生成启动脚本，配置服务开机自启"><a href="#生成启动脚本，配置服务开机自启" class="headerlink" title="生成启动脚本，配置服务开机自启"></a>生成启动脚本，配置服务开机自启</h4><pre><code>[root@cong11 ~]# vim /etc/init.d/nginx
+#!/bin/bash
+# chkconfig: 2345 99 20
+# description: Nginx Service Control Script
+PROG=&quot;/usr/local/nginx/sbin/nginx&quot;
+PIDF=&quot;/usr/local/nginx/logs/nginx.pid&quot;
+case &quot;$1&quot; in
+start)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+echo &quot;Nginx service already running.&quot;
+else
+     $PROG -t &amp;&gt; /dev/null
+if [ $? -eq 0 ] ; then 
+       $PROG
+echo &quot;Nginx service start success.&quot;
+else
+     $PROG -t
+fi
+fi
+   ;;
+stop)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+kill -s QUIT $(cat $PIDF)
+echo &quot;Nginx service stop success.&quot; 
+else
+echo &quot;Nginx service already stop&quot;
+fi
+   ;;
+restart)
+    $0 stop
+    $0 start
+    ;;
+status)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+echo &quot;Nginx service is running.&quot;
+else
+echo &quot;Nginx is stop.&quot;
+fi
+  ;; 
+reload)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+    $PROG -t &amp;&gt; /dev/null
+if [ $? -eq 0 ] ; then
+kill -s HUP $(cat $PIDF)
+echo &quot;reload Nginx config success.&quot;
+else
+      $PROG -t
+fi
+else
+echo &quot;Nginx service is not run.&quot; 
+fi
+    ;;
+  *)
+echo &quot;Usage: $0 &#123;start|stop|restart|reload&#125;&quot;
+exit 1
+esac
+
+[root@cong11 ~]# chmod +x /etc/init.d/nginx  #给脚本添加可执行权限
+[root@cong11 ~]# chkconfig --add nginx    #把nginx添加为系统服务
+[root@cong11 ~]# chkconfig nginx on      #把nginx添加开机自启动
+[root@cong11 ~]# chkconfig --list nginx    #查看nginx开机启动项
+</code></pre>
+<h4 id="Nginx运行CPU亲和力"><a href="#Nginx运行CPU亲和力" class="headerlink" title="Nginx运行CPU亲和力"></a>Nginx运行CPU亲和力</h4><p> 这个要根据你的CPU线程数配置，在高并发情况下，通过设置cpu亲和力来降低由于多CPU核切换带来的性能损耗。</p>
+<pre><code>[root@cong11 ~]# vim /usr/local/nginx/conf/nginx.conf
+  worker_processes  4;
+  worker_cpu_affinity 0001 0010 0100 1000;
+</code></pre>
+<p> 上面的配置表示：4核CPU，开启4个进程。0001表示开启第一个cpu内核， 0010表示开启第二个cpu内核，依次类推；有多少个核，就有几位数，1表示该内核开启，0表示该内核关闭。</p>
+<p> worker_cpu_affinity auto;  #自动绑定cpu</p>
+<h4 id="Nginx最多可以打开文件数"><a href="#Nginx最多可以打开文件数" class="headerlink" title="Nginx最多可以打开文件数"></a>Nginx最多可以打开文件数</h4><h5 id="设置nginx最大可打开文件数"><a href="#设置nginx最大可打开文件数" class="headerlink" title="设置nginx最大可打开文件数"></a>设置nginx最大可打开文件数</h5><p>在nginx.conf文件全局配置中添加</p>
+<pre><code>worker_rlimit_nofile 102400;
+</code></pre>
+<h5 id="修改系统可以打开的最大文件数"><a href="#修改系统可以打开的最大文件数" class="headerlink" title="修改系统可以打开的最大文件数"></a>修改系统可以打开的最大文件数</h5><h6 id="临时修改"><a href="#临时修改" class="headerlink" title="临时修改"></a>临时修改</h6><pre><code>root@cong11 ~]# ulimit -n 102400
+[root@cong11 ~]# ulimit -n
+102400
+</code></pre>
+<h6 id="永久修改"><a href="#永久修改" class="headerlink" title="永久修改"></a>永久修改</h6><pre><code>[root@cong11 ~]# vim /etc/security/limits.conf
+#在文件尾部添加如下代码： 
+* soft nofile 102400
+* hard nofile 102400
+</code></pre>
+<h4 id="Nginx事件处理模型"><a href="#Nginx事件处理模型" class="headerlink" title="Nginx事件处理模型"></a>Nginx事件处理模型</h4><pre><code>[root@cong11 ~]# vim /usr/local/nginx/conf/nginx.conf
+events &#123;
+    use epoll;
+    worker_connections  65535;   #单个进程允许客户端最大并发连接数
+&#125;
+</code></pre>
+<p> nginx采用epoll事件模型，处理效率高。</p>
+<p> worker_connections是单个worker进程允许客户端最大连接数。</p>
+<h4 id="http主体优化"><a href="#http主体优化" class="headerlink" title="http主体优化"></a>http主体优化</h4><h5 id="开启高效传输模式"><a href="#开启高效传输模式" class="headerlink" title="开启高效传输模式"></a>开启高效传输模式</h5><pre><code>[root@cong11 ~]# vim /usr/local/nginx/conf/nginx.conf
+ http &#123;
+     include       mime.types;        #媒体类型
+     default_type  application/octet-stream;  #默认媒体类型足够
+     sendfile        on;
+     tcp_nopush     on;  
+</code></pre>
+<p> <strong>sendfile     on;</strong></p>
+<p> 开启高效文件传输模式，sendfile指令指定nginx是否调用sendfile函数来输出文件，当nginx是一个静态文件服务器的时候，开启sendfile配置项能大大提高nginx的性能。</p>
+<p> <strong>tcp_nopush   on;</strong></p>
+<p> 必须在sendfile开启模式才有效，防止网络阻塞，积极的减少网络报文段的数量（将响应头和响应体两部分一起发送，而不一个接一个的发送。）</p>
+<h5 id="长连接超时时间"><a href="#长连接超时时间" class="headerlink" title="长连接超时时间"></a>长连接超时时间</h5><pre><code>[root@cong11 ~]# vim /usr/local/nginx/conf/nginx.conf
+     keepalive_timeout  65; 
+</code></pre>
+<p> keepalived_timeout  与client的keep-alive连接超时时间，单位是秒。服务器将会在这个时间后关闭连接，长连接可以减少重建连接的开销，如果设置时间过长，用户又多，长时间保持连接会占用大量资源。</p>
+<h5 id="文件上传大小限制"><a href="#文件上传大小限制" class="headerlink" title="文件上传大小限制"></a>文件上传大小限制</h5><pre><code>[root@cong11 ~]# vim /usr/local/nginx/conf/nginx.conf
+client_max_body_size 10m;  #在40行添加
+</code></pre>
+<h5 id="location匹配"><a href="#location匹配" class="headerlink" title="location匹配"></a>location匹配</h5><p> Nginx的location通过指定模式来与客户端请求的URI相匹配，location可以把网站的不同部分,定位到不同的处理方式上，基本语法如下：</p>
+<p> location [&#x3D;|<del>|</del>*|^~] pattern {</p>
+<p> ……</p>
+<p> }  </p>
+<p> &#x3D; 表示做精确匹配，即要求请求的地址和匹配路径完全相同</p>
+<p> ~：正则匹配，区分大小写</p>
+<p> ~*：正则匹配”不区分大小写</p>
+<p> 注：nginx支持正则匹配，波浪号（<del>）表示匹配路径是正则表达式，加上*变成</del>*后表示大小写不敏感</p>
+<p>^<del>：指令用于字符前缀匹配。例如：location ^</del> &#x2F;images&#x2F; {…}</p>
+<h6 id="精确匹配"><a href="#精确匹配" class="headerlink" title="精确匹配"></a>精确匹配</h6><p> 1.精准匹配,浏览器输入ip地址&#x2F;text.html,定位到服务器&#x2F;var&#x2F;www&#x2F;html&#x2F;text.html文件</p>
+<p> location &#x3D; &#x2F;text.html { </p>
+<p>  root &#x2F;var&#x2F;www&#x2F;html;  </p>
+<p>  index text.html;</p>
+<p> }</p>
+<ol start="2">
+<li>匹配命中的location，使用rewrite指令，用于转发。可以理解命中了就重定向到rewrite后面的url即可。</li>
+</ol>
+<p> location &#x3D; &#x2F;demo {   </p>
+<p>   rewrite ^ <a target="_blank" rel="noopener" href="http://google.com/">http://google.com</a>;</p>
+<p> }</p>
+<p> location &#x3D; &#x2F;yzt {   </p>
+<p>   rewrite ^ (.*) <a target="_blank" rel="noopener" href="https://yzt6666.gitee.io/">https://yzt6666.gitee.io</a>;</p>
+<p> }</p>
+<h6 id="前缀匹配"><a href="#前缀匹配" class="headerlink" title="前缀匹配"></a>前缀匹配</h6><p> ^<del>指令用于字符前缀匹配，和&#x3D;精确匹配一样，也是用于字符确定的匹配，不能使用正则且区分大小写。和&#x3D;不同的在于，^</del>指令下，访问的url无需url匹配模式一模一样，只需要其开头前缀和url匹配模式一样即可。</p>
+<p> location ^~ &#x2F;demo {   </p>
+<p>   rewrite ^ <a target="_blank" rel="noopener" href="http://google.com/">http://google.com</a>;</p>
+<p> }</p>
+<p> 对于该模式（&#x2F;demo），访问下列的地址都能匹配：</p>
+<p> <a target="_blank" rel="noopener" href="http://ip/demo">http://ip/demo</a></p>
+<p> <a target="_blank" rel="noopener" href="http://ip/demo/">http://ip/demo/</a></p>
+<p> <a target="_blank" rel="noopener" href="http://ip/demo/aaa">http://ip/demo/aaa</a></p>
+<p> <a target="_blank" rel="noopener" href="http://ip/demo/aaa/bbb">http://ip/demo/aaa/bbb</a></p>
+<h6 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h6><p> nginx支持正则匹配。所使用的指令是<del>和</del>*，前者表示使用正则，区分大小写，后者表示使用正则，不区分大小写。</p>
+<p> 例1：匹配任何以 gif、jpg 或 jpeg 结尾的请求。</p>
+<p> location ~* .(gif|jpg|swf)$ {</p>
+<p> }</p>
+<p> 例2：</p>
+<p> location ~ &#x2F;[0-9]emo {   </p>
+<p>   rewrite ^ <a target="_blank" rel="noopener" href="http://google.com/">http://google.com</a>;</p>
+<p> }</p>
+<p> 对于上述的模式，可以匹配的url如下：</p>
+<p>   <a target="_blank" rel="noopener" href="http://192.168.33.10/5emo">http://192.168.33.10/5emo</a></p>
+<p>   <a target="_blank" rel="noopener" href="http://192.168.33.10/9emo">http://192.168.33.10/9emo</a></p>
+<h6 id="正常匹配"><a href="#正常匹配" class="headerlink" title="正常匹配"></a>正常匹配</h6><p> 正常匹配的指令为空，即没有指定匹配指令的即为正常匹配。其形式类似 &#x2F;XXX&#x2F;YYY.ZZZ正常匹配中的url匹配模式可以使用正则，不区分大小写。</p>
+<p> location &#x2F;demo {   </p>
+<p>   rewrite ^ <a target="_blank" rel="noopener" href="http://google.com/">http://google.com</a>;</p>
+<p> }</p>
+<p> 上述模式指的是匹配&#x2F;demo的url，下面的都能匹配</p>
+<p>   <a target="_blank" rel="noopener" href="http://192.168.33.10/demo">http://192.168.33.10/demo</a></p>
+<p>   <a target="_blank" rel="noopener" href="http://192.168.33.10/demo/">http://192.168.33.10/demo/</a></p>
+<p>   <a target="_blank" rel="noopener" href="http://192.168.33.10/demo/aaa">http://192.168.33.10/demo/aaa</a></p>
+<h6 id="全匹配"><a href="#全匹配" class="headerlink" title="全匹配"></a>全匹配</h6><p> 全匹配与正常匹配一样，没有匹配指令，匹配的url模式仅一个斜杠&#x2F;</p>
+<p> location &#x2F; {   </p>
+<p>   rewrite ^ <a target="_blank" rel="noopener" href="http://google.com/">http://google.com</a>;</p>
+<p> }</p>
+<p> 匹配任何查询，因为所有请求都已 &#x2F; 开头。但是正则表达式规则和一些较长的字符串将被优先查询匹配。</p>
+<h6 id="命名匹配"><a href="#命名匹配" class="headerlink" title="命名匹配"></a>命名匹配</h6><p> 命名匹配指的是使用@绑定一个模式，类似变量替换的用法。</p>
+<p> error_page 404 &#x3D; @not_found;</p>
+<p> location @not_found {    </p>
+<p>   rewrite ^ <a target="_blank" rel="noopener" href="http://google.com/">http://google.com</a>;</p>
+<p> }</p>
+<p> 上述的作用是如果访问没有匹配的url会触发404指令，然后就匹配到@not_found 这个 location上。</p>
+<h6 id="匹配优先级"><a href="#匹配优先级" class="headerlink" title="匹配优先级"></a>匹配优先级</h6><p> 大原则是关于匹配模式的优先级：</p>
+<p> 精确匹配  &gt;  前缀匹配  &gt;  正则匹配  &gt; 正常匹配  &gt; 全匹配</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/1003982246/" target="_blank">Nginx调优</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/Nginx/">Nginx</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3678535185/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3678535185/" title="发布于 2024-01-27 02:48">tomcat优化</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/590003368/" class="next-prefix">» </a> 下一篇：    <a href="/posts/590003368/" title="发布于 2024-01-16 07:03">OpenSSH配置</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +409,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

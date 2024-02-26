@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            基于Dockerfile构建镜像
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">基于Dockerfile构建镜像</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-02-21
+                        </span>
+                        
+                            
+                                <span id="/posts/2619997822/" class="leancloud_visitors" data-flag-title="基于Dockerfile构建镜像">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2619997822/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Docker</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,128 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="镜像构建方式"><a href="#镜像构建方式" class="headerlink" title="镜像构建方式"></a>镜像构建方式</h4><p><strong>1、基于已有的容器创建镜像</strong></p>
+<p>2、基于本地模板创建镜像</p>
+<p><strong>3、基于Dockerfile创建镜像</strong></p>
+<h4 id="基于已有容器创建镜像"><a href="#基于已有容器创建镜像" class="headerlink" title="基于已有容器创建镜像"></a>基于已有容器创建镜像</h4><p>命令格式：</p>
+<p>docker commit [选项] 容器ID&#x2F;名称 仓库名称:[标签] </p>
+<p>常用选项：</p>
+<p>l -m 说明信息；</p>
+<p>l -a 作者信息；</p>
+<p>-p 生成过程中停止容器的运行。</p>
+<p>测试：</p>
+<p>首先启动一个镜像，在容器里做相应的修改，然后将修改后的容器提交为新的镜像。需要记住该容器的ID号。</p>
+<pre><code>[root@192 registry]# docker pull centos:7  #下载镜像
+[root@192 registry]# docker run -it centos:7 /bin/bash  #启动容器并进入
+[root@e06965dbe671 /]# touch yzt  #创建测试文件
+[root@e06965dbe671 /]# ls
+anaconda-post.log  dev  home  lib64  mnt  proc  run   srv  tmp  var
+bin                etc  lib   media  opt  root  sbin  sys  usr  yzt
+[root@e06965dbe671 /]# exit  #退出容器
+[root@192 registry]# docker commit -m &quot;yzt test images&quot; -a &quot;yzt&quot; e069 centos7:new  #创建镜像
+sha256:ff38ff23d40ce13d012960d76cdba3e8b06dd99c17657736ce86c36296e58a59
+[root@192 registry]# docker images  #查看镜像
+REPOSITORY                      TAG       IMAGE ID       CREATED         SIZE
+centos7                         new       ff38ff23d40c   3 seconds ago   204MB
+[root@192 registry]# docker run -it centos7:new /bin/bash
+[root@0391efe777f8 /]# ls -l yzt
+-rw-r--r--. 1 root root 0 Feb 21 09:19 yzt
+</code></pre>
+<h4 id="基于Dockerfile构建镜像"><a href="#基于Dockerfile构建镜像" class="headerlink" title="基于Dockerfile构建镜像"></a>基于Dockerfile构建镜像</h4><p>Docker镜像特点：</p>
+<ol>
+<li>Dockerfile中的每个指令都会创建一个新的镜像层；</li>
+<li>镜像层可以被缓存和复用；</li>
+<li>当Dockerfile中的指令被修改、复制的文件发生变化或者构建镜像时指定的变量值更换了，那么对应的镜像层缓存也将会失效；</li>
+<li>某一层的镜像缓存失效，它之后的镜像层缓存都会失效；</li>
+<li>镜像层是不可变的，如果在某一层中添加一个文件，然后在某一层中删除它，则镜像中依然会包含该文件，只是这个文件在Docker容器中不可见了。</li>
+</ol>
+<h4 id="Dockerfile详解"><a href="#Dockerfile详解" class="headerlink" title="Dockerfile详解"></a>Dockerfile详解</h4><p>Dockerfile的指令根据作用可以分为两种，构建指令和设置指令。构建指令用于构建image，其指定的操作不会在运行image的容器上执行；设置指令用于设置image的属性，其指定的操作将在运行image的容器中执行。</p>
+<p>1、FROM 镜像:Tag</p>
+<p>​	构建指令，必须指定且需要在Dockerfile文件中其他指令的前面。后续的指令都依赖于该指令指定的image。FROM指令指定的基础image可以是官方远程仓库中的，也可以位于本地仓库。</p>
+<p>2、MAINTAINER 作者信息</p>
+<p>​	构建指令，用于将image的制作者相关的信息写入到image中。当我们对该image执行docker inspect命令时，输出中有相应的字段记录该信息。</p>
+<p>3、RUN 命令</p>
+<p>​	构建指令，RUN可以运行任何被基础image支持的命令并提交到新的镜像中。如基础image选择ubuntu，那么软件管理部分只能使用ubuntu的命令。</p>
+<p>4、CMD [“要运行的程序” , ”参数1” , ”参数2”]</p>
+<p>​	设置指令，用于container（容器）启动时指定的操作。该操作可以是执行自定义脚本，也可以是执行系统命令。该指令只能在文件中存在一次（最后一行），如果有多个CMD命令，则只执行最后一条。</p>
+<p>5、ENTRYPOINT（设置container启动时执行的操作）</p>
+<p>​	设置指令，指定容器启动时执行的命令，可以多次设置，但是只有最后一个有效。</p>
+<p>6、USER 用户名&#x2F;UID</p>
+<p>​	设置指令，设置启动容器的用户，默认是root用户。</p>
+<p>7、EXPOSE 端口</p>
+<p>​	设置指令，该指令会将容器中的端口映射成宿主机器中的某个端口。当你需要访问容器的时候，可以不使用容器的IP地址而是使用宿主机器的IP地址和映射后的端口。要完成整个操作需要两个步骤，首先在Dockerfile使用EXPOSE设置需要映射的容器端口，然后在运行容器的时候指定-p选项加上EXPOSE设置的端口，这样EXPOSE设置的端口号会被随机映射成宿主机器中的一个端口号。也可以指定需要映射到宿主机器的那个端口，这时要确保宿主机器上的端口号没有被使用。EXPOSE指令可以一次设置多个端口号，相应的运行容器的时候，可以配套的多次使用-p选项。</p>
+<p>8、ENV 环境变量 变量值</p>
+<p>​	构建指令，在image中设置一个环境变量。</p>
+<p>​	设置了后，后续的RUN命令都可以使用，container启动后，可以通过docker inspect查看这个环境变量，也可以通过在docker run –env key&#x3D;value时设置或修改环境变量。假如你安装了JAVA程序，需要设置JAVA_HOME，那么可以在Dockerfile中这样写：ENV JAVA_HOME &#x2F;usr&#x2F;local&#x2F;java</p>
+<p>9、ADD 源文件 目标文件</p>
+<p>​	构建指令，ADD命令相对于COPY命令，可以解压缩文件并把它们添加到镜像中的功能，如果我们有一个压缩文件包，并且需要把这个压缩包中的文件添加到镜像中。需不需要先解开压缩包然后执行 COPY 命令呢？当然不需要！我们可以通过 ADD 命令一次搞定。</p>
+<p>同时ADD还可以从 url 拷贝文件到镜像中，但官方不推荐这样使用，官方建议我们当需要从远程复制文件时，最好使用 curl 或 wget 命令来代替 ADD 命令。原因是，当使用 ADD 命令时，会创建更多的镜像层，当然镜像的 size 也会更大，所以ADD命令官方推荐只有在解压缩文件并把它们添加到镜像中时才需要。</p>
+<p>10、COPY 源文件 目标文件</p>
+<p>​	COPY命令用于将于Dockerfile所在目录中的文件在镜像构建阶段从宿主机拷贝到镜像中，对于文件而言可以直接将文件复制到镜像中，对于目录而言，该命令只复制目录中的内容而不包含目录自身</p>
+<p>11、VOLUME [“目录”]</p>
+<p>​	设置指令，使容器中的一个目录具有持久化存储数据的功能，该目录可以被容器本身使用，也可以共享给其他容器使用。我们知道容器使用的是AUFS，这种文件系统不能持久化数据，当容器关闭后，所有的更改都会丢失。当容器中的应用有持久化数据的需求时可以在Dockerfile中使用该指令。</p>
+<p>12、WORKDIR 目录</p>
+<p>​	设置指令相当于cd命令，为后续RUN,CMD,ENTRYPOINT指定工作目录。</p>
+<p>13、ONBUILD 命令</p>
+<p>​	指定所生产的镜像作为一个基础镜像时所要运行的命令</p>
+<p>14、HEALTHCHECK</p>
+<p>​	健康检查</p>
+<p>在编写 Dockerfile 时，有严格的格式需要遵循：第一行必须使用 FROM 指令指明所基于的镜像名称；之后使用 MAINTAINER 指令说明维护该镜像的用户信息；然后是镜像操作相关指令，如 RUN 指令。每运行一条指令，都会给基础镜像添加新的一层。最后使用 CMD 指令指定启动容器时要运行的命令操作。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/2619997822/" target="_blank">基于Dockerfile构建镜像</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/Docker/">Docker</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3857397584/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3857397584/" title="发布于 2024-02-21 02:43">Docker容器引擎基础</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +225,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

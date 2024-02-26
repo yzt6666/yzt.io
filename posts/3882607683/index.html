@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            解析文件系统原理
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">解析文件系统原理</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-01-16
+                        </span>
+                        
+                            
+                                <span id="/posts/3882607683/" class="leancloud_visitors" data-flag-title="解析文件系统原理">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3882607683/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Linux</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,199 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="Inode和Block概述"><a href="#Inode和Block概述" class="headerlink" title="Inode和Block概述"></a>Inode和Block概述</h4><p>文件储存在硬盘上，硬盘的最小储存单位为扇区，多个扇区组成块（Block），是文件存储的最小单位，Block存储文件数据。文件存储在块中需要Inode来存储元信息，称为索引节点，也叫i节点。</p>
+<p>ps：Inode不包含文件名。文件名是存储在目录的目录项中。一个文件必须占用一个Inode，至少占用一个block。</p>
+<h4 id="查看文件的inode信息：stat"><a href="#查看文件的inode信息：stat" class="headerlink" title="查看文件的inode信息：stat"></a>查看文件的inode信息：stat</h4><pre><code>[root@192 ~]# stat anaconda-ks.cfg 
+  文件：anaconda-ks.cfg
+  大小：791       	块：8          IO 块：4096   普通文件
+Device: 253,0	Inode: 2490375     Links: 1
+权限：(0600/-rw-------)  Uid：(    0/    root)   Gid：(    0/    root)
+环境：system_u:object_r:admin_home_t:s0
+最近访问：2024-01-16 00:20:43.085011439 +0800
+最近更改：2024-01-16 00:20:43.128011440 +0800
+最近改动：2024-01-15 16:42:15.988404283 +0800
+创建时间：2024-01-16 00:20:43.085011439 +0800
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>别称</th>
+<th>中文翻译</th>
+<th>如何修改</th>
+<th>查看命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accesss</td>
+<td>Atime</td>
+<td>访问时间</td>
+<td>读取</td>
+<td>ls -lu</td>
+</tr>
+<tr>
+<td>Modify</td>
+<td>Mtime</td>
+<td>修改时间</td>
+<td>写入、修改</td>
+<td>ls -l</td>
+</tr>
+<tr>
+<td>Change&#x2F;Create</td>
+<td>Ctime</td>
+<td>改变时间&#x2F;创建时间</td>
+<td>修改文件名、写入、修改、改权限、做链接</td>
+<td>ls -lc</td>
+</tr>
+</tbody></table>
+<h4 id="文件系统访问文件的步骤"><a href="#文件系统访问文件的步骤" class="headerlink" title="文件系统访问文件的步骤"></a>文件系统访问文件的步骤</h4><p>1.用户在目录中看到要访问的文件名。</p>
+<p>2.通过目录的数据找到这个文件名对应我的Inode号。</p>
+<p>3.根据Inode号码，获取Inode信息（文件的元信息）。</p>
+<p>4.根据Inode信息，找到文件数据所在的block，读出数据。</p>
+<h4 id="删除指定Inode号锁对应的文件"><a href="#删除指定Inode号锁对应的文件" class="headerlink" title="删除指定Inode号锁对应的文件"></a>删除指定Inode号锁对应的文件</h4><p>格式：find	.&#x2F;	-inum	inode号	-exec	rm	-i	{}	;</p>
+<pre><code>[root@192 ~]# stat 123.txt 
+  文件：123.txt
+  大小：0         	块：0          IO 块：4096   普通空文件
+Device: 253,0	Inode: 2535711     Links: 1
+权限：(0644/-rw-r--r--)  Uid：(    0/    root)   Gid：(    0/    root)
+环境：unconfined_u:object_r:admin_home_t:s0
+最近访问：2024-01-16 15:45:27.689806417 +0800
+最近更改：2024-01-16 15:45:27.689806417 +0800
+最近改动：2024-01-16 15:45:27.689806417 +0800
+创建时间：2024-01-16 15:45:27.689806417 +0800
+[root@192 ~]# find ./ -inum 2535711 -exec rm -i &#123;&#125; \;
+rm：是否删除普通空文件 &#39;./123.txt&#39;？y
+</code></pre>
+<h4 id="查看文件系统的inode与block的信息"><a href="#查看文件系统的inode与block的信息" class="headerlink" title="查看文件系统的inode与block的信息"></a>查看文件系统的inode与block的信息</h4><p>df	-i	设备名（文件系统已挂载时查询，查询inode总数与已用数量）</p>
+<p>dumpe2fs	-h	设备名（文件系统无需挂载）</p>
+<p>tune2fs	-l	设备名（文件系统无需挂载）</p>
+<pre><code>[root@192 ~]# df -i
+文件系统                    Inodes 已用(I) 可用(I) 已用(I)% 挂载点
+devtmpfs                   1048576     416 1048160       1% /dev
+tmpfs                       311360       1  311359       1% /dev/shm
+tmpfs                       819200     750  818450       1% /run
+tmpfs                         1024      17    1007       2% /sys/fs/cgroup
+/dev/mapper/openeuler-root 3014656  278592 2736064      10% /
+tmpfs                      1048576      20 1048556       1% /tmp
+/dev/sda1                    65536     381   65155       1% /boot
+tmpfs                        62272      27   62245       1% /run/user/983
+tmpfs                        62272      23   62249       1% /run/user/0
+</code></pre>
+<h4 id="格式化时指定文件系统的inode个数和block大小"><a href="#格式化时指定文件系统的inode个数和block大小" class="headerlink" title="格式化时指定文件系统的inode个数和block大小"></a>格式化时指定文件系统的inode个数和block大小</h4><p>mkfs.xfs	-N	inode数	-b	块大小（单位字节）	设备名</p>
+<h4 id="解决inode耗尽导致的磁盘故障"><a href="#解决inode耗尽导致的磁盘故障" class="headerlink" title="解决inode耗尽导致的磁盘故障"></a>解决inode耗尽导致的磁盘故障</h4><ol>
+<li>删除不使用的文件</li>
+<li>将文件备份，重新格式化此文件系统，指定较多的inode个数</li>
+</ol>
+<h4 id="Linux文件系统软硬链接原理"><a href="#Linux文件系统软硬链接原理" class="headerlink" title="Linux文件系统软硬链接原理"></a>Linux文件系统软硬链接原理</h4><h5 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h5><p>方法：ln	源文件	目标文件</p>
+<p>特点：硬链接指向的文件的inode号，新生成的硬链接文件的inode号与源文件的inode号相同。不能对目录做链接，必须同一文件系统内，删除源文件，不影响另一个。</p>
+<pre><code>[root@192 data]# ls
+a.txt
+[root@192 data]# ln a.txt b.txt
+[root@192 data]# ls -i
+2666316 a.txt  2666316 b.txt
+[root@192 data]# rm -rf a.txt 
+[root@192 data]# ls
+b.txt
+</code></pre>
+<h5 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h5><p>方法：ln	-s	源文件或目录	目标文件或目录</p>
+<p>特点：软链接指向的文件名，新生成的inode号与源文件不相同，目录也可以生成软链接，可以不在同一个文件系统内，但当源文件移动或者重命名时软链接报错。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>硬链接</th>
+<th>软链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>指向</td>
+<td>inode号</td>
+<td>文件名</td>
+</tr>
+<tr>
+<td>inode号是否相同</td>
+<td>相同</td>
+<td>不同</td>
+</tr>
+<tr>
+<td>是否可以针对目录</td>
+<td>不可针对目录</td>
+<td>可针对目录</td>
+</tr>
+<tr>
+<td>可否跨文件系统</td>
+<td>不可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>删除、重命名、移动源文件</td>
+<td>不受影响</td>
+<td>失效</td>
+</tr>
+<tr>
+<td>创建命令</td>
+<td>ln 源文件 目标文件</td>
+<td>ln	-s	源文件或目录	目标文件或目录</td>
+</tr>
+</tbody></table>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3882607683/" target="_blank">解析文件系统原理</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/Linux/">Linux</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/1092337223/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1092337223/" title="发布于 2024-01-16 05:05">系统日志文件详解</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/275906450/" class="next-prefix">» </a> 下一篇：    <a href="/posts/275906450/" title="发布于 2023-12-29 03:14">操作系统安全控制</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +296,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

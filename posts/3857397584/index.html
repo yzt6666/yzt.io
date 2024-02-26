@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            Docker容器引擎基础
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">Docker容器引擎基础</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-02-21
+                        </span>
+                        
+                            
+                                <span id="/posts/3857397584/" class="leancloud_visitors" data-flag-title="Docker容器引擎基础">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3857397584/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Docker</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,45 +70,139 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="容器背景"><a href="#容器背景" class="headerlink" title="容器背景"></a>容器背景</h4><p>随着云计算和DevOps生态圈的蓬勃发展，出现的问题是需要维护一个非常庞大的<strong>开发、测试、预上线和生产环境</strong>。</p>
+<h4 id="虚拟化的几个缺点"><a href="#虚拟化的几个缺点" class="headerlink" title="虚拟化的几个缺点"></a>虚拟化的几个缺点</h4><ol>
+<li>资源占用多。</li>
+<li>冗余步骤多。</li>
+<li>启动慢。</li>
+</ol>
+<h4 id="容器技术的优势"><a href="#容器技术的优势" class="headerlink" title="容器技术的优势"></a>容器技术的优势</h4><ol>
+<li>启动快。</li>
+<li>资源占用少。</li>
+<li>体积小。</li>
+<li>简化部署。</li>
+</ol>
+<h4 id="Docker镜像操作"><a href="#Docker镜像操作" class="headerlink" title="Docker镜像操作"></a>Docker镜像操作</h4><p>docker search  关键字 ：从Docker Hub搜索镜像。</p>
+<p>docker pull 镜像名称:[标签]：获取镜像，从网络上下载。</p>
+<p>docker images 仓库名称:[标签]：查看镜像信息。</p>
+<p>docker inspect 镜像名或镜像ID：获取镜像的详细信息。</p>
+<p>docker tag 名称[:标签] 新名称[:新标签]：为镜像添加新的标签。</p>
+<p>docker rmi 镜像名称[:标签]：删除镜像。</p>
+<p>docker rmi 镜像ID：删除镜像。</p>
+<p>docker save -o 存出镜像为本地文件名 镜像名：存出镜像。</p>
+<p>docker load &lt; 存出的文件：载入镜像。</p>
+<p>docker load –input 存出的文件：载入镜像。</p>
+<p>docker push 仓库名称:标签：上传镜像。</p>
+<h4 id="Docker容器操作"><a href="#Docker容器操作" class="headerlink" title="Docker容器操作"></a>Docker容器操作</h4><p>1、创建容器与运行容器</p>
+<p>命令格式：docker create [选项]… 镜像运行的程序</p>
+<p>常用选项：</p>
+<p>-i 让容器的输入保持打开</p>
+<p>-t 让Docker 分配一个伪终端</p>
+<p>-d 守护进程形式运行</p>
+<p>例如：<strong>docker create -it centos &#x2F;bin&#x2F;bash</strong></p>
+<p>可以使用docker ps 命令来查看所有容器的运行状态。添加-a 选项可以列出系统中所有容器状态。</p>
+<p>2、容器的启动与停止</p>
+<p>命令格式：docker start 容器的ID&#x2F;名称</p>
+<p>如果用户想创建并启动容器，可以直接执行docker run 命令，等同于先执行docker create 命令，再执行docker start 命令。</p>
+<p>创建容器并启动执行一条shell 命令：<strong>docker run centos &#x2F;bin&#x2F;bash -c ls &#x2F;</strong></p>
+<p>docker run -d：容器在守护态形式在后台进行运行。</p>
+<p>下面的容器会持续在后台进行运行：</p>
+<p><strong>[root@localhost ~]# docker run -d nginx &#x2F;bin&#x2F;bash -c “while true;do echo hello;done”</strong></p>
+<p><strong>fa286930dde0ac3dde6750812929e42c650bb78a2d6e96cf1373a872266a1bc2</strong> </p>
+<p>查看容器内的输出：</p>
+<p><strong>[root@localhost ~]# docker logs fa286930dde0</strong></p>
+<p>2、容器的运行与终止</p>
+<p>命令格式：docker stop 容器的ID&#x2F;名称</p>
+<p>3、容器的进入</p>
+<p>命令格式：docker exec -it 容器ID&#x2F;名称&#x2F;bin&#x2F;bash</p>
+<p>-i ：表示让容器的输入保持打开；</p>
+<p>-t ：表示让Docker 分配一个伪终端。</p>
+<p>通过exit 命令退出容器。</p>
+<p>通过Ctrl+pq命令退出容器并保证容器在后台继续运行。</p>
+<p>4、容器的导出与导入</p>
+<p>导出容器到文件</p>
+<p>命令格式：docker export 容器ID&#x2F;名称&gt;文件名</p>
+<p>导入文件成为本地镜像</p>
+<p>命令格式：cat 文件名| docker import – 生成的镜像名称:标签</p>
+<p>5、容器的删除</p>
+<p>命令格式：docker rm 容器ID&#x2F;名称</p>
+<p>6、文件复制</p>
+<p>将主机&#x2F;root&#x2F;anaconda-ks.cfg目录拷贝到容器1708ad171a07的&#x2F;tmp目录下</p>
+<p><strong>docker cp &#x2F;root&#x2F;anaconda-ks.cfg 1708ad171a07:&#x2F;tmp</strong></p>
+<p><strong>docker attach 1708ad171a07</strong>：进入容器</p>
+<h4 id="创建私有仓库"><a href="#创建私有仓库" class="headerlink" title="创建私有仓库"></a>创建私有仓库</h4><p>通过官方提供的registry镜像部署一套本地的私有仓库环境</p>
+<pre><code>[root@localhost ~]# mkdir -p /opt/data/registry
+[root@localhost ~]# docker run -d -p 5000:5000 -v /opt/data/registry:/tmp/registry registry
+</code></pre>
+<p>准备测试镜像</p>
+<p><strong>docker run -d -p 8000:80 nginx</strong> 	&#x2F;&#x2F;将宿主机8000端口映射给容器的业务端口</p>
+<p>将修改过的nginx镜像做标记封装，准备上传到私有仓库 </p>
+<p><strong>docker tag nginx 192.168.200.101:5000&#x2F;nginx-test</strong></p>
+<p>上传之前设置docker客户端使用http协议</p>
+<p><strong>[root@localhost ~]# cat &#x2F;etc&#x2F;docker&#x2F;daemon.json</strong> </p>
+<p><strong>{“insecure-registries”:[“192.168.200.101:5000”]}</strong></p>
+<p>将镜像上传到私有仓库</p>
+<p><strong>[root@localhost ~]# docker push 192.168.200.101:5000&#x2F;nginx-test</strong></p>
+<p>从私有仓库中下载镜像到本地</p>
+<p><strong>[root@localhost ~]# docker pull 192.168.200.1<strong><strong>0</strong></strong>1:5000&#x2F;nginx-test</strong></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3857397584/" target="_blank">Docker容器引擎基础</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 21 篇日志，继续加油！
+                            <a href="/category/Docker/">Docker</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/2619997822/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/2619997822/" title="发布于 2024-02-21 05:13">基于Dockerfile构建镜像</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3314795838/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3314795838/" title="发布于 2024-01-27 05:12">mysql半同步复制</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -121,7 +236,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
