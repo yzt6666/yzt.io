@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            OpenSSH配置
+            Kubernetes工作原理
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,28 +37,28 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">OpenSSH配置</h1>
+                <h1 class="header-subtitle">Kubernetes工作原理</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2024-01-16
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-22
                         </span>
                         
                             
-                                <span id="/posts/590003368/" class="leancloud_visitors" data-flag-title="OpenSSH配置">
+                                <span id="/posts/1451685181/" class="leancloud_visitors" data-flag-title="Kubernetes工作原理">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/590003368/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1451685181/"></span>
                                 </span>
                               
                         
                     </p>
                     
                         
-                            <span class="category-color">SSH</span>
+                            <span class="category-color">Kubernetes</span>
                         
                     
                     
@@ -74,55 +74,42 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h4 id="SSH简介"><a href="#SSH简介" class="headerlink" title="SSH简介"></a>SSH简介</h4><p>SSH是一种安全通道协议，主要实现远程登录、远程命令执行、远程复制等功能。</p>
-<p>SSH协议默认监听端口：TCP协议	22</p>
-<p>SSH协议版本：v1	<strong>v2</strong></p>
-<h4 id="OpenSSH的配置"><a href="#OpenSSH的配置" class="headerlink" title="OpenSSH的配置"></a>OpenSSH的配置</h4><p>OpenSSH服务器属于C&#x2F;S结构，并已将sshd添加为标准的系统服务。</p>
-<p>服务名称：sshd</p>
-<p>服务端主程序：&#x2F;usr&#x2F;sbin&#x2F;sshd</p>
-<p>服务端配置文件：&#x2F;etc&#x2F;ssh&#x2F;sshd_config</p>
-<p>客户端配置文件：&#x2F;etc&#x2F;ssh&#x2F;ssh_config</p>
-<h5 id="服务监听选项"><a href="#服务监听选项" class="headerlink" title="服务监听选项"></a>服务监听选项</h5><pre><code>vim	/etc/ssh/ssh_config
-Port 22		#监听端口
-ListenAddress 0.0.0.0	#监听IP地址
-protocol 2		#ssh协议的版本选用V2比V1的安全性更好
-UseDNS no		#禁用DNS反向解可以提高服务的响应速度
-</code></pre>
-<h5 id="用户登录控制"><a href="#用户登录控制" class="headerlink" title="用户登录控制"></a>用户登录控制</h5><pre><code>vim	/etc/ssh/ssh_config
-LoginGraceTime 2m	#登录验证时间为2分钟
-PermitRootLogin yes		#允许root用户登录
-MaxAuthTries 6		#最大重试次数为6
-PermitEmptyPasswords no		#禁止控密码用户登陆
-</code></pre>
-<h4 id="登录验证方式"><a href="#登录验证方式" class="headerlink" title="登录验证方式"></a>登录验证方式</h4><p>SSH服务支持两种验证方式：</p>
-<p>密码验证</p>
-<p>密钥对验证</p>
-<p>可以设置只使用其中一种方式，也可以两种方式都启用。</p>
-<pre><code>vim	/etc/ssh/ssh_config
-PasswordAuthentication yes	#启用密码验证
-PermitEmptyPasswords yes	#启用密钥对验证
-</code></pre>
-<h4 id="使用SSH客户端程序"><a href="#使用SSH客户端程序" class="headerlink" title="使用SSH客户端程序"></a>使用SSH客户端程序</h4><p>openssh客户端包括ssh远程登录及远程命令执行、scp远程复制命令等</p>
-<h5 id="1-命令程序"><a href="#1-命令程序" class="headerlink" title="1.命令程序"></a>1.命令程序</h5><h6 id="（1）ssh命令（远程登录）"><a href="#（1）ssh命令（远程登录）" class="headerlink" title="（1）ssh命令（远程登录）"></a>（1）ssh命令（远程登录）</h6><p>ssh	user@host	（用户名相同可省去user）</p>
-<p>ssh	user@host	command（只执行命令，不切换）</p>
-<p>端口选项：-p	22</p>
-<p>ifconfig ens33 | awk ‘NR&#x3D;&#x3D;2{print$2}’：提取网卡的ip地址</p>
-<h6 id="（2）scp命令（远程安全复制）"><a href="#（2）scp命令（远程安全复制）" class="headerlink" title="（2）scp命令（远程安全复制）"></a>（2）scp命令（远程安全复制）</h6><p>scp	[-r]	user@host:file1	file2	#将远程复制到本机</p>
-<p>scp	[-r]	file1	user@host:file2	#将本机复制到远程</p>
-<h4 id="构建密钥对验证的SSH体系"><a href="#构建密钥对验证的SSH体系" class="headerlink" title="构建密钥对验证的SSH体系"></a>构建密钥对验证的SSH体系</h4><p>密钥对验证包含四步：</p>
-<ol>
-<li>首先在SSH客户端以root用户身份创建密钥对。</li>
-<li>客户端将创建的公钥文件上传至SSH服务端临时位置。</li>
-<li>服务端将公钥信息导入用户root的公钥数据库文件。</li>
-<li>客户端以root身份连接服务器端root用户测试。</li>
-</ol>
-<h5 id="1-在客户端创建密钥对"><a href="#1-在客户端创建密钥对" class="headerlink" title="1.在客户端创建密钥对"></a>1.在客户端创建密钥对</h5><p>ssh-keygen命令创建密钥对文件。</p>
-<p>id_ecdsa是私钥文件，id_ecdsa.pub是公钥文件，用来提供给SSH</p>
-<h5 id="2-将公钥上传至服务器"><a href="#2-将公钥上传至服务器" class="headerlink" title="2.将公钥上传至服务器"></a>2.将公钥上传至服务器</h5><p>scp .ssh&#x2F;id_ecdsa.pub <a href="mailto:&#114;&#111;&#111;&#116;&#64;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#46;&#49;&#x30;&#48;&#x2e;&#49;&#x30;">&#114;&#111;&#111;&#116;&#64;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#46;&#49;&#x30;&#48;&#x2e;&#49;&#x30;</a>:&#x2F;tmp</p>
-<h5 id="3-服务端：在服务器中导入公钥文本"><a href="#3-服务端：在服务器中导入公钥文本" class="headerlink" title="3.服务端：在服务器中导入公钥文本"></a>3.服务端：在服务器中导入公钥文本</h5><p>服务器中目标用户的公钥数据库位于~&#x2F;.ssh目录，文件为authorized_keys.</p>
-<p>cat &#x2F;tmp&#x2F;id_ecdsa.pub &gt;&gt; .ssh&#x2F;authorized_keys</p>
-<p>2和3可以采用另一种方式直接实现。</p>
-<p>ssh-copy-id <a href="mailto:&#x72;&#x6f;&#111;&#116;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#49;&#x30;&#x30;&#x2e;&#x31;&#x30;">&#x72;&#x6f;&#111;&#116;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#49;&#x30;&#x30;&#x2e;&#x31;&#x30;</a></p>
+                <h3 id="Kubernetes工作原理"><a href="#Kubernetes工作原理" class="headerlink" title="Kubernetes工作原理"></a>Kubernetes工作原理</h3><p>Kubernetes 是一个可移植、可扩展的开源Docker容器编排调度引擎，和Docker容器结合在一起，可实现容器技术的分布式架构方案。主要用于自动化部署、扩展和管理容器类应用，提供资源调度、部署管理、服务发现、扩容缩容、监控等功能。</p>
+<h4 id="Kubernetes节点"><a href="#Kubernetes节点" class="headerlink" title="Kubernetes节点"></a>Kubernetes节点</h4><h5 id="Master节点"><a href="#Master节点" class="headerlink" title="Master节点"></a>Master节点</h5><p>Master 节点提供集群的管理控制中心，对集群进行全局决策，并检测和响应集群事件。建议Master节点占据一个独立的服务器并做好<strong>高可用</strong>。因为Master节点是整个集群的大脑，如果Master所在节点宕机或者不可用，那么所有的控制中心都将失效。</p>
+<p>在Master节点上运行着以下关键进程：</p>
+<ul>
+<li>Kube-apiserver：用于暴露Kubernetes API接口，任何的资源请求&#x2F;调用操作都是通过kube-apiserver 提供的接口进行。提供了HTTP Rest接口的关键服务进程，是Kubernetes中所有资源的增、删、改、查等操作的唯一入口，也是集群控制入口进程；</li>
+<li>Etcd：是Kubernetes 提供的默认存储，所有集群数据都保存在Etcd中，使用时建议为Etcd 数据提供备份计划；</li>
+<li>Kube-scheduler：是负责资源调度的进程，监视新创建且没有分配到Node的Pod，为Pod 选择一个Node；</li>
+<li>Kube-controller-manager：运行管理控制器，是集群中处理常规任务的后台进程，是Kubernetes 里所有资源对象的自动化控制中心。</li>
+</ul>
+<h5 id="Node节点"><a href="#Node节点" class="headerlink" title="Node节点"></a>Node节点</h5><p>Kubernetes 集群中除了Master节点，其他服务器被称为Node 节点。与Master 节点一样，Node 节点可以是一台物理主机，也可以是一台虚拟机。Node 节点是K8S 集群中的工作负载节点，每个Node 都会被Master 分配一些工作负载。当某个Node 宕机时，Node上的工作负载会被Master自动转移到其他Node节点上去。</p>
+<p>每个Node 节点上都运行着以下关键进程：</p>
+<ul>
+<li>kubelet：负责Pod对应容器的创建、起停等任务，同时与Master 节点密切协作，实现集群管理的基本功能。</li>
+<li>Kube-proxy：用于实现Kubernetes Service 之间的通信与负载均衡机制。</li>
+<li>Docker Engine(docker)：Docker引擎，负责本机的容器创建和管理工作。</li>
+</ul>
+<p>Node 节点可以在运行期间动态增加到Kubernetes 集群中，前提是这个节点上已经正确安装、配置和启动了上述关键进程。</p>
+<h4 id="Kubernetes资源对象"><a href="#Kubernetes资源对象" class="headerlink" title="Kubernetes资源对象"></a>Kubernetes资源对象</h4><h5 id="pod"><a href="#pod" class="headerlink" title="pod"></a>pod</h5><p>Pod（豆荚）是Kubernetes 创建或部署的最小&#x2F;最简单的基本单位，一个Pod 代表集群上正在运行的一个进程。一个Pod 由<strong>一个或多个容器</strong>组成，Pod 中容器可以共享存储和网络，在同一台Docker主机上运行。</p>
+<h5 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h5><p>Label(标签)是Kubernetes系统中另外一个核心概念。一个Label是一个key-value的键值对，其中key与value由用户自己指定。Label可以附加到各种资源对象上，例如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象中，也可以在对象创建后动态添加或者删除。</p>
+<p><strong>ReplicaSet</strong></p>
+<p>Replication Controller（复制控制器，RC）是Kubernetes 集群中最早的保证Pod高可用的API 对象。通过监控运行中的Pod 来保证集群中运行指定数目的Pod 副本。指定的数目可以是1 个或多个；如果少于指定数目，RC 就会运行新的Pod 副本。如果多于指定数目，RC 就会杀死多余的Pod 副本。</p>
+<p><strong>Deployment</strong></p>
+<p>Deployment（部署）表示用户对K8s 集群的一次更新操作，可以是创建一个新的服务，更新一个新的服务，也可以是滚动升级一个服务。滚动升级一个服务，实际是创建一个新的RS，然后逐渐将新RS中副本数增加到理想状态，将旧RS中的副本数减小到0的复合操作。</p>
+<p><strong>Service</strong></p>
+<p>RC 和Deployment 只是保证了支撑Service（服务）的微服务Pod的数量，但是没有解决如何访问这些服务的问题。一个Pod只是一个运行服务的实例，随时可能在一个节点上停止，在另一个节点以一个新的IP地址启动一个新的Pod，因此不能以固定的IP地址和端口号提供服务。要稳定地提供服务，需要服务发现和负载均衡能力。服务发现完成的工作，是针对客户端访问的服务，找到对应的的后端服务实例。</p>
+<p>每个Service 会对应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。在K8s集群中微服务的负载均衡是由Kube-proxy实现的。Kube-proxy是K8s集群内部的负载均衡器。它是一个分布式代理服务器，在K8s 的每个Node节点上都会运行一个Kube-proxy 组件；</p>
+<p><strong>Job</strong></p>
+<p>Job 是Kubernetes 用来控制批处理型任务的API对象。批处理业务与长期服务业务的主要区别是批处理业务的运行有头有尾，而长期伺服业务在用户不停止的情况下永远运行。根据用户的设置，Job 管理的Pod 把任务成功完成就自动退出了。</p>
+<p><strong>DaemonSet</strong></p>
+<p>后台支撑型服务的核心关注点在Kubernetes 集群中的节点（物理机或虚拟机），DaemonSet（守护程序集）确保所有或某些节点运行同一个Pod，要保证每个节点上都有一个此类Pod 运行。节点可能是所有集群节点也可能是通过nodeSelector 选定的一些特定节点。典型的后台支撑型服务包括，存储，日志和监控等在每个节点上支持K8s 集群运行的服务。</p>
+<p><strong>Volume</strong></p>
+<p>数据卷，共享Pod 中容器使用的数据。</p>
+<p><strong>Namespace</strong></p>
+<p>命名空间将对象逻辑上分配到不同namespace，可以是不同的项目、用户等区分管理，并设定控制策略，从而实现多租户。命名空间也成为虚拟集群。</p>
+<p><strong>StatefulSet</strong></p>
+<p>StatefulSet 适合持久性的应用程序，<strong>有唯一的网络标志符（IP）</strong>，持久存储，有序的部署、扩展、删除和滚动更新。</p>
 
                 
                 <p class="end">__END__</p>
@@ -135,7 +122,7 @@ PermitEmptyPasswords yes	#启用密钥对验证
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/posts/590003368/" target="_blank">OpenSSH配置</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/1451685181/" target="_blank">Kubernetes工作原理</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -150,18 +137,18 @@ PermitEmptyPasswords yes	#启用密钥对验证
                     <div class="category">
                         分类：
                         
-                            <a href="/category/SSH/">SSH</a>
+                            <a href="/category/Kubernetes/">Kubernetes</a>
                         
                     </div>
                 
                 
                 <div class="article-prev-next">
                     
-                        <a href="/posts/1003982246/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1003982246/" title="发布于 2024-01-18 05:19">Nginx调优</a>
+                        <a href="/posts/1771542099/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1771542099/" title="发布于 2024-03-22 02:50">Pod的核心概念</a>
                         <br>
                     
                     
-                        <a href="/posts/1092337223/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1092337223/" title="发布于 2024-01-16 05:05">系统日志文件详解</a>
+                        <a href="/posts/2619997822/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2619997822/" title="发布于 2024-02-21 05:13">基于Dockerfile构建镜像</a>
                     
                 </div>
             </div>
