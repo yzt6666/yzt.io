@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            面试
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">面试</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-01
+                        </span>
+                        
+                            
+                                <span id="/posts/1081515827/" class="leancloud_visitors" data-flag-title="面试">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1081515827/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">面试</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,37 +70,72 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h4><p>面试官您好，我叫杨子腾，毕业于保定学院，就读于软件工程专业，在校期间，我深入学习了Linux系统、数据库原理、Docker等核心课程，对运维产生了浓厚的兴趣，大三的时候参加学校组织的实习工作，在某某公司担任运维工作，主要是维护公司的服务器集群，在此期间，接触到了运维的整体工作流程，对各项工作有了充分认知，也开始自主学习k8s、nginx、tomcat等相关技术，实习六个月后回到学校，自己又找了实习单位，xx公司，在公司里我参与了多个项目的部署和维护工作，比如，我负责搭建并且维护了k8s集群、实现了nginx高可用集群配置、参与了数据库集群的搭建等，积累了丰富的实战经验，我的自我介绍结束了，非常感谢您给我这个机会来介绍自己，我期待能够进一步了解贵公司和这个职位。</p>
+<h4 id="你在工作中遇到过什么问题？"><a href="#你在工作中遇到过什么问题？" class="headerlink" title="你在工作中遇到过什么问题？"></a>你在工作中遇到过什么问题？</h4><p>在我初入第一家公司的时候，主要负责服务器的日常维护工作，有次服务器报警，我迅速定位问题，发现存日志的磁盘占用已经超过设置的阈值，我立刻向上报汇报，请求急购新的磁盘，在得到公司配备更大磁盘容量后，我直接将其安装在服务器上，然后挂载在存储日志的目录，当检查的时候，发现以前的日志没有了，我以为是新磁盘的挂载覆盖掉了旧数据，就很慌，然后我就上csdn查找怎么恢复数据，后来发现是日志并没有被覆盖，还在旧磁盘上，我又重新挂载旧磁盘，将数据拿到其他磁盘，再转移到新磁盘才解决问题，经过这次经历，我意识到数据备份的重要性，以防数据丢失。</p>
+<h4 id="你曾经做过什么项目？"><a href="#你曾经做过什么项目？" class="headerlink" title="你曾经做过什么项目？"></a>你曾经做过什么项目？</h4><p>我在上一家公司参与过k8s的部署工作，我记得当时根据甲方公司的业务需求，用了3台Master和20多台node，每台服务器都先安装ntpdate来同步时间，然后安装docker和containerd以及所需的依赖包，为了快速部署k8s，我们选择用kubeadm来初始化集群，设置三台Master，配合Nginx和Keepalived实现高可用，确保集群能稳定运行，然后将node节点加入到集群当中，最后在所有节点安装上Calico，来实现集群内部的网络通信。创建了几个pod测试成功后就投入使用了。</p>
+<h4 id="这个项目中你有遇到什么问题吗？"><a href="#这个项目中你有遇到什么问题吗？" class="headerlink" title="这个项目中你有遇到什么问题吗？"></a>这个项目中你有遇到什么问题吗？</h4><p>我记得是没有什么大问题，就是在测试的时候，停掉主master，发现另外两个master节点上都有vip，也就是发生了脑裂，因为是最近部署的，问题肯定出在keepalived的配置文件上，检查的时候发现两台从节点的优先级是一样的，复制过来没有改才造成这个问题，修改完成后重启服务，vip才正常漂移。</p>
+<h4 id="pod的创建流程"><a href="#pod的创建流程" class="headerlink" title="pod的创建流程"></a>pod的创建流程</h4><p>首先是客户端提交创建pod的请求，调用api server，api server接收到pod创建请求后，会将编辑好的yaml中的信息写入etcd，然后api server触发watch机制准备创建pod，信息转发给调度器scheduler，调度器使用调度算法选择匹配的node，将node信息反馈给api server将绑定的node信息写入etcd，api server又通过watch机制，调用kubectl，指定pod信息，调用docker api创建并启动pod内的容器，创建完成后反馈给kubectl，再传给api server，将pod的状态信息写入etcd。</p>
+<h4 id="如何实现nginx的高可用？"><a href="#如何实现nginx的高可用？" class="headerlink" title="如何实现nginx的高可用？"></a>如何实现nginx的高可用？</h4><p>首先要在每台nginx服务器安装Keepalived，Keepalived可以实时监控nginx的运行状态，一旦发现nginx宕机，它就会采取行动，先配置Keepalived，主要是两部分，一个是虚拟IP地址，也叫vip，这是客户端请求的目标地址，还要定义好每个nginx的优先级和权重，来决定在发生故障时，vip漂移到哪个备份服务器。还要确保主从nginx服务器的配置和数据的一致性，最后都启动keepalived服务，它就可以监控nginx服务，从而实现高可用性。</p>
+<h4 id="你都创建过什么镜像？"><a href="#你都创建过什么镜像？" class="headerlink" title="你都创建过什么镜像？"></a>你都创建过什么镜像？</h4><p>我创建过nginx镜像，首先是创建一个工作目录，将所需要的静态资源，初始镜像，配置文件放到目录里，开始编写dockerfile文件，先导入官网的nginx基础镜像包，再将我修改过的nginx配置文件替换掉原有的文件，把静态资源复制进去，暴露Nginx的80端口，再加上启动nginx服务的命令，文件就写完了，执行docker build命令，将自动创建镜像，完成后再设置好标签，上传到harbor仓库储存备用。大概就是这么一个过程。</p>
+<h4 id="pod为什么pending？"><a href="#pod为什么pending？" class="headerlink" title="pod为什么pending？"></a>pod为什么pending？</h4><p>可能是集群中没有足够的资源来调度pod（如CPU、内存、存储等），Pod可能由于调度约束（如亲和性&#x2F;反亲和性规则，污点和容忍）而无法被调度到任何可用的节点上。可能是镜像拉取失败（如拉取的是国外镜像源）。</p>
+<h4 id="nginx脚本"><a href="#nginx脚本" class="headerlink" title="nginx脚本"></a>nginx脚本</h4><p> #!&#x2F;bin&#x2F;bash<br>#判断nginx是否存活</p>
+<p>nginx&#x3D;$(ps -ef | grep nginx | wc -l)</p>
+<p>if [ “${nginx}” -gt 1 ]; then<br>        echo “nginx正常运行中”<br>else<br>        echo “nginx挂掉了，正在准备重启”<br>        systemctl start nginx.service<br>        sleep 2<br>        status&#x3D;$(systemctl status nginx.service | grep active | awk ‘{print $2}’)<br>        if [ “${status}” &#x3D;&#x3D; active ]; then<br>                echo “nginx已经重启成功”<br>        else<br>                echo “nginx重启失败，请手动检查”<br>        fi<br>fi</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/1081515827/" target="_blank">面试</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 35 篇日志，继续加油！
+                            <a href="/category/%E9%9D%A2%E8%AF%95/">面试</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/2468726264/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2468726264/" title="发布于 2024-03-31 05:09">配置管理中心configmap</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -113,7 +169,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

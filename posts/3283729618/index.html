@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            四层代理service
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">四层代理service</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-30
+                        </span>
+                        
+                            
+                                <span id="/posts/3283729618/" class="leancloud_visitors" data-flag-title="四层代理service">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3283729618/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Kubernetes</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,37 +70,88 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="四层代理service"><a href="#四层代理service" class="headerlink" title="四层代理service"></a><strong>四层代理service</strong></h3><h4 id="Service的工作原理"><a href="#Service的工作原理" class="headerlink" title="Service的工作原理"></a>Service的工作原理</h4><p>k8s 在创建 Service 时，会根据标签选择器 selector(lable selector)来查找 Pod，据此创建与Service 同名的 endpoint 对象，当 Pod 地址发生变化时，endpoint 也会随之发生变化，service 接收前端 client 请求的时候，就会通过 endpoint，找到转发到哪个 Pod 进行访问的地址。(至于转发到哪个节点的 Pod，由负载均衡 kube-proxy 决定)。</p>
+<h4 id="kubernetes-集群中有三类-IP-地址"><a href="#kubernetes-集群中有三类-IP-地址" class="headerlink" title="kubernetes 集群中有三类 IP 地址"></a>kubernetes 集群中有三类 IP 地址</h4><ol>
+<li>Node Network（节点网络）：物理节点或者虚拟节点的网络。</li>
+<li>Pod network（pod 网络）：创建的 Pod 具有的 IP 地址。</li>
+<li>Cluster Network（集群地址，也称为 service network）：这个地址是虚拟的地址（virtual ip），没有配置在某个接口上，只是出现在 service 的规则当中。</li>
+</ol>
+<h4 id="Service-的四种类型"><a href="#Service-的四种类型" class="headerlink" title="Service 的四种类型"></a>Service 的四种类型</h4><p>1.ExternalName：适用于 k8s 集群内部容器访问外部资源，它没有 selector，也没有定义任何的端口和 Endpoint。</p>
+<pre><code class="yaml">#以下 Service 定义的是将 prod 名称空间中的 my-service 服务映射到 my.database.example.com 
+kind: Service  # 定义资源类型为Service  
+  
+apiVersion: v1  # 使用Kubernetes API的版本v1  
+  
+metadata:  # 元数据部分，描述Service的基本信息  
+  name: my-service  # Service的名字为my-service  
+  namespace: prod  # 这个Service位于prod这个命名空间中  
+  
+spec:  # 规格部分，描述Service的具体配置  
+  type: ExternalName  # Service的类型为ExternalName。这种类型的Service用于返回CNAME记录，它不会进行任何代理或负载均衡，只是将请求重定向到指定的外部域名  
+  externalName: my.database.example.com  # 外部域名为my.database.example.com。当你尝试访问这个Service时，它实际上会重定向到这个外部域名
+</code></pre>
+<p>2.ClusterIP：通过 k8s 集群内部 IP 暴露服务，选择该值，服务只能够在集群内部访问，这也是默认的ServiceType。 </p>
+<p>3.NodePort: 通过每个 Node 节点上的 IP 和静态端口暴露 k8s 集群内部的服务。通过请求<NodeIP>:<NodePort>可 以把请求代理到内部的 pod。</p>
+<p>Client—–&gt;NodeIP:NodePort—–&gt;Service Ip:ServicePort—- -&gt;PodIP:ContainerPort。</p>
+<p>4.LoadBalancer: 使用云提供商的负载均衡器，可以向外部暴露服务。外部的负载均衡器可以路由到 NodePort 服务和ClusterIP 服务。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3283729618/" target="_blank">四层代理service</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 35 篇日志，继续加油！
+                            <a href="/category/Kubernetes/">Kubernetes</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3524471779/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3524471779/" title="发布于 2024-03-30 03:59">K8S常见的存储方案</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/1565089412/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1565089412/" title="发布于 2024-03-23 05:10">K8S控制器之 Replicaset</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -113,7 +185,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

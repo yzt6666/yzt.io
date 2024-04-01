@@ -121,7 +121,7 @@ spec:
 <li>逻辑分组：当需要将相关的 Pod 分组部署到特定节点上时，可以使用节点亲和性。例如，在分布式系统中，某个节点需要承担特定的角色或任务，可以使用节点亲和性将相关的 Pod 调度到该节点上，以便实现逻辑上的分组和管理。 </li>
 <li>特定硬件或软件要求：当某个 Pod 需要依赖特定的硬件设备或软件环境时，可以使用节点亲和性将它调度到具备所需条件的节点上。例如，某个 Pod 需要与具有特定硬件加速器的节点进行通信，可以使用节点亲和性将它调度到具备所需硬件的节点上。</li>
 </ol>
-<h5 id="node和node亲和性"><a href="#node和node亲和性" class="headerlink" title="node和node亲和性"></a>node和node亲和性</h5><p><strong>preferred</strong>DuringSchedulingIgnoredDuringExecution是Kubernetes 中节点亲和性（Node Affinity）的一种规则类型，它允许用户指定 Pod 调度器尽可能将 Pod 调度到与指定节点亲和的节点上，但如果没有可用的这样的节点，Pod 也可以调度到其他节点上。(软亲和性)</p>
+<h5 id="node亲和性"><a href="#node亲和性" class="headerlink" title="node亲和性"></a>node亲和性</h5><p><strong>preferred</strong>DuringSchedulingIgnoredDuringExecution是Kubernetes 中节点亲和性（Node Affinity）的一种规则类型，它允许用户指定 Pod 调度器尽可能将 Pod 调度到与指定节点亲和的节点上，但如果没有可用的这样的节点，Pod 也可以调度到其他节点上。(软亲和性)</p>
 <p><strong>required</strong>DuringSchedulingIgnoredDuringExecution：这个字段指定了一个节点选择器，Pod<br>只能被调度到满足这个节点选择器的节点上。如果没有节点满足这个要求，Pod 就无法被调度。(硬亲和性)</p>
 <h6 id="实例一：硬亲和性"><a href="#实例一：硬亲和性" class="headerlink" title="实例一：硬亲和性"></a>实例一：硬亲和性</h6><pre><code class="yaml">apiVersion: v1
 kind: Pod

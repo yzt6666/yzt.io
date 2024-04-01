@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            K8S控制器之Daemonset
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">K8S控制器之Daemonset</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-31
+                        </span>
+                        
+                            
+                                <span id="/posts/491617779/" class="leancloud_visitors" data-flag-title="K8S控制器之Daemonset">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/491617779/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Kubernetes</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,37 +70,113 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="k8s控制器之Daemonset"><a href="#k8s控制器之Daemonset" class="headerlink" title="k8s控制器之Daemonset"></a><strong>k8s控制器之Daemonset</strong></h3><h4 id="DaemonSet概述"><a href="#DaemonSet概述" class="headerlink" title="DaemonSet概述"></a>DaemonSet概述</h4><p>DaemonSet控制器能够确保k8s集群所有的节点都运行一个相同的pod副本，当向k8s集群中增加node节点时，这个node节点也会自动创建一个pod副本，当node节点从集群移除，这些pod也会自动删除；删除Daemonset也会删除它们创建的pod</p>
+<h4 id="DaemonSet工作原理：如何管理Pod？"><a href="#DaemonSet工作原理：如何管理Pod？" class="headerlink" title="DaemonSet工作原理：如何管理Pod？"></a>DaemonSet工作原理：如何管理Pod？</h4><p>daemonset的控制器会监听kuberntes的daemonset对象、pod对象、node对象，这些被监听的对象之变动，就会触发syncLoop循环让kubernetes集群朝着daemonset对象描述的状态进行演进。</p>
+<h4 id="DaemonSet-与-Deployment-的区别"><a href="#DaemonSet-与-Deployment-的区别" class="headerlink" title="DaemonSet 与 Deployment 的区别"></a>DaemonSet 与 Deployment 的区别</h4><p>Deployment 部署的副本 Pod 会分布在各个 Node 上，每个 Node 都可能运行好几个副本。<br>DaemonSet 的不同之处在于：每个 Node 上最多只能运行一个副本。</p>
+<h4 id="DaemonSet资源清单详解"><a href="#DaemonSet资源清单详解" class="headerlink" title="DaemonSet资源清单详解"></a>DaemonSet资源清单详解</h4><pre><code class="yaml">apiVersion: apps/v1 # 指定API版本，这里是Kubernetes Apps API的版本1  
+kind: DaemonSet # 资源类型为DaemonSet，它确保每个节点上都运行一个Pod副本  
+metadata:  
+  name: fluentd-elasticsearch # DaemonSet的名称  
+  namespace: kube-system # DaemonSet所在的命名空间，kube-system通常用于存放系统组件  
+  labels: # 为DaemonSet添加的标签  
+    k8s-app: fluentd-logging # 标签的键和值，用于标识和选择资源  
+spec:  
+  selector: # 选择器的定义，用于确定哪些Pods属于这个DaemonSet  
+    matchLabels: # 使用标签来选择Pods  
+      name: fluentd-elasticsearch # Pods上必须带有这个标签，其值必须为fluentd-elasticsearch  
+  template: # Pod模板，定义了如何创建新的Pods  
+    metadata:  
+      labels: # Pods的标签  
+        name: fluentd-elasticsearch # Pods的标签，与DaemonSet的selector匹配  
+    spec:  
+      tolerations: # 容忍列表，允许Pods在具有特定污点的节点上调度  
+      - key: node-role.kubernetes.io/master # 污点的键  
+        effect: NoSchedule # 污点的效果，NoSchedule表示该节点不会被调度新的Pods，除非Pods能容忍这个污点  
+      containers: # 容器列表  
+      - name: fluentd-elasticsearch # 容器的名称  
+        image: fluentd:v2.5.1 # 容器使用的镜像和版本  
+        resources: # 容器资源限制和请求  
+          limits: # 资源的最大限制  
+            memory: 200Mi # 内存限制为200MiB  
+          requests: # 资源的最小请求  
+            cpu: 100m # CPU请求为100毫核  
+            memory: 200Mi # 内存请求为200MiB  
+        volumeMounts: # 容器挂载的卷列表  
+        - name: varlog # 卷的名称  
+          mountPath: /var/log # 卷在容器内的挂载路径  
+        - name: varlibdockercontainers # 另一个卷的名称  
+          mountPath: /var/lib/docker/containers # 另一个卷在容器内的挂载路径  
+          readOnly: true # 这个卷是只读的  
+      terminationGracePeriodSeconds: 30 # 当删除Pods时，等待容器优雅关闭的时间为30秒  
+      volumes: # 定义Pod的卷列表  
+      - name: varlog # 卷的名称  
+        hostPath: # 使用宿主机的目录作为卷  
+          path: /var/log # 宿主机上的目录路径  
+      - name: varlibdockercontainers # 另一个卷的名称  
+        hostPath: # 使用宿主机的另一个目录作为卷  
+          path: /var/lib/docker/containers # 宿主机上的另一个目录路径
+</code></pre>
+<h4 id="DaemonSet实现pod的滚动更新"><a href="#DaemonSet实现pod的滚动更新" class="headerlink" title="DaemonSet实现pod的滚动更新"></a>DaemonSet实现pod的滚动更新</h4><p>DaemonSet 有两种更新策略：</p>
+<p><strong>OnDelete:</strong> 使用 OnDelete 更新策略时，在更新 DaemonSet 模板后，只有当你手动删除老的 DaemonSet pods 之后，新的 DaemonSet Pod 才会被自动创建。跟 Kubernetes 1.6 以前的版本类似。</p>
+<p><strong>RollingUpdate:</strong> 这是默认的更新策略。使用 RollingUpdate 更新策略时，在更新 DaemonSet 模板后， 老的 DaemonSet Pod 将被终止，并且将以受控方式自动创建新的 DaemonSet Pod。 更新期间，最多只能有 DaemonSet 的一个 Pod 运行于每个节点上。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/491617779/" target="_blank">K8S控制器之Daemonset</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 35 篇日志，继续加油！
+                            <a href="/category/Kubernetes/">Kubernetes</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3630697454/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3630697454/" title="发布于 2024-03-31 04:57">K8S控制器之Statefulset</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3524471779/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3524471779/" title="发布于 2024-03-30 03:59">K8S常见的存储方案</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -113,7 +210,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

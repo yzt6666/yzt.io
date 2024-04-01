@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            K8S常见的存储方案
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">K8S常见的存储方案</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-30
+                        </span>
+                        
+                            
+                                <span id="/posts/3524471779/" class="leancloud_visitors" data-flag-title="K8S常见的存储方案">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3524471779/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Kubernetes</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,37 +70,146 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="K8S常见的存储方案"><a href="#K8S常见的存储方案" class="headerlink" title="K8S常见的存储方案"></a><strong>K8S常见的存储方案</strong></h3><h4 id="在-k8s-中为什么要做持久化存储？"><a href="#在-k8s-中为什么要做持久化存储？" class="headerlink" title="在 k8s 中为什么要做持久化存储？"></a>在 k8s 中为什么要做持久化存储？</h4><p>在 k8s 中部署的应用都是以 pod 容器的形式运行的，假如我们部署 MySQL、Redis 等数据库，需要对这些数据库产生的数据做备份。因为 Pod 是有生命周期的，如果 pod 不挂载数据卷，那 pod 被删除或重启后这些数据会随之消失，如果想要长久的保留这些数据就要用到 pod 数据持久化存储。</p>
+<p><strong>常用的如下：</strong> </p>
+<p><strong>emptyDir  使用主机目录，会随pod结束而结束</strong></p>
+<p><strong>hostPath  使用主机目录，不会随pod结束而结束</strong></p>
+<p><strong>nfs    共享存储</strong></p>
+<p><strong>persistentVolumeClaim  PVC</strong></p>
+<p><strong>glusterfs  分布式存储</strong></p>
+<p><strong>cephfs   分布式存储</strong></p>
+<p><strong>configMap  K8S资源类型（配置文件）</strong></p>
+<p><strong>Secret  K8S资源类型（密码文件）</strong></p>
+<h4 id="emptyDir"><a href="#emptyDir" class="headerlink" title="emptyDir"></a>emptyDir</h4><p>emptyDir 类型的 Volume 是在 Pod 分配到 Node 上时被创建，Kubernetes 会在 Node 上自动分配一个目录，因此无需指定宿主机 Node 上对应的目录文件。 这个目录的初始内容为空，当 Pod 从 Node上移除时，emptyDir 中的数据会被永久删除。emptyDir Volume 主要用于某些应用程序无需永久保存的临时目录，多个容器的共享目录等。</p>
+<pre><code class="yaml">apiVersion: v1  # 使用Kubernetes API的版本v1  
+kind: Pod  # 定义资源类型为Pod  
+metadata:  
+  name: pod-empty  # Pod的名字是pod-empty  
+spec:  
+  containers:  # 定义Pod中的容器  
+  - name: container-empty  # 容器的名字是container-empty  
+    image: nginx  # 容器使用的镜像是nginx  
+    volumeMounts:  # 定义容器中的卷挂载  
+    - mountPath: /cache  # 将卷挂载到容器内的路径是/cache  
+      name: cache-volume  # 挂载的卷的名字是cache-volume  
+  volumes:  # 定义Pod中的卷  
+  - emptyDir:  # 定义一个emptyDir类型的卷  
+     &#123;&#125;  # emptyDir类型卷的配置，这里为空，因为emptyDir不需要额外的配置  
+    name: cache-volume  # 卷的名字是cache-volume
+</code></pre>
+<h4 id="hostPath"><a href="#hostPath" class="headerlink" title="hostPath"></a>hostPath</h4><p>hostPath Volume 是指 Pod 挂载宿主机上的目录或文件。 hostPath Volume 使得容器可以使用宿主机的文件系统进行存储，hostpath（宿主机路径）：节点级别的存储卷，在 pod 被删除，这个存储卷还是存在的，不会被删除，所以只要同一个 pod 被调度到同一个节点上来，在 pod 被删除重新被调度到这个节点之后，对应的数据依然是存在的。</p>
+<pre><code class="yaml">apiVersion: v1  # Kubernetes API的版本v1  
+kind: Pod  # 资源类型为Pod  
+metadata:  
+  name: test-hostpath  # Pod的名字为test-hostpath  
+spec:  
+  containers:  # Pod中的容器列表  
+  - image: nginx  # 第一个容器的镜像为nginx  
+    imagePullPolicy: IfNotPresent  # 如果本地没有nginx镜像，则尝试从远程仓库拉取；否则，使用本地镜像  
+    name: test-nginx  # 容器名字为test-nginx  
+    volumeMounts:  # 容器挂载的卷列表  
+    - mountPath: /test-nginx  # 将卷挂载到容器内的路径/test-nginx  
+      name: test-volume  # 挂载的卷的名字为test-volume  
+  - image: tomcat:8.5-jre8-alpine  # 第二个容器的镜像为tomcat:8.5-jre8-alpine  
+    imagePullPolicy: IfNotPresent  # 如果本地没有tomcat:8.5-jre8-alpine镜像，则尝试从远程仓库拉取；否则，使用本地镜像  
+    name: test-tomcat  # 容器名字为test-tomcat  
+    volumeMounts:  # 容器挂载的卷列表  
+    - mountPath: /test-tomcat  # 将卷挂载到容器内的路径/test-tomcat  
+      name: test-volume  # 挂载的卷的名字为test-volume  
+  volumes:  # Pod中定义的卷列表  
+  - name: test-volume  # 卷的名字为test-volume  
+    hostPath:  # 定义hostPath类型的卷  
+      path: /data1  # 卷对应的宿主机上的路径为/data1  
+      type: DirectoryOrCreate  # 如果宿主机上不存在/data1目录，则创建它；如果已存在，则直接使用
+</code></pre>
+<h4 id="nfs"><a href="#nfs" class="headerlink" title="nfs"></a>nfs</h4><p>上节说的 hostPath 存储，存在单点故障，pod 挂载 hostPath 时，只有调度到同一个节点，数据才不会丢失。那可以使用 nfs 作为持久化存储。</p>
+<pre><code class="yaml">apiVersion: v1  # 使用Kubernetes API的版本v1  
+kind: Pod  # 资源类型为Pod  
+metadata:  
+ name: test-nfs-volume  # Pod的名字为test-nfs-volume  
+spec:  
+ containers:  # Pod中的容器列表  
+ - name: test-nfs  # 容器的名字为test-nfs  
+   image: nginx  # 容器使用的镜像为nginx  
+   imagePullPolicy: IfNotPresent  # 如果本地没有nginx镜像，则尝试从远程仓库拉取；否则，使用本地镜像  
+   ports:  # 容器开放的端口列表  
+   - containerPort: 80  # 容器内部监听的端口号为80  
+     protocol: TCP  # 使用的协议为TCP  
+   volumeMounts:  # 容器挂载的卷列表  
+   - name: nfs-volumes  # 挂载的卷的名字为nfs-volumes  
+     mountPath: /usr/share/nginx/html  # 将卷挂载到容器内的路径/usr/share/nginx/html  
+ volumes:  # Pod中定义的卷列表  
+ - name: nfs-volumes  # 卷的名字为nfs-volumes  
+   nfs:  # 定义nfs类型的卷  
+     path: /data/volumes  # NFS服务器上共享的目录路径为/data/volumes  
+     server: 192.168.200.101  # NFS服务器的IP地址为192.168.200.101
+</code></pre>
+<h4 id="PVC"><a href="#PVC" class="headerlink" title="PVC"></a>PVC</h4><p><strong>k8s PV 是什么？</strong> </p>
+<p>PersistentVolume（PV）是群集中的一块存储，<strong>由管理员配置或使用存储类动态配置。</strong> 它是集群中的资源，就像 pod 是 k8s 集群资源一样。 PV 是容量插件，如 Volumes，其生命周期独立于使用 PV 的任何单个 pod。</p>
+<p> <strong>k8s PVC 是什么？</strong> </p>
+<p>PersistentVolumeClaim（PVC）是一个持久化存储卷，我们在创建 pod 时可以定义这个类型的存储卷。 它类似于一个 pod。 Pod 消耗节点资源，PVC 消耗 PV 资源。 Pod 可以请求特定级别的资源（CPU 和内存）。 pvc 在申请 pv 的时候也可以请求特定的大小和访问模式（例如，可以一次读写或多次只读）。</p>
+<p><strong>k8s PVC 和 PV 工作原理</strong> </p>
+<p>PV 是群集中的资源。 （提供清单上的需求内容）</p>
+<p>PVC 是对这些资源的请求。 （请求单）</p>
+<h4 id="storageclass"><a href="#storageclass" class="headerlink" title="storageclass"></a>storageclass</h4><p>Kubernetes 提供一种自动创建 PV 的机制，叫 StorageClass，它的作用就是创建 PV 的模板。k8s 集群管理员通过创建storageclass 可以动态生成一个存储卷 pv 供 k8s pvc 使用。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/3524471779/" target="_blank">K8S常见的存储方案</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 35 篇日志，继续加油！
+                            <a href="/category/Kubernetes/">Kubernetes</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/491617779/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/491617779/" title="发布于 2024-03-31 04:01">K8S控制器之Daemonset</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/3283729618/" class="next-prefix">» </a> 下一篇：    <a href="/posts/3283729618/" title="发布于 2024-03-30 02:30">四层代理service</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -113,7 +243,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

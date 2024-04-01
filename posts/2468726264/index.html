@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            配置管理中心configmap
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">配置管理中心configmap</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-31
+                        </span>
+                        
+                            
+                                <span id="/posts/2468726264/" class="leancloud_visitors" data-flag-title="配置管理中心configmap">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2468726264/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">Kubernetes</span>
+                        
+                    
+                    
                 </div>
             
         </div>
@@ -49,37 +70,82 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="配置管理中心configmap"><a href="#配置管理中心configmap" class="headerlink" title="配置管理中心configmap"></a><strong>配置管理中心configmap</strong></h3><h4 id="什么是-Configmap？"><a href="#什么是-Configmap？" class="headerlink" title="什么是 Configmap？"></a>什么是 Configmap？</h4><p>Configmap 是 k8s 中的资源对象，用于保存非机密性的配置的，数据可以用 key&#x2F;value键值对的形式保存，也可通过文件的形式保存。</p>
+<h4 id="Configmap-能解决哪些问题？"><a href="#Configmap-能解决哪些问题？" class="headerlink" title="Configmap 能解决哪些问题？"></a>Configmap 能解决哪些问题？</h4><p>我们在部署服务的时候，每个服务都有自己的配置文件，如果一台服务器上部署多个服务：nginx、tomcat、apache 等，那么这些配置都存在这个节点上，假如一台服务器不能满足线上高并发的要求，需要对服务器扩容，扩容之后的服务器还是需要部署多个服务：nginx、tomcat、apache，新增加的服务器上还是要管理这些服务的配置，如果有一个服务出现问题，需要修改配置文件，每台物理节点上的配置都需要修改，这种方式肯定满足不了线上大批量的配置变更要求。 所以，k8s 中引入了 Configmap资源对象，可以当成 volume 挂载到 pod 中，实现统一的配置管理。</p>
+<h4 id="Configmap-应用场景"><a href="#Configmap-应用场景" class="headerlink" title="Configmap 应用场景"></a>Configmap 应用场景</h4><p>1、使用 k8s 部署应用，当你将应用配置写进代码中，更新配置时也需要打包镜像，configmap 可以将配置信息和 docker 镜像解耦，以便实现镜像的可移植性和可复用性，因为一个 configMap 其实就是一系列配置信息的集合，可直接注入到 Pod 中给容器使用。<strong>configmap 注入方式有两种，一种将 configMap 做为存储卷，一种是将configMap 通过 env 中 configMapKeyRef 注入到容器中</strong>。</p>
+<p>2、使用微服务架构的话，存在多个服务共用配置的情况，如果每个服务中单独一份配置的话，那么更新配置就很麻烦，使用 configmap 可以友好的进行配置共享。</p>
+<h4 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h4><p>ConfigMap 在设计上不是用来保存大量数据的。在 ConfigMap 中保存的数据不可超过 1MiB。如果你需要保存超出此尺寸限制的数据，可以考虑挂载存储卷或者使用独立的数据库或者文件服务。</p>
+<h4 id="Configmap-创建方法"><a href="#Configmap-创建方法" class="headerlink" title="Configmap 创建方法"></a>Configmap 创建方法</h4><h5 id="命令行直接创建"><a href="#命令行直接创建" class="headerlink" title="命令行直接创建"></a>命令行直接创建</h5><p>直接在命令行中指定 configmap 参数创建，通过–from-literal 指定参数</p>
+<p><strong>kubectl create configmap tomcat-config –from-literal&#x3D;tomcat_port&#x3D;8080 –from-literal&#x3D;server_name&#x3D;myapp.tomcat.com</strong></p>
+<h5 id="通过文件创建"><a href="#通过文件创建" class="headerlink" title="通过文件创建"></a>通过文件创建</h5><p>通过指定文件创建一个 configmap，–from-file&#x3D;&lt;文件&gt; </p>
+<p>vim nginx.conf</p>
+<pre><code>server &#123;
+ server_name www.nginx.com; 
+ listen 80; 
+ root /home/nginx/www/ 
+&#125;
+</code></pre>
+<p>定义一个 key 是 www，值是 nginx.conf 中的内容</p>
+<p><strong>kubectl create configmap www-nginx –from-file&#x3D;www&#x3D;.&#x2F;nginx.conf</strong></p>
+<h5 id="指定目录创建-configmap"><a href="#指定目录创建-configmap" class="headerlink" title="指定目录创建 configmap"></a>指定目录创建 configmap</h5><p><strong>kubectl create configmap mysql-config****1</strong> <strong>–from-file&#x3D;&#x2F;root&#x2F;test-a&#x2F;</strong></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/2468726264/" target="_blank">配置管理中心configmap</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 35 篇日志，继续加油！
+                            <a href="/category/Kubernetes/">Kubernetes</a>
                         
-                    </span>
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/1081515827/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/1081515827/" title="发布于 2024-04-01 03:45">面试</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/posts/1107118888/"><span>什么是爬虫？</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-25</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/posts/1283773186/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1283773186/" title="发布于 2024-03-31 05:07">配置管理中心secret</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -113,7 +179,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
