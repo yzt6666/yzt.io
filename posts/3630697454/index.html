@@ -123,7 +123,7 @@ spec:
         - containerPort: 80 # 容器内部监听的端口号为80  
           name: web # 端口的名字为web
 </code></pre>
-<h4 id="headless-service作用"><a href="#headless-service作用" class="headerlink" title="headless service作用"></a>headless service作用</h4><p>Headless Service的主要作用是为分布式系统中的应用提供稳定的网络标识和持久化存储关联。在[Kubernetes](<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=Kubernetes&rsv_idx=2&tn=88093251_109_hao_pg&usm=1&ie=utf-8&rsv_pq=879440ff00021f7f&oq=headless">https://www.baidu.com/s?wd=Kubernetes&amp;rsv_idx=2&amp;tn=88093251_109_hao_pg&amp;usm=1&amp;ie=utf-8&amp;rsv_pq=879440ff00021f7f&amp;oq=headless</a> service作用&amp;rsv_t&#x3D;a116a2x0EIAjhbMu1+FRLLO7Xxb1vraRpFzlK8xI5xXlvWv4kMHXQO87pIZn9g7rlVAfjzX18p8oIg&amp;sa&#x3D;re_dqa_zy&amp;icon&#x3D;1)中，当创建一个Headless Service时，Kube-dns或CoreDNS会为服务下的每个Pod创建唯一的DNS A记录（对于IPv4）或AAAA记录（对于IPv6）。这使得客户端可以直接通过Pod的hostname或子域名访问到具体的Pod，而无需通过负载均衡器。这种方式允许应用程序直接与后端Pod进行通信，非常适合于有状态应用，如数据库集群、消息队列集群等。</p>
+<h4 id="headless-service作用"><a href="#headless-service作用" class="headerlink" title="headless service作用"></a>headless service作用</h4><p>Headless Service的主要作用是为分布式系统中的应用提供稳定的网络标识和持久化存储关联。在k8s中，当创建一个Headless Service时，Kube-dns或CoreDNS会为服务下的每个Pod创建唯一的DNS A记录（对于IPv4）或AAAA记录（对于IPv6）。这使得客户端可以直接通过Pod的hostname或子域名访问到具体的Pod，而无需通过负载均衡器。这种方式允许应用程序直接与后端Pod进行通信，非常适合于有状态应用，如数据库集群、消息队列集群等。</p>
 
                 
                 <p class="end">__END__</p>
