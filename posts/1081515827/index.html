@@ -189,30 +189,6 @@
 <p>6）快速：每秒10000次写入的基准速度；</p>
 <p>7）可靠：使用Raft算法实现了强一致、高可用的服务存储目录；</p>
 <h4 id="简述Kubernetes-RC的机制"><a href="#简述Kubernetes-RC的机制" class="headerlink" title="简述Kubernetes RC的机制?"></a>简述Kubernetes RC的机制?</h4><p> 答：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。当定义了RC并提交至Kubernetes集群中之后，Master节点上的Controller Manager组件获悉，并同时巡检系统中当前存活的目标Pod，并确保目标Pod实例的数量刚好等于此RC的期望值，若存在过多的Pod副本在运行，系统会停止一些Pod，反之则自动创建一些Pod；</p>
-<h4 id="简述kube-proxy作用"><a href="#简述kube-proxy作用" class="headerlink" title="简述kube-proxy作用?"></a>简述kube-proxy作用?</h4><p>答：kube-proxy 运行在所有节点上，它监听 apiserver 中 service 和 endpoint 的变化情况，创建路由规则以提供服务 IP 和负载均衡功能。</p>
-<p>简单理解此进程是Service的透明代理兼负载均衡器，其核心功能是将到某个Service的访问请求转发到后端的多个Pod实例上；</p>
-<h4 id="简述kube-proxy-iptables原理"><a href="#简述kube-proxy-iptables原理" class="headerlink" title="简述kube-proxy iptables原理?"></a>简述kube-proxy iptables原理?</h4><p> 答：Kubernetes从1.2版本开始，将iptables作为kube-proxy的默认模式。iptables模式下的kube-proxy不再起到Proxy的作用，其核心功能：通过API Server的Watch接口实时跟踪Service与Endpoint的变更信息，并更新对应的iptables规则，Client的请求流量则通过iptables的NAT机制“直接路由”到目标Pod；</p>
-<h4 id="简述kube-proxy-ipvs原理"><a href="#简述kube-proxy-ipvs原理" class="headerlink" title="简述kube-proxy ipvs原理?"></a>简述kube-proxy ipvs原理?</h4><p>答：IPVS在Kubernetes1.11中升级为GA稳定版。</p>
-<p>IPVS则专门用于高性能负载均衡，并使用更高效的数据结构（Hash表），允许几乎无限的规模扩张，因此被kube-proxy采纳为最新模式；</p>
-<p>在IPVS模式下，使用iptables的扩展ipset，而不是直接调用iptables来生成规则链。</p>
-<p>iptables规则链是一个线性的数据结构，ipset则引入了带索引的数据结构，因此当规则很多时，也可以很高效地查找和匹配；</p>
-<p>可以将ipset简单理解为一个IP（段）的集合，这个集合的内容可以是IP地址、IP网段、端口等，iptables可以直接添加规则对这个“可变的集合”进行操作，这样做的好处在于可以大大减少iptables规则的数量，从而减少性能损耗；</p>
-<h4 id="简述Kubernetes中什么是静态Pod"><a href="#简述Kubernetes中什么是静态Pod" class="headerlink" title="简述Kubernetes中什么是静态Pod?"></a>简述Kubernetes中什么是静态Pod?</h4><p>答：静态pod是由kubelet进行管理的仅存在于特定Node的Pod上，他们不能通过API Server进行管理，无法与ReplicationController、Deployment或者DaemonSet进行关联，并且kubelet无法对他们进行健康检查。</p>
-<p>静态Pod总是由kubelet进行创建，并且总是在kubelet所在的Node上运行；</p>
-<h4 id="简述Kubernetes-Pod的常见调度方式"><a href="#简述Kubernetes-Pod的常见调度方式" class="headerlink" title="简述Kubernetes Pod的常见调度方式?"></a>简述Kubernetes Pod的常见调度方式?</h4><p>答：</p>
-<p>1）Deployment或RC：该调度策略主要功能就是自动部署一个容器应用的多份副本，以及持续监控副本的数量，在集群内始终维持用户指定的副本数量；</p>
-<p>2）NodeSelector：定向调度，当需要手动指定将Pod调度到特定Node上，可以通过Node的标签（Label）和Pod的nodeSelector属性相匹配；</p>
-<p>3）NodeAffinity亲和性调度：亲和性调度机制极大的扩展了Pod的调度能力，目前有两种节点亲和力表达：硬规则，必须满足指定的规则，调度器才可以调度Pod至Node上（类似nodeSelector，语法不同）；软规则，优先调度至满足的Node的节点，但不强求，多个优先级规则还可以设置权重值；</p>
-<p>4）Taints和Tolerations（污点和容忍）：Taint：使Node拒绝特定Pod运行；Toleration：为Pod的属性，表示Pod能容忍（运行）标注了Taint的Node；</p>
-<h4 id="简述Kubernetes-ingress"><a href="#简述Kubernetes-ingress" class="headerlink" title="简述Kubernetes ingress?"></a>简述Kubernetes ingress?</h4><p> 答：</p>
-<p>K8s的Ingress资源对象，用于将不同URL的访问请求转发到后端不同的Service，以实现HTTP层的业务路由机制。</p>
-<p>K8s使用了Ingress策略和Ingress Controller，两者结合并实现了一个完整的Ingress负载均衡器。</p>
-<p>使用Ingress进行负载分发时，Ingress Controller基于Ingress规则将客户端请求直接转发到Service对应的后端Endpoint（Pod）上，从而跳过kube-proxy的转发功能，kube-proxy不再起作用，</p>
-<p>全过程为：ingress controller + ingress 规则 —-&gt; services；</p>
-<h4 id="简述Kubernetes镜像的下载策略"><a href="#简述Kubernetes镜像的下载策略" class="headerlink" title="简述Kubernetes镜像的下载策略?"></a>简述Kubernetes镜像的下载策略?</h4><p> 答：</p>
-<p>1）Always：镜像标签为latest时，总是从指定的仓库中获取镜像；</p>
-<p>2）Never：禁止从仓库中下载镜像，也就是说只能使用本地镜像；</p>
-<p>3）IfNotPresent：仅当本地没有对应镜像时，才从目标仓库中下载；默认的镜像下载策略是：当镜像标签是latest时，默认策略是Always；当镜像标签是自定义时（也就是标签不是latest），那么默认策略是IfNotPresent；</p>
 
                 
                 <p class="end">__END__</p>
