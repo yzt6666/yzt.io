@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            阿腾
+            面试2
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,332 +32,106 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">摆烂的阿腾</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">面试2</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-28
+                        </span>
+                        
+                            
+                                <span id="/posts/2772806020/" class="leancloud_visitors" data-flag-title="面试2">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2772806020/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">面试</span>
+                        
+                    
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="实现nginx的高可用？"><a href="#实现nginx的高可用？" class="headerlink" title="实现nginx的高可用？"></a>实现nginx的高可用？</h4><p>首先要在每台nginx服务器安装Keepalived，Keepalived可以实时监控nginx的运行状态，一旦发现nginx宕机，它就会采取行动，先配置Keepalived，主要是两部分，一个是虚拟IP地址，也叫vip，这是客户端请求的目标地址，还要定义好每个nginx的优先级和权重，来决定在发生故障时，vip漂移到哪个备份服务器。还要确保主从nginx服务器的配置和数据的一致性，最后都启动keepalived服务，它就可以监控nginx服务，从而实现高可用性。</p>
+<h4 id="你都创建过什么镜像？"><a href="#你都创建过什么镜像？" class="headerlink" title="你都创建过什么镜像？"></a>你都创建过什么镜像？</h4><p>我创建过nginx镜像，首先是创建一个工作目录，将所需要的静态资源，初始镜像，配置文件放到目录里，开始编写dockerfile文件，先导入官网的nginx基础镜像包，再将我修改过的nginx配置文件替换掉原有的文件，把静态资源复制进去，暴露Nginx的80端口，再加上启动nginx服务的命令，文件就写完了，执行docker build命令，将自动创建镜像，完成后再设置好标签，上传到harbor仓库储存备用。大概就是这么一个过程。</p>
+<h4 id="copy和add的区别"><a href="#copy和add的区别" class="headerlink" title="copy和add的区别"></a>copy和add的区别</h4><p>copy只能从构建上下文中拷贝文件和目录，add除了上述功能，还具有解压缩和自动处理远程文件的功能。</p>
+<h4 id="nginx有哪些模块，你用过哪些模块实现过什么功能？"><a href="#nginx有哪些模块，你用过哪些模块实现过什么功能？" class="headerlink" title="nginx有哪些模块，你用过哪些模块实现过什么功能？"></a>nginx有哪些模块，你用过哪些模块实现过什么功能？</h4><p>Nginx是一个功能强大的高性能HTTP和反向代理服务器，Nginx的模块可以分为核心模块、标准HTTP模块、可选HTTP模块、邮件服务模块、Stream服务模块和第三方模块。我用过<strong>rewrite</strong>模块进行url重定向，<strong>proxy</strong>模块作为反向代理，将客户端请求转发到后端服务器，使用<strong>gzip</strong>模块将响应的内容进行gzip压缩，减少网络传输的数据量，提高了传输效率，<strong>upstream</strong>模块配置了后端服务器地址、端口，实现了负载均衡等一些模块。</p>
+<h4 id="nginx脚本"><a href="#nginx脚本" class="headerlink" title="nginx脚本"></a>nginx脚本</h4><p> #!&#x2F;bin&#x2F;bash<br>#判断nginx是否存活</p>
+<p>nginx&#x3D;$(ps -ef | grep nginx | wc -l)</p>
+<p>if [ “${nginx}” -gt 1 ]; then<br>        echo “nginx正常运行中”<br>else<br>        echo “nginx挂掉了，正在准备重启”<br>        systemctl start nginx.service<br>        sleep 2<br>        status&#x3D;$(systemctl status nginx.service | grep active | awk ‘{print $2}’)<br>        if [ “${status}” &#x3D;&#x3D; active ]; then<br>                echo “nginx已经重启成功”<br>        else<br>                echo “nginx重启失败，请手动检查”<br>        fi<br>fi</p>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/2772806020/">面试2</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-28
-                            </span>
-                            
-                                
-                                    <span id="/posts/2772806020/" class="leancloud_visitors" data-flag-title="面试2">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2772806020/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/2772806020/" target="_blank">面试2</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/category/%E9%9D%A2%E8%AF%95/">面试</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/1081515827/">面试1</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-01
-                            </span>
-                            
-                                
-                                    <span id="/posts/1081515827/" class="leancloud_visitors" data-flag-title="面试1">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1081515827/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/2468726264/">配置管理中心configmap</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-31
-                            </span>
-                            
-                                
-                                    <span id="/posts/2468726264/" class="leancloud_visitors" data-flag-title="配置管理中心configmap">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2468726264/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/1283773186/">配置管理中心secret</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-31
-                            </span>
-                            
-                                
-                                    <span id="/posts/1283773186/" class="leancloud_visitors" data-flag-title="配置管理中心secret">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1283773186/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/3630697454/">K8S控制器之Statefulset</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-31
-                            </span>
-                            
-                                
-                                    <span id="/posts/3630697454/" class="leancloud_visitors" data-flag-title="K8S控制器之Statefulset">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3630697454/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/491617779/">K8S控制器之Daemonset</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-31
-                            </span>
-                            
-                                
-                                    <span id="/posts/491617779/" class="leancloud_visitors" data-flag-title="K8S控制器之Daemonset">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/491617779/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/3524471779/">K8S常见的存储方案</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-30
-                            </span>
-                            
-                                
-                                    <span id="/posts/3524471779/" class="leancloud_visitors" data-flag-title="K8S常见的存储方案">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3524471779/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/3283729618/">四层代理service</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-30
-                            </span>
-                            
-                                
-                                    <span id="/posts/3283729618/" class="leancloud_visitors" data-flag-title="四层代理service">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/3283729618/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/1565089412/">K8S控制器之 Replicaset</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-23
-                            </span>
-                            
-                                
-                                    <span id="/posts/1565089412/" class="leancloud_visitors" data-flag-title="K8S控制器之 Replicaset">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/1565089412/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/posts/981039780/">K8S控制器之 Deployment</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-23
-                            </span>
-                            
-                                
-                                    <span id="/posts/981039780/" class="leancloud_visitors" data-flag-title="K8S控制器之 Deployment">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/981039780/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/posts/1081515827/" class="next-prefix">» </a> 下一篇：    <a href="/posts/1081515827/" title="发布于 2024-04-01 03:45">面试1</a>
+                    
+                </div>
             </div>
             
-            
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a href="/page/2/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -385,7 +159,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
