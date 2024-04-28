@@ -146,49 +146,6 @@
 <h4 id="deployment的更新升级策略有哪些？"><a href="#deployment的更新升级策略有哪些？" class="headerlink" title="deployment的更新升级策略有哪些？"></a>deployment的更新升级策略有哪些？</h4><p>答：deployment的升级策略主要有两种。</p>
 <p>1、Recreate 重建更新：这种更新策略会杀掉所有正在运行的pod，然后再重新创建的pod；</p>
 <p>2、rollingUpdate 滚动更新：这种更新策略，deployment会以滚动更新的方式来逐个更新pod，同时通过设置滚动更新的两个参数<code>maxUnavailable、maxSurge</code>来控制更新的过程。</p>
-<h4 id="pv的访问模式有哪几种"><a href="#pv的访问模式有哪几种" class="headerlink" title="pv的访问模式有哪几种"></a>pv的访问模式有哪几种</h4><p>pv的访问模式有3种，如下：</p>
-<ul>
-<li>ReadWriteOnce，简写：RWO 表示，只仅允许单个节点以读写方式挂载；</li>
-<li>ReadOnlyMany，简写：ROX 表示，可以被许多节点以只读方式挂载；</li>
-<li>ReadWriteMany，简写：RWX 表示，可以被多个节点以读写方式挂载；</li>
-</ul>
-<h4 id="讲一下都有哪些存储卷，作用分别是什么"><a href="#讲一下都有哪些存储卷，作用分别是什么" class="headerlink" title="讲一下都有哪些存储卷，作用分别是什么?"></a>讲一下都有哪些存储卷，作用分别是什么?</h4><table>
-<thead>
-<tr>
-<th>卷</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>hostPath</td>
-<td>用于将目录从工作节点的文件系统挂载到pod中</td>
-</tr>
-<tr>
-<td>configMap</td>
-<td>用于将非敏感的数据保存到键值对中，使用时可以使用作为环境变量、命令行参数arg，存储卷被pods挂载使用</td>
-</tr>
-<tr>
-<td>secret</td>
-<td>主要用于存储和管理一些敏感数据，然后通过在 Pod 的容器里挂载 Volume 的方式或者环境变量的方式访问到这些 Secret 里保存的信息了，pod会自动解密Secret 的信息</td>
-</tr>
-<tr>
-<td>pvc</td>
-<td>pvc是存储卷声明</td>
-</tr>
-<tr>
-<td>emptyDir</td>
-<td>用于存储临时数据的简单空目录</td>
-</tr>
-</tbody></table>
-<h4 id="简述ETCD及其特点"><a href="#简述ETCD及其特点" class="headerlink" title="简述ETCD及其特点?"></a>简述ETCD及其特点?</h4><p>答：etcd是一个分布式的、高可用的、一致的key-value存储数据库，基于Go语言实现，主要用于共享配置和服务发现。特点：</p>
-<p>1）完全复制：集群中的每个节点都可以使用完整的存档；</p>
-<p>2）高可用性：Etcd可用于避免硬件的单点故障或网络问题；</p>
-<p>3）一致性：每次读取都会返回跨多主机的最新写入；</p>
-<p>4）简单：包括一个定义良好、面向用户的API（gRPC）；</p>
-<p>5）安全：实现了带有可选的客户端证书身份验证的自动化TLS；</p>
-<p>6）快速：每秒10000次写入的基准速度；</p>
-<p>7）可靠：使用Raft算法实现了强一致、高可用的服务存储目录；</p>
-<h4 id="简述Kubernetes-RC的机制"><a href="#简述Kubernetes-RC的机制" class="headerlink" title="简述Kubernetes RC的机制?"></a>简述Kubernetes RC的机制?</h4><p> 答：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。当定义了RC并提交至Kubernetes集群中之后，Master节点上的Controller Manager组件获悉，并同时巡检系统中当前存活的目标Pod，并确保目标Pod实例的数量刚好等于此RC的期望值，若存在过多的Pod副本在运行，系统会停止一些Pod，反之则自动创建一些Pod；</p>
 
                 
                 <p class="end">__END__</p>
