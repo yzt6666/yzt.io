@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            linux基础
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">linux基础</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-05-20
+                        </span>
+                        
+                            
+                                <span id="/posts/573873540/" class="leancloud_visitors" data-flag-title="linux基础">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/573873540/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">面试</span>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="Linux基础"><a href="#Linux基础" class="headerlink" title="Linux基础"></a>Linux基础</h2><h3 id="简述Linux主流的发行版？"><a href="#简述Linux主流的发行版？" class="headerlink" title="简述Linux主流的发行版？"></a>简述Linux主流的发行版？</h3><p>Redhat、CentOS、Fedora、SuSE、Debian、Ubuntu、FreeBSD等。</p>
+<h3 id="简述Linux启动过程-Centos7以下启动流程-？"><a href="#简述Linux启动过程-Centos7以下启动流程-？" class="headerlink" title="简述Linux启动过程(Centos7以下启动流程)？"></a>简述Linux启动过程(Centos7以下启动流程)？</h3><ul>
+<li>⑴ 开机BIOS自检，加载硬盘。</li>
+<li>⑵ 读取MBR，MBR引导。</li>
+<li>⑶ grub引导菜单(Boot Loader)。</li>
+<li>⑷ 加载内核kernel。</li>
+<li>⑸ 启动init进程，依据inittab文件设定运行级别。</li>
+<li>⑹ init进程，执行rc.sysinit文件。</li>
+<li>⑺ 启动内核模块，执行不同级别的脚本程序。</li>
+<li>⑻ 执行&#x2F;etc&#x2F;rc.d&#x2F;rc.local。</li>
+<li>⑼ 启动tty，进入系统登陆界面。</li>
+</ul>
+<h3 id="简述Linux删除文件的原理？"><a href="#简述Linux删除文件的原理？" class="headerlink" title="简述Linux删除文件的原理？"></a>简述Linux删除文件的原理？</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制：i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="简述Linux运行级别？"><a href="#简述Linux运行级别？" class="headerlink" title="简述Linux运行级别？"></a>简述Linux运行级别？</h3><ul>
+<li>0：关机模式</li>
+<li>1：单用户模式&lt;&#x3D;&#x3D;破解root密码</li>
+<li>2：无网络支持的多用户模式</li>
+<li>3：有网络支持的多用户模式（文本模式，工作中最常用的模式）</li>
+<li>4：保留，未使用</li>
+<li>5：有网络支持的X-windows支持多用户模式（桌面）</li>
+<li>6：重新引导系统，即重启</li>
+</ul>
+<h3 id="简述Linux常见目录及其作用？"><a href="#简述Linux常见目录及其作用？" class="headerlink" title="简述Linux常见目录及其作用？"></a>简述Linux常见目录及其作用？</h3><ul>
+<li>&#x2F;（根目录）：Linux文件系统的起点；</li>
+<li>boot：存放Linux系统启动做必须的文件；</li>
+<li>var：存放经常变换的文件；</li>
+<li>home：普通用户的家目录</li>
+<li>root：Linux系统的root用户家目录；</li>
+<li>bin：存放系统基本的用户命令；</li>
+<li>sbin：存放系统基本的管理命令；</li>
+<li>use：存放Linux应用程序；</li>
+<li>etc：存放Linux系统和各种程序的配置文件。</li>
+</ul>
+<h3 id="简述Linux操作系统常见的文件系统有？"><a href="#简述Linux操作系统常见的文件系统有？" class="headerlink" title="简述Linux操作系统常见的文件系统有？"></a>简述Linux操作系统常见的文件系统有？</h3><ul>
+<li>EXT3</li>
+<li>EXT4</li>
+<li>XFS</li>
+</ul>
+<h3 id="简述Linux系统中的buffer和cache区别？"><a href="#简述Linux系统中的buffer和cache区别？" class="headerlink" title="简述Linux系统中的buffer和cache区别？"></a>简述Linux系统中的buffer和cache区别？</h3><p>buffer和cache都是内存中的一块区域，当CPU需要写数据到磁盘时，由于磁盘速度比较慢，所以CPU先把数据存进buffer，然后CPU去执行其他任务，buffer中的数据会定期写入磁盘；当CPU需要从磁盘读入数据时，由于磁盘速度比较慢，可以把即将用到的数据提前存入cache，CPU直接从Cache中读取数据。</p>
+<h3 id="简述Linux中inode和block？"><a href="#简述Linux中inode和block？" class="headerlink" title="简述Linux中inode和block？"></a>简述Linux中inode和block？</h3><p>inode节点是一个64字节长的表，表中包含了文件的相关信息，如：字节数、属主UserID、属组GroupID、读写执行权限、时间戳等。在inode节点表中最重要的内容是：磁盘地址表。</p>
+<p>文件名存放在目录当中，但Linux系统内部不使用文件名，而是使用inode号码识别文件。对于系统来说文件名只是inode号码便于识别的别称。即Linux文件系统通过把inode和文件名进行关联来查找文件。当需要读取该文件时，文件系统在当前目录表中查找该文件名对应的项，由此得到该文件相对应的inode节点号，通过该inode节点的磁盘地址表把分散存放的文件物理块连接成文件的逻辑结构。</p>
+<p>文件是存储在硬盘上的，硬盘的最小存储单位叫做扇区sector，每个扇区存储512字节。操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个块block。这种由多个扇区组成的块，是文件存取的最小单位。块的大小，最常见的是4KB，即连续八个sector组成一个block。</p>
+<p>即512字节组成一个扇区（sector），多个扇区组成一个块（block），常见的块单位位4KB，即连续八个扇区组成一个block。</p>
+<blockquote>
+<p>一个文件必须占用一个inode，但至少占用一个block。</p>
+</blockquote>
+<h3 id="简述Linux文件系统修复fsck过程？"><a href="#简述Linux文件系统修复fsck过程？" class="headerlink" title="简述Linux文件系统修复fsck过程？"></a>简述Linux文件系统修复fsck过程？</h3><p>成功修复文件系统的前提是要有两个以上的主文件系统（即两个系统），并保证在修复之前卸载将被修复的文件系统，然后使用命令fsck对受到破坏的文件系统进行修复。</p>
+<p>fsck检查文件系统分为5步，每一步检查系统不同部分的连接特性并对上一步进行验证和修改。</p>
+<p>检查从超级块开始、然后是分配的磁盘块、路径名、目录的连接性、链接数目以及空闲块链表、inode。</p>
+<h3 id="简述Linux中软链接和硬链接的区别？"><a href="#简述Linux中软链接和硬链接的区别？" class="headerlink" title="简述Linux中软链接和硬链接的区别？"></a>简述Linux中软链接和硬链接的区别？</h3><ul>
+<li>软链接</li>
+</ul>
+<p><code>软链接</code>类似于Windows的快捷方式功能的文件，可以快速连接到目标文件或目录。即再创建一个独立的文件，而这个文件会让数据的读取指向它连接的那个文件的文件名。例如，文件A和文件B的inode号码虽然不一样，但是文件A的内容是文件B的路径。读取文件A时，系统会自动将访问者导向文件B。这时，文件A就称为文件B的软链接。</p>
+<p>因此，文件A依赖于文件B而存在，如果删除了文件B，打开文件A就会报错。</p>
+<ul>
+<li>硬链接</li>
+</ul>
+<p>通过文件系统的inode链接来产生的新的文件名，而不是产生新的文件，称为硬链接。</p>
+<p>一般情况下，每个inode号码对应一个文件名，但是Linux允许多个文件名指向同一个inode号码。意味着可以使用不同的文件名访问相同的内容。<br>创建硬链接，源文件与目标文件的inode号码相同，都指向同一个inode。inode信息中的链接数这时就会增加1。</p>
+<ul>
+<li><p>当一个文件拥有多个硬链接时，对文件内容修改，会影响到所有其他文件的内容；</p>
+</li>
+<li><p>删除一个文件名，不影响另一个文件名的访问，删除一个文件名，只会使得inode中的链接数减1。</p>
+</li>
+<li><p>区别</p>
+</li>
+</ul>
+<p>软链接与硬链接最大的区别：软链接是文件A指向文件B的文件名，而不是文件B的inode号码，文件B的inode链接数不会因此发生变化。</p>
+<blockquote>
+<p>不能对目录做硬链接，但是通过mkdir命令创建一个新目录，通常其硬链接数应该有2个，因为常见的目录本身为1个硬链接，而目录下面的隐藏目录.（点号）是该目录的又一个硬链接，也算是1个连接数。</p>
+</blockquote>
+<h3 id="简述TCP三次握手，四次断开，及其优点和缺点，同时相对于UDP的差别？"><a href="#简述TCP三次握手，四次断开，及其优点和缺点，同时相对于UDP的差别？" class="headerlink" title="简述TCP三次握手，四次断开，及其优点和缺点，同时相对于UDP的差别？"></a>简述TCP三次握手，四次断开，及其优点和缺点，同时相对于UDP的差别？</h3><p><code>TCP</code>与<code>UDP</code>概念：</p>
+<ul>
+<li>TCP：传输控制协议，即面向连接；</li>
+<li>UDP：用户数据报协议，无连接的，即发送数据之前不需要建立连接</li>
+</ul>
+<p>TCP与UDP的优缺点上的区别：</p>
+<ul>
+<li>TCP的优点：</li>
+</ul>
+<p>可靠，稳定。TCP的可靠体现在TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源。</p>
+<ul>
+<li>三次握手：</li>
+</ul>
+<p>1、第一次握手，主机A向主机B发出一个含同步序列号的标志位的数据段给主机B ，向主机B请求建立连接。通过这个数据段，A向B声明通信请求，以及告知B可用某个序列号作为起始数据段进行响应；</p>
+<p>2、第二次握手，主机B收到主机A的请求后，用一带有确认应答(ACK)和同步序列号(SYN)标志位的数据段响应A。通过此数据段，B向A声明已收到A的请求，A可以传输数据了，同时告知A可用某个序列号作为起始数据段进行响应；</p>
+<p>3、第三次握手，主机A收到主机B的数据段后，再发送一个确认应答，确认已收到主机B 的数据段，之后开始正式实际传输数据。</p>
+<blockquote>
+<ul>
+<li><code>ACK</code>：TCP报头的控制位之一，对数据进行确认。确认由目的端发出，来告知发送端这个序列号之前的数据段都收到了。比如，确认号为X，则表示前X-1个数据段都收到了。只有当ACK&#x3D;1时，确认号才有效，当ACK&#x3D;0时，确认号无效，此时会要求重传数据，保证数据的完整性。</li>
+<li><code>SYN</code>：同步序列号，这个标志位只有在TCP建立连接时才会被置1，握手完成后SYN标志位被置0。</li>
+</ul>
+</blockquote>
+<ul>
+<li>四次断开：<ul>
+<li>1、当主机A完成数据传输后，将控制位FIN置1，提出停止TCP连接的请求；</li>
+<li>2、主机B收到FIN后对其作出响应，确认这一方向上的TCP连接将关闭，将ACK置1；</li>
+<li>3、主机B再提出反方向的关闭请求，将FIN置1；</li>
+<li>4、主机A对主机B的请求进行确认，将ACK置1，双方向的关闭结束。</li>
+</ul>
+</li>
+</ul>
+<p>• TCP的缺点：</p>
+<p>慢、效率低、占用系统资源高、易被攻击：TCP在传递数据之前，要先建连接，需要消耗时间，而且在数据传递时，确认机制、重传机制、拥塞控制机制等都会消耗大量的时间，而且要在每台设备上维护所有的传输连接。同时，每个连接都会占用系统的CPU、内存等硬件资源。 而且，因为TCP有确认机制、三次握手机制，这些也导致TCP容易被人利用，实现DOS、DDOS、CC等攻击。</p>
+<blockquote>
+<ul>
+<li><code>DoS</code>：拒绝服务（Denial of Servic），造成DoS的攻击行为被称为DoS攻击，其目的是使计算机或网络无法提供正常的服务。最常见的DoS攻击有计算机网络带宽攻击和连通性攻击。</li>
+<li><code>DDOS</code>：分布式拒绝服务(DDoS:Distributed Denial of Service)，DDoS攻击指借助于客户&#x2F;服务器技术，将多个计算机联合起来作为攻击平台，对一个或多个目标发动DDoS攻击，从而成倍地提高拒绝服务攻击的威力。</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>UDP的优点：</p>
+<p>  快、比TCP稍安全、没有TCP的握手、确认、窗口、重传、拥塞控制等机制，UDP是一个无状态的传输协议，所以它在传递数据时非常快。没有TCP的这些机制，UDP被攻击者利用的漏洞就要少一些。但UDP也是无法避免攻击的，比如：UDP Flood攻击。</p>
+</li>
+</ul>
+<blockquote>
+<p>UDP Flood攻击检测：短时间内向特定目标不断发送 UDP 报文，致使目标系统负担过重而不能处理合法的传输任务，就发生了 UDP Flood。启用 UDP Flood 攻击检测功能时，要求设置一个连接速率阈值，一旦发现保护主机响应的 UDP 连接速率超过该值，防火墙会输出发生 UDP Flood 攻击的告警日志，并且根据用户的配置可以阻止发往该主机的后续连接请求。</p>
+</blockquote>
+<ul>
+<li>UDP的缺点：</li>
+</ul>
+<p>不可靠、不稳定。因为UDP没有那些可靠的机制，在数据传递时，如果网络质量不好，就会很容易丢包。</p>
+<ul>
+<li>TCP应用场景：</li>
+</ul>
+<p>当对网络通讯质量有要求的时候，比如：整个数据要准确无误的传递给对方，要求可靠的应用，比如HTTP、HTTPS、FTP等传输文件的协议，POP、SMTP等邮件传输的协议。</p>
+<ul>
+<li>UDP应用场景：</li>
+</ul>
+<p>当对网络通讯质量要求不高的时候，要求网络通讯速度能尽量的快。 比如QQ语音、QQ视频、TFTP 。</p>
+<h3 id="简述TCP-x2F-IP及其主要协议？"><a href="#简述TCP-x2F-IP及其主要协议？" class="headerlink" title="简述TCP&#x2F;IP及其主要协议？"></a>简述TCP&#x2F;IP及其主要协议？</h3><p>TCP&#x2F;IP协议是一个协议簇，其中包括很多协议的。</p>
+<p>TCP&#x2F;IP协议包括<code>应用层</code>、<code>传输层</code>、<code>网络层</code>、<code>网络访问层</code>（<code>网络接口层</code>、<code>网际层</code>）。</p>
+<ul>
+<li><p>应用层：应用程序间沟通的层</p>
+<ul>
+<li>超文本传输协议(HTTP)：万维网的基本协议；</li>
+<li>文件传输(TFTP)：简单文件传输协议；</li>
+<li>远程登录(Telnet)：提供远程访问其它主机功能，它允许用户登录internet主机，并在这台主机上执行命令；</li>
+<li>网络管理(SNMP)：简单网络管理协议，该协议提供了监控网络设备的方法，以及配置管理、统计信息收集、性能管理及安全管理等；</li>
+<li>域名系统(DNS)：域名解析服务，该系统用于在internet中将域名及转换成IP地址；</li>
+</ul>
+</li>
+<li><p>传输层：提供了节点间的数据传送服务，给数据包加入传输数据并把它传输到下一层中，这一层负责传送数据，并且确定数据已被送达并接收。</p>
+<ul>
+<li>传输控制协议（TCP）</li>
+<li>用户数据报协议（UDP）</li>
+</ul>
+</li>
+<li><p>网络层：负责提供基本的数据封包传送功能，让每一个数据包都能够到达目的主机（但不检查是否被正确接收）。</p>
+<ul>
+<li>Internet协议(IP) ：根据网间报文IP地址，从一个网络通过路由器传到另一网络；</li>
+<li>ICMP：Internet控制信息协议(ICMP)；</li>
+<li>ARP：地址解析协议(ARP) ——“最不安全的协议”。</li>
+<li>RARP：反向地址解析协议(RARP)：</li>
+</ul>
+</li>
+<li><p>网络访问层：又称作主机到网络层(host-to-network)，IP地址与物理地址硬件的映射及IP封装成帧，基于不同硬件类型的网络接口，网络访问层定义了与物理介质的连接。</p>
+</li>
+</ul>
+<h3 id="简述OSI模型及其主要协议？"><a href="#简述OSI模型及其主要协议？" class="headerlink" title="简述OSI模型及其主要协议？"></a>简述OSI模型及其主要协议？</h3><p>OSI模型是一个开放式系统互联参考模型，该模型人为的定义了七层结构。由下至上及其主要作用为：</p>
+<p>1、物理层：OSI的物理层规定了通信端点之间的机械特性、电气特性、功能特性以及过程特性，该层为上层协议提供了一个传输数据的物理媒体。该层数据的单位称为比特(bit)。其主要有：EIA&#x2F;TIA、RS-232、EIA&#x2F;TIA、RS-449、V.35、RJ-45、fddi令牌环网。</p>
+<p>2、数据链路层：定义了在单个链路上如何传输数据，其主要作用包括：作用包括物理地址寻址、数据的成帧、流量控制、数据的检错、重发等。该层数据的单位称为帧(frame)。其主要有：ARP、RARP、SDLC、HDLC、PPP、STP、帧中继。</p>
+<p>3、网络层：定义了端到端的包传输，定义了能够标识所有结点的逻辑地址，还定义了路由实现的方式和学习路由的方式。为了适应最大传输单元长度小于包长度的传输介质，网络层还定义了如何将一个包分解成更小的包的分段方法。主要负责寻找地址和路由选择，网络层还可以实现拥塞控制、网际互连等功能。该层数据的单位称为数据包(packet)。主要有：IP、IPX、RIP、OSPF。</p>
+<p>4、传输层：主要功能：</p>
+<ul>
+<li>为端到端连接提供传输服务；</li>
+<li>这种传输服务分为可靠和不可靠的，其中TCP是典型的可靠传输，而UDP则是不可靠传输；</li>
+<li>为端到端连接提供流量控制，差错控制，重新排序，服务质量等管理服务。</li>
+</ul>
+<p>该层数据的单位称为数据段(segment)。主要有：TCP、UDP、SPX、DCCP、SCTP、RTP、RSVP、PPTP。</p>
+<p>5、会话层：他定义了如何开始、控制和结束一个会话，即负责建立和断开通信连接（数据流动的逻辑通路）。主要有：RPC、SQL、NetBIOS。</p>
+<p>6、表示层：定义数据格式及加密。主要负责数据格式的转换，确保一个系统的应用层信息可被另一个系统应用层读取。主要有：加密、ASII、TIFF、JPEG、HTML、PICT。</p>
+<p>7、应用层：与其他计算机进行通讯的一个应用，它是对应应用程序的通信服务的，为应用程序提供服务并规定应用程序中通信相关的细节。主要有：Telnet、HTTP、FTP、WWW、NFS、SMTP。</p>
+<h3 id="简述IP协议、IP地址？"><a href="#简述IP协议、IP地址？" class="headerlink" title="简述IP协议、IP地址？"></a>简述IP协议、IP地址？</h3><p>IP协议(Internet Protocol)：又称互联网协议，是支持网间互连的数据报协议。它提供网间连接的完善功能，包括IP数据报规定互连网络范围内的IP地址格式。</p>
+<p>为了实现连接到互联网上的结点之间的通信，必须为每个结点（入网的计算机）分配一个地址，并且应当保证这个地址是全网唯一的，这便是IP地址。</p>
+<p>目前的IP地址（IPv4：IP第4版本）由32个二进制位表示，每8位二进制数为一个整数，中间由小数点间隔，整个IP地址空间有4组8位二进制数，由表示主机所在的网络的地址以及主机在该网络中的标识共同组成。 为了便于寻址和层次化的构造网络，IP地址被分为A、B、C、D、E五类，商业应用中只用到A、B、C三类。</p>
+<ul>
+<li>A类地址：网络标识由第一组8位二进制数表示，网络中的主机标识占3组8位二进制数，网络标识的第一位二进制数取值必须为”0”。A类地址允许有126个网段，每个网络大约允许有1670万台主机，通常分配给拥有大量主机的网络（如主干网）。 1.0.0.1－127.255.255.254</li>
+<li>B类地址：网络标识由前两组8位二进制数表示，网络中的主机标识占两组8位二进制数，网络标识的前两位二进制数取值必须为”10”。B类地址允许有16384个网段，每个网络允许有65533台主机，适用于结点比较多的网络（如区域网）。 128.1.0.1－191.255.255.254</li>
+<li>C类地址：网络标识由前3组8位二进制数表示，网络中主机标识占1组8位二进制数，网络标识的前3位二进制数取值必须为”110”。具有C类地址的网络允许有254台主机，适用于结点比较少的网络（如校园网）。 192.0.1.1－223.255.255.254</li>
+</ul>
+<p>为了便于记忆，通常习惯采用4个十进制数来表示一个IP地址，十进制数之间采用句点”.”予以分隔。这种IP地址的表示方法也被称为点分十进制法。</p>
+<h3 id="简述静态路由和动态路由及其特点？"><a href="#简述静态路由和动态路由及其特点？" class="headerlink" title="简述静态路由和动态路由及其特点？"></a>简述静态路由和动态路由及其特点？</h3><ul>
+<li><p><code>静态路由</code>：由系统管理员创建的路由，适用于网关数量有限的场合，且网络拓朴结构不经常变化的网络。其缺点是不能动态地适用网络状况的变化，当网络状况变化后需要网络管理员手动修改路由表。</p>
+</li>
+<li><p><code>动态路由</code>：由路由选择协议动态构建的路由，路由协议之间通过交换各自所拥有的路由信息实时更新路由表的内容。动态路由可以自动学习网络的拓朴结构，并更新路由表。其缺点是路由广播更新信息将占据大量的网络带宽。</p>
+</li>
+</ul>
+<h3 id="简述NAT的几种类型，及其原理？"><a href="#简述NAT的几种类型，及其原理？" class="headerlink" title="简述NAT的几种类型，及其原理？"></a>简述NAT的几种类型，及其原理？</h3><p>常见的NAT主要有<code>DNA</code>和<code>SNAT</code>。</p>
+<ul>
+<li><p><code>SNAT</code>：指在数据包从网卡发送出去的时候，把数据包中的源地址部分替换为指定的IP。此时，接收方就认为数据包的来源是被替换的那个IP的主机。</p>
+</li>
+<li><p><code>DNAT</code>：指数据包从网卡发送出去的时候，修改数据包中的目的IP。此时，若访问A，但因此DNAT的存在，所有访问A的数据包的目的IP全部修改为B，那么，实际上访问的是B。</p>
+</li>
+</ul>
+<h3 id="简述包过滤防火墙和代理应用防火墙的区别？"><a href="#简述包过滤防火墙和代理应用防火墙的区别？" class="headerlink" title="简述包过滤防火墙和代理应用防火墙的区别？"></a>简述包过滤防火墙和代理应用防火墙的区别？</h3><ul>
+<li><code>包过滤防火墙</code>：工作在网络层，根据包头中的源IP地址、目标IP地址、协议类型、端口号进行过滤；</li>
+<li><code>代理应用防火墙</code>：工作在应用层，使用代理服务器技术，将内网对外网的访问，变为防火墙对外网的访问，可以对包的内容进行分辨，从而过滤。</li>
+</ul>
+<blockquote>
+<ul>
+<li>作者：木二</li>
+<li>链接：<a target="_blank" rel="noopener" href="https://www.yuque.com/docs/share/d3dd1e8e-6828-4da7-9e30-6a4f45c6fa8e">https://www.yuque.com/docs/share/d3dd1e8e-6828-4da7-9e30-6a4f45c6fa8e</a></li>
+</ul>
+</blockquote>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/573873540/" target="_blank">linux基础</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/category/%E9%9D%A2%E8%AF%95/">面试</a>
+                        
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/3425886379/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/3425886379/" title="发布于 2024-05-20 04:28">基础服务</a>
+                        <br>
+                    
+                    
+                        <a href="/posts/459674589/" class="next-prefix">» </a> 下一篇：    <a href="/posts/459674589/" title="发布于 2024-05-20 04:28">运维工具</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
+    
+</div>
+    <div id="footer">
+    <div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2023-2024 WorstOne. All Rights Reserved.</div>
+</div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/avatar.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>摆烂的阿腾</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://www.zhihu.com/people/36-35-43-58" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/7821302597" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="image" target="_self" data="/image/sidebar/wechat.png"><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/yzt6666" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+    
+    <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+    <script type="text/javascript" src="/js/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/Meting.min.js"></script>
+    <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+
+    <div class="wrap-right">
+    <div class="wrap-right-hide">
+         <div class="wrap-right-button favorites">
+            <div class="iconbox" switch="false">
+                <span class="iconfont icon-favorites"></span>
+            </div>
+            <span class="icontext">关注</span>
+         </div>
+        <div class="wrap-right-button search">
+            <div class="iconbox">
+                <span class="iconfont icon-search-menu"></span>
+            </div>
+            <span class="icontext">搜索</span>
+        </div>
+        <div class="wrap-right-button menu-button">
+            <div class="iconbox">
+                <span class="iconfont icon-menu"></span>
+            </div>
+            <span class="icontext">菜单</span>
+        </div>
+        <div class="wrap-right-button mode">
+            <div class="light">
+                <div class="iconbox">
+                    <span class="iconfont icon-daymode"></span>
+                </div>
+                <span class="icontext">浅色模式</span>
+            </div>
+            <div class="dark">
+                <div class="iconbox">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                </div>
+                <span class="icontext">深色模式</span>
+            </div>
+        </div>
+        <div class="wrap-right-button bottom">
+            <div class="iconbox">
+                <span class="iconfont icon-top"></span>
+            </div>
+            <span class="icontext">跳至底部</span>
+        </div>
+    </div>
+    <div class="wrap-right-show">
+        <div class="wrap-right-button set">
+            <div class="iconbox">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="wrap-right-button top">
+            <div class="iconbox">
+                <span class="iconfont icon-top"></span>
+            </div>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+</div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "yzt6666",
+        GitHubRepositories : "yzt6666.github.io",
+
+        User             : "摆烂的阿腾",
+        UserAvatar       : "/image/sidebar/avatar.jpg",
+        WebsiteStartDate : "2023-04-26",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, 阿腾",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/home.jpeg",
+            
+                "/image/header/home4.jpg",
+            
+                "/image/header/home1.jpg",
+            
+                "/image/header/home2.jpg",
+            
+                "/image/header/home3.jpg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://www.zhihu.com/people/36-35-43-58",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/7821302597",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/wechat.png"
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/yzt6666",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2023-2024 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Comment : {
+            switch : true,
+            type   : "Valine",
+        },
+
+        Waline : {
+            el              : ".comments-content",
+            serverURL       : "",
+            path            : window.location.pathname,
+            meta            : "['nick', 'mail', 'link']",
+            requiredMeta    : "['nick', 'mail']",
+            pageSize        : 10,
+            lang            : "zh-cn",
+            locale: {
+                admin       : "博主",
+                anonymous   : "匿名用户",
+                sofa        : "快来做第一个评论的人吧 ~",
+                placeholder : "你是我一生只会遇见一次的惊喜...",
+            },
+            dark            : "html[color-scheme='dark']",
+            search          : false,
+            pageview        : true,
+            comment         : true,
+            copyright       : false,
+        },
+
+        Valine : {
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css",
+            waline           : "/css/waline.css",
+            walineCustom     : "/css/waline-custom.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js",
+            waline           : "/js/waline.mjs",
+            pageview         : "/js/pageview.mjs",
+            comment          : "/js/comment.mjs",
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

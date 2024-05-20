@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            面试题1
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">面试题1</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-01
+                        </span>
+                        
+                            
+                                <span id="/posts/2749460458/" class="leancloud_visitors" data-flag-title="面试题1">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/posts/2749460458/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                        
+                            <span class="category-color">面试题</span>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h4><p>面试官您好，我叫杨子腾，毕业于保定学院，就读于软件工程专业，在校期间，我当过两年班长，也拿过两年奖学金，我积极参与学校组织的活动，获得过校级运维大赛三等奖，大三的时候参加学校组织的实习工作，在科大讯飞保定科技有限公司担任运维工作，主要是维护公司的服务器集群，在此期间，接触到了运维的整体工作流程，对各项工作有了充分认知，也开始自主学习k8s、Nginx、Docker等相关技术，实习六个月后回到学校，自己又找了实习单位，北京鼎立印软件开发有限公司，在公司里我参与了多个项目的部署和维护工作，积累了丰富的实战经验，我的自我介绍结束了，非常感谢您给我这个机会来介绍自己，我期待能够进一步了解贵公司和这个职位。</p>
+<h4 id="你们公司的服务器架构是什么样的？"><a href="#你们公司的服务器架构是什么样的？" class="headerlink" title="你们公司的服务器架构是什么样的？"></a>你们公司的服务器架构是什么样的？</h4><p>我们公司总共大概有50多台服务器，其中，有两台Nginx负责网站的流量分配，三台Tomcat用来处理业务逻辑，还有一台数据库服务器，这些就构成了我们公司的web网站，除了这些，其他的服务器都是按照甲方的要求动态分配，用来进行软件的开发和测试工作。这样，我们不仅能满足公司的日常运营需求，还能确保软件开发和测试工作顺利进行。</p>
+<h4 id="你在工作中遇到过什么问题？"><a href="#你在工作中遇到过什么问题？" class="headerlink" title="你在工作中遇到过什么问题？"></a>你在工作中遇到过什么问题？</h4><p>在我初入第一家公司的时候，主要负责服务器的日常维护工作，有次服务器报警，我迅速定位问题，发现存日志的磁盘占用已经超过设置的阈值，我立刻向上报汇报，请求急购新的磁盘，在得到公司配备更大磁盘容量后，我直接将其安装在服务器上，然后挂载在存储日志的目录，当检查的时候，发现以前的日志没有了，我以为是新磁盘的挂载覆盖掉了旧数据，就很慌，然后我就上csdn查找怎么恢复数据，后来发现是日志并没有被覆盖，还在旧磁盘上，我又重新挂载旧磁盘，将数据拿到其他磁盘，再转移到新磁盘才解决问题，经过这次经历，我意识到数据备份的重要性，以防数据丢失。</p>
+<h4 id="你曾经做过什么项目？"><a href="#你曾经做过什么项目？" class="headerlink" title="你曾经做过什么项目？"></a>你曾经做过什么项目？</h4><p>我在上一家公司参与过k8s的部署工作，我记得当时根据甲方公司的业务需求，用了大概20多台服务器，其中有三台Master节点，配合两台Nginx和Keepalived实现了高可用性，这样确保集群能够稳定运行，其余的都为work节点，每台服务器都先安装ntpdate来同步时间，然后安装docker和containerd以及所需的依赖包，为了快速部署k8s，我们选择用kubeadm来初始化集群，然后将work节点逐一加入到集群当中，最后在所有节点安装上Calico网络插件，来实现集群内部的网络通信。然后创建了几个pod进行测试，我们确认集群性能稳定可靠后，就正式投入使用了。</p>
+<h4 id="这个项目中你有遇到什么问题吗？"><a href="#这个项目中你有遇到什么问题吗？" class="headerlink" title="这个项目中你有遇到什么问题吗？"></a>这个项目中你有遇到什么问题吗？</h4><p>我主要负责实现节点的高可用性，配置Nginx和Keepalived，我记得是没有什么大问题，就是在测试的时候，模拟主节点死掉后，检查vip是否漂移，发现另外两个从节点上都有vip，问题肯定出在keepalived的配置文件上，检查的时候发现两台从节点的优先级是一样的，复制过来没有改才造成这个问题，修改完成后重启服务，vip才正常漂移。</p>
+<h4 id="pod的创建流程"><a href="#pod的创建流程" class="headerlink" title="pod的创建流程"></a>pod的创建流程</h4><p>首先是客户端通过kubectl提交创建pod的请求调用api server，api server接收到pod创建请求后验证权限信息，通过后将信息存入到etxd，其他组件触发watch机制准备创建pod，信息转发给调度器，调度器使用调度算法选择匹配的node，将node信息反馈给api server将绑定的node信息写入etcd，node节点上的kubelet通过watch机制，调用kubectl，根据指定的pod信息，调用docker创建并启动pod内的容器，创建完成后将结果反馈给api server，将pod的状态信息写入etcd。就完成了pod的创建。</p>
+<h4 id="pod的重启策略有哪些？"><a href="#pod的重启策略有哪些？" class="headerlink" title="pod的重启策略有哪些？"></a>pod的重启策略有哪些？</h4><p>pod重启容器策略是指针对pod内所有容器的重启策略，不是重启pod，其可以通过restartPolicy字段配置pod重启容器的策略，如下：</p>
+<ul>
+<li>Always: 当容器终止退出后，总是重启容器，默认策略就是Always。</li>
+<li>OnFailure: 当容器异常退出，退出状态码非0时，才重启容器。</li>
+<li>Never: 当容器终止退出，不管退出状态码是什么，从不重启容器。</li>
+</ul>
+<h4 id="pod的镜像拉取策略有哪几种？"><a href="#pod的镜像拉取策略有哪几种？" class="headerlink" title="pod的镜像拉取策略有哪几种？"></a>pod的镜像拉取策略有哪几种？</h4><p>pod镜像拉取策略可以通过imagePullPolicy字段配置镜像拉取策略，</p>
+<p>主要有3中镜像拉取策略，如下：</p>
+<ul>
+<li>IfNotPresent: 默认值，镜像在node节点宿主机上不存在时才拉取。</li>
+<li>Always: 总是重新拉取，即每次创建pod都会重新从镜像仓库拉取一次镜像。</li>
+<li>Never: 永远不会主动拉取镜像，仅使用本地镜像，需要你手动拉取镜像到node节点，如果node节点不存在镜像则pod启动失败。</li>
+</ul>
+<h4 id="kubenetes针对pod资源对象的健康监测机制-（必须记住3重探测方式，重点，经常问）"><a href="#kubenetes针对pod资源对象的健康监测机制-（必须记住3重探测方式，重点，经常问）" class="headerlink" title="kubenetes针对pod资源对象的健康监测机制?（必须记住3重探测方式，重点，经常问）"></a>kubenetes针对pod资源对象的健康监测机制?（必须记住3重探测方式，重点，经常问）</h4><p>提供了三类probe（探针）来执行对pod的健康监测：</p>
+<ul>
+<li>livenessProbe探针 （存活探针）:</li>
+</ul>
+<p>可以根据用户自定义规则来判定pod是否健康，用于判断容器是否处于Running状态，</p>
+<p>如果不是，kubelet就会杀掉该容器，并根据重启策略做相应的处理。如果容器不包含该探针，那么kubelet就会默认返回值都是success;</p>
+<ul>
+<li>ReadinessProbe探针:</li>
+</ul>
+<p>同样是可以根据用户自定义规则来判断pod是否健康，容器服务是否可用（Ready），如果探测失败，控制器会将此pod从对应service的endpoint列表中移除，从此不再将任何请求调度到此Pod上，直到下次探测成功;</p>
+<ul>
+<li>startupProbe探针:</li>
+</ul>
+<p>启动检查机制，应用一些启动缓慢的业务，避免业务长时间启动而被上面两类探针kill掉。</p>
+<p>kubernetes提供了3种探测容器的存活探针，如下：</p>
+<ul>
+<li>httpGet：通过容器的IP、端口、路径发送http 请求，返回200-400范围内的状态码表示成功。</li>
+<li>exec：在容器内执行shell命令，根据命令退出状态码是否为0进行判断，0表示健康，非0表示不健康。</li>
+<li>TCPSocket：与容器的IP、端口建立TCP Socket链接，能建立则说明探测成功，不能建立则说明探测失败</li>
+</ul>
+<h4 id="就绪探针（ReadinessProbe探针）与存活探针（livenessProbe探针）区别是什么？"><a href="#就绪探针（ReadinessProbe探针）与存活探针（livenessProbe探针）区别是什么？" class="headerlink" title="就绪探针（ReadinessProbe探针）与存活探针（livenessProbe探针）区别是什么？"></a>就绪探针（ReadinessProbe探针）与存活探针（livenessProbe探针）区别是什么？</h4><p>两者作用不一样，</p>
+<p>存活探针是将检查失败的容器杀死，创建新的启动容器来保持pod正常工作；</p>
+<p>就绪探针是，当就绪探针检查失败，并不重启容器，而是将pod移出endpoint，就绪探针确保了service中的pod都是可用的，确保客户端只与正常的pod交互并且客户端永远不会知道系统存在问题。</p>
+<h4 id="pod的生命周期有哪几种？"><a href="#pod的生命周期有哪几种？" class="headerlink" title="pod的生命周期有哪几种？"></a>pod的生命周期有哪几种？</h4><p>pod生命周期有的5种状态（也称5种相位），如下：</p>
+<ul>
+<li>Pending（挂起）：API server已经创建pod，但是该pod还有一个或多个容器的镜像没有创建，包括正在下载镜像的过程；</li>
+<li>Running（运行中）：Pod内所有的容器已经创建，且至少有一个容器处于运行状态、正在启动括正在重启状态；</li>
+<li>Succeed（成功）：Pod内所有容器均已退出，且不会再重启；</li>
+<li>Failed（失败）：Pod内所有容器均已退出，且至少有一个容器为退出失败状态</li>
+<li>Unknown（未知）：某于某种原因apiserver无法获取该pod的状态，可能由于网络通行问题导致；</li>
+</ul>
+<h4 id="DaemonSet资源对象的特性？"><a href="#DaemonSet资源对象的特性？" class="headerlink" title="DaemonSet资源对象的特性？"></a>DaemonSet资源对象的特性？</h4><p>DaemonSet这种资源对象会在每个k8s集群中的节点上运行，并且每个节点只能运行一个pod，这是它和deployment资源对象的最大也是唯一的区别。</p>
+<p>所以，在其yaml文件中，不支持定义replicas，</p>
+<p>除此之外，与Deployment、RS等资源对象的写法相同,</p>
+<p>DaemonSet一般使用的场景有</p>
+<ul>
+<li>在去做每个节点的日志收集工作；</li>
+<li>监控每个节点的的运行状态;</li>
+</ul>
+<h4 id="pod为什么pending？"><a href="#pod为什么pending？" class="headerlink" title="pod为什么pending？"></a>pod为什么pending？</h4><p>pod在刚开始创建的时候，本身就处于pending状态，可能是正在拉取镜像，正在创建容器的过程。如果一直是pending状态，就要使用kubectl describe命令查看一下pod的详细信息，可能是集群中没有足够的资源来调度pod（如CPU、内存、存储等），Pod可能由于调度约束（如亲和性&#x2F;反亲和性规则，污点和容忍）而无法被调度到任何可用的节点上。也可能是pvc或者PV无法动态创建，这些情况都会使pod处于pending状态。</p>
+<h4 id="pod创建失败该怎么办？"><a href="#pod创建失败该怎么办？" class="headerlink" title="pod创建失败该怎么办？"></a>pod创建失败该怎么办？</h4><p>pod创建失败可以先查看一下Pod日志，看看失败的原因，可能是镜像不存在或损坏、配置错误、资源限制、网络连接等等，如果是镜像的原因，就检查并修复镜像，或者重新拉取镜像，如果是配置错误，就检查pod的配置文件，修复可能存在的错误，如果是资源限制，就为pod设置适当的资源请求和限制，查看网络策略，看是否禁止创建pod。</p>
+<h4 id="简述deployment和replicaset的区别"><a href="#简述deployment和replicaset的区别" class="headerlink" title="简述deployment和replicaset的区别"></a>简述deployment和replicaset的区别</h4><p>Deployment 是一个高级别的控制器，管理 ReplicaSet 并提供滚动更新和回滚等高级功能，而 ReplicaSet 是一个低级别的控制器，确保在集群中始终运行指定数量的 Pod 副本。Deployment 适用于需要高级控制和自动化的复杂应用程序，而 ReplicaSet 适用于需要简单、可扩展且灵活的机制来管理 Pod 副本的场景。</p>
+<h4 id="service的类型有哪几种"><a href="#service的类型有哪几种" class="headerlink" title="service的类型有哪几种"></a>service的类型有哪几种</h4><p>service的类型一般有4中，分别是：</p>
+<ul>
+<li>ClusterIP：表示service仅供集群内部使用，默认值就是ClusterIP类型</li>
+<li>NodePort：表示service可以对外访问应用，会在每个节点上暴露一个端口，这样外部浏览器访问地址为：任意节点的IP：NodePort就能连上service了</li>
+<li>LoadBalancer：表示service对外访问应用，这种类型的service是公有云环境下的service，此模式需要外部云厂商的支持，需要有一个公网IP地址</li>
+<li>ExternalName：这种类型的service会把集群外部的服务引入集群内部，这样集群内直接访问service就可以间接的使用集群外部服务了</li>
+</ul>
+<p>一般情况下，service都是ClusterIP类型的，通过ingress接入的外部流量。</p>
+<h4 id="deployment的更新升级策略有哪些？"><a href="#deployment的更新升级策略有哪些？" class="headerlink" title="deployment的更新升级策略有哪些？"></a>deployment的更新升级策略有哪些？</h4><p>答：deployment的升级策略主要有两种。</p>
+<p>1、Recreate 重建更新：这种更新策略会杀掉所有正在运行的pod，然后再重新创建的pod；</p>
+<p>2、rollingUpdate 滚动更新：这种更新策略，deployment会以滚动更新的方式来逐个更新pod，同时通过设置滚动更新的两个参数<code>maxUnavailable、maxSurge</code>来控制更新的过程。</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/avatar.jpg" alt="摆烂的阿腾">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>摆烂的阿腾
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/posts/2749460458/" target="_blank">面试题1</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/category/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+                        
+                    </div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/posts/988298832/" class="prev-prefix">« </a> 上一篇：    <a href="/posts/988298832/" title="发布于 2024-04-28 05:33">面试题2</a>
+                        <br>
+                    
+                    
+                        <a href="/posts/2468726264/" class="next-prefix">» </a> 下一篇：    <a href="/posts/2468726264/" title="发布于 2024-03-31 05:09">配置管理中心configmap</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
+    
+</div>
+    <div id="footer">
+    <div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2023-2024 WorstOne. All Rights Reserved.</div>
+</div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/avatar.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>摆烂的阿腾</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://www.zhihu.com/people/36-35-43-58" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/7821302597" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="image" target="_self" data="/image/sidebar/wechat.png"><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/yzt6666" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+    
+    <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+    <script type="text/javascript" src="/js/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/Meting.min.js"></script>
+    <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+
+    <div class="wrap-right">
+    <div class="wrap-right-hide">
+         <div class="wrap-right-button favorites">
+            <div class="iconbox" switch="false">
+                <span class="iconfont icon-favorites"></span>
+            </div>
+            <span class="icontext">关注</span>
+         </div>
+        <div class="wrap-right-button search">
+            <div class="iconbox">
+                <span class="iconfont icon-search-menu"></span>
+            </div>
+            <span class="icontext">搜索</span>
+        </div>
+        <div class="wrap-right-button menu-button">
+            <div class="iconbox">
+                <span class="iconfont icon-menu"></span>
+            </div>
+            <span class="icontext">菜单</span>
+        </div>
+        <div class="wrap-right-button mode">
+            <div class="light">
+                <div class="iconbox">
+                    <span class="iconfont icon-daymode"></span>
+                </div>
+                <span class="icontext">浅色模式</span>
+            </div>
+            <div class="dark">
+                <div class="iconbox">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                </div>
+                <span class="icontext">深色模式</span>
+            </div>
+        </div>
+        <div class="wrap-right-button bottom">
+            <div class="iconbox">
+                <span class="iconfont icon-top"></span>
+            </div>
+            <span class="icontext">跳至底部</span>
+        </div>
+    </div>
+    <div class="wrap-right-show">
+        <div class="wrap-right-button set">
+            <div class="iconbox">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="wrap-right-button top">
+            <div class="iconbox">
+                <span class="iconfont icon-top"></span>
+            </div>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+</div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "yzt6666",
+        GitHubRepositories : "yzt6666.github.io",
+
+        User             : "摆烂的阿腾",
+        UserAvatar       : "/image/sidebar/avatar.jpg",
+        WebsiteStartDate : "2023-04-26",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, 阿腾",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/home.jpeg",
+            
+                "/image/header/home4.jpg",
+            
+                "/image/header/home1.jpg",
+            
+                "/image/header/home2.jpg",
+            
+                "/image/header/home3.jpg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://www.zhihu.com/people/36-35-43-58",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/7821302597",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/wechat.png"
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/yzt6666",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2023-2024 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Comment : {
+            switch : true,
+            type   : "Valine",
+        },
+
+        Waline : {
+            el              : ".comments-content",
+            serverURL       : "",
+            path            : window.location.pathname,
+            meta            : "['nick', 'mail', 'link']",
+            requiredMeta    : "['nick', 'mail']",
+            pageSize        : 10,
+            lang            : "zh-cn",
+            locale: {
+                admin       : "博主",
+                anonymous   : "匿名用户",
+                sofa        : "快来做第一个评论的人吧 ~",
+                placeholder : "你是我一生只会遇见一次的惊喜...",
+            },
+            dark            : "html[color-scheme='dark']",
+            search          : false,
+            pageview        : true,
+            comment         : true,
+            copyright       : false,
+        },
+
+        Valine : {
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css",
+            waline           : "/css/waline.css",
+            walineCustom     : "/css/waline-custom.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js",
+            waline           : "/js/waline.mjs",
+            pageview         : "/js/pageview.mjs",
+            comment          : "/js/comment.mjs",
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
